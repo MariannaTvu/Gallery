@@ -6,23 +6,23 @@
     <title>Gallery</title>
 
 
-    <link href="${pageContext.request.contextPath}../layout/styles/layout.css" rel="stylesheet"  type="text/css"/>
+    <link href="/resources/layout/styles/layout.css" rel="stylesheet"  type="text/css"/>
     <!--    photo header styles 1 -->
     <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../css/ekko-lightbox.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/ekko-lightbox.min.css">
+    <link rel="stylesheet" type="text/css" href="/resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
     <!--    photo header styles 1 end -->
 
     <!-- userGallery -->
     <!-- animate.css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}../../assets/animate/animate.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}../../assets/animate/set.css" />
+    <link rel="stylesheet" href="/resources/assets/animate/animate.css" />
+    <link rel="stylesheet" href="/resources/assets/animate/set.css" />
 
     <!-- userGallery -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}../../assets/userGallery/blueimp-userGallery.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}../../assets/style.css">
+    <link rel="stylesheet" href="/resources/assets/userGallery/blueimp-userGallery.min.css">
+    <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
 
@@ -41,169 +41,49 @@
         </div>
     </div>
 </div>
-<div class="wrapper col2">
+<div class="wrapper col2" >
     <div id="header">
         <div id="logo">
-            <h1><a href="index.html">Gallery</a></h1>
+            <h1><a href="/">Gallery</a></h1>
             <p>to share and sell you artwork</p>
         </div>
         <ul id="topnav">
             <li class="last"><a href="#">Login</a></li>
             <li><a href="#">Profile</a>
                 <ul>
-                    <li><a href="${pageContext.request.contextPath}../../pages/upload_art.html">Submit art</a></li>
-                    <li><a href="${pageContext.request.contextPath}../../pages/shop.html">Shop</a></li>
+                    <li><a href="/upload_art">Submit art</a></li>
+                    <li><a href="/pages/shop.html">Shop</a></li>
                     <li><a href="#">Logout</a></li>
                 </ul>
             </li>
-            <li><a href="userGallery.html">Galleries</a></li>
-            <li class="active"><a href="index.html">Main</a></li>
+            <li><a href="/artist_gallery">Galleries</a></li>
+            <li class="active"><a href="/">Main</a></li>
         </ul>
         <br class="clear" />
     </div>
 </div>
 <div class="wrapper col3">
-    <div id="userGallery">
-
-
-
-
+    <div id="photos">
+        <c:forEach items="${picture_id}" var="picture_id">
         <div class="container-fluid">
             <div class="row">
+                <div class="hovereffect"  >
 
-                <div class="hovereffect" style="width:33.333333%" >
-                    <div class="33">
-                        <img  class="img-responsive"  src="images/tm-sigma-01.jpg" alt="Image 1" >
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html" >view userGallery</a>
-                        </div>
-                    </div>
+
+                <img  class="img-responsive"  src="picture/${picture_id}" alt="Image 1" >
+                <div class="overlay">
+                    <h2>Picture name by Author</h2>
+                    <a class="info" href="html/artist_gallery.html" >view userGallery</a>
                 </div>
 
-                <div class="hovereffect" style="width:33.333333%" >
-                    <div class="33">
-                        <img src="${pageContext.request.contextPath}../../images/tm-sigma-02.jpg" alt="Image 2" class="img-fluid sigmapad col-lg-4 col-md-6 col-sm-6">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="${pageContext.request.contextPath}../../artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="hovereffect" style="width:33.333333%" >
-                    <div class="33">
-                        <img src="${pageContext.request.contextPath}../../images/tm-sigma-03.jpg" alt="Image 3" class="img-fluid sigmapad col-lg-4 col-md-8 col-sm-12">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:66.666666%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-04.jpg" alt="Image 4" class="img-fluid sigmapad col-lg-8 col-md-4 col-sm-6">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:33.333333%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-05.jpg" alt="Image 5" class="img-fluid sigmapad col-lg-4 col-md-4 col-sm-6">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:33.333333%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-06.jpg" alt="Image 6" class="img-fluid sigmapad col-lg-4" title="Bicycle">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:50%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-07.jpg" alt="Image 7" class="img-fluid sigmapad col-sm-6" title="Walking">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:50%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-08.jpg" alt="Image 8" class="img-fluid sigmapad col-sm-6" title="Camera">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:25%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-01.jpg" alt="Image 9" class="img-fluid sigmapad col-lg-3 col-md-8 col-sm-12">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:25%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-02.jpg" alt="Image 10" class="img-fluid sigmapad col-lg-3 col-md-4 col-sm-6">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:25%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-03.jpg" alt="Image 11" class="img-fluid sigmapad col-lg-3 col-md-4 col-sm-6">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hovereffect" style="width:25%" >
-                    <div class="33">
-                        <img src="images/tm-sigma-04.jpg" alt="Image 12" class="img-fluid sigmapad col-lg-3 col-sm-12">
-                        <div class="overlay">
-                            <h2>Picture name by Author</h2>
-                            <a class="info" href="artist_gallery.html">view userGallery</a>
-                        </div>
-                    </div>
                 </div>
             </div>
-
         </div>
+        </c:forEach>
     </div>
 </div>
-<div class="wrapper col4">
-    <div id="services">
 
-
-
-
-        <br class="clear" />
-    </div>
-</div>
 <div class="wrapper col5">
     <div id="container">
         <div id="content">

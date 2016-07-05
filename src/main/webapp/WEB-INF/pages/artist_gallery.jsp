@@ -12,31 +12,31 @@
 <head>
     <title>Gallery</title>
 
-    <link href="${pageContext.request.contextPath}../layout/styles/layout.css" rel="stylesheet"  type="text/css"/>
+    <link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css"/>
 
 
     <!-- CSS Files -->
-    <link rel="stylesheet" type="text/css"  href="${pageContext.request.contextPath}../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css"/>
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}../../menu/css/simple_menu.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}../../css/nivo-slider.css" type="text/css"
+          href="/resources/menu/css/simple_menu.css"/>
+    <link rel="stylesheet" href="/resources/css/nivo-slider.css" type="text/css"
           media="screen"/>
     <!--    photo header styles 1 -->
     <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../css/ekko-lightbox.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/ekko-lightbox.min.css"/>
 
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css"/>
     <!--    photo header styles 1 end -->
     <!-- userGallery -->
     <!-- animate.css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}../../assets/animate/animate.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}../../assets/animate/set.css"/>
+    <link rel="stylesheet" href="/resources/assets/animate/animate.css"/>
+    <link rel="stylesheet" href="/resources/assets/animate/set.css"/>
 
     <!-- userGallery -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../assets/userGallery/blueimp-userGallery.min.css"/>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../../assets/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/assets/userGallery/blueimp-userGallery.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/assets/style.css"/>
 
     <!--userGallery end-->
 
@@ -60,20 +60,20 @@
 <div class="wrapper col2">
     <div id="header">
         <div id="logo">
-            <h1><a href="../../../../../../../ProjectPro/front/index.html">Gallery</a></h1>
+            <h1><a href="/">Gallery</a></h1>
             <p>to share and sell you artwork</p>
         </div>
         <ul id="topnav">
             <li class="last"><a href="#">Login</a></li>
             <li><a href="#">Profile</a>
                 <ul>
-                    <li><a href="../../../../../../../ProjectPro/front/pages/upload_art.html">Submit art</a></li>
-                    <li><a href="../../../../../../../ProjectPro/front/pages/shop.html">Shop</a></li>
+                    <li><a href="/upload_art">Submit art</a></li>
+                    <li><a href="/pages/shop.jsp">Shop</a></li>
                     <li><a href="#">Logout</a></li>
                 </ul>
             </li>
-            <li class="active"><a href="../../../../../../../ProjectPro/front/userGallery.html">Galleries</a></li>
-            <li><a href="../../../../../../../ProjectPro/front/index.html">Main</a></li>
+            <li class="active"><a href="artist_gallery">Galleries</a></li>
+            <li><a href="/">Main</a></li>
         </ul>
         <br class="clear"/>
     </div>
@@ -124,26 +124,30 @@
     </ul>
 
     <!-- works -->
+    <div class="wrapper col4">
+        <div id="works" class="artist_grid">
+            <div class="artist_grid">
+                <c:forEach items="${pictures}" var="picture">
 
-    <div id="works" class=" clearfix grid">
-        <div class="artist_grid">
-            <c:forEach items="${file_name}" var="file">
+                        <figure class="art_hovereffect" style="width: 25%">
+                            <img src=picture/${picture.id} />
 
-            <figure class="art_hovereffect">
-                <img src=${file} />
-                <a href="">
-                    <div class="overlay">
-                        <h2>Picture name</h2>
-                    </div>
-                </a>
-            </figure>
-            </c:forEach>
+                            <a href="<c:url value='/view_art/${picture.id}'/>">
+                                <div class="overlay">
 
+                                    <h2 > <c:out value="${picture.name}"/> </h2>
+
+                                </div>
+                            </a>
+
+                        </figure>
+
+                </c:forEach>
+            </div>
         </div>
+        <!-- works -->
+
     </div>
-    <!-- works -->
-
-
     <!-- close container -->
 
 
