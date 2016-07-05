@@ -1,6 +1,7 @@
 package com.mariana.gallery.persistence.picture;
 
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -33,4 +34,6 @@ public interface PictureDAO {
     List<PictureComment> getCommentsByPictureId(long id);
 
     String getPictureNameById(long id);
+
+    List<Picture> sortPicturesByName();
 }

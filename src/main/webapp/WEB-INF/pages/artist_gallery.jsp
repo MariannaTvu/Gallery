@@ -46,12 +46,11 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form action="#" method="post">
+            <form role="search" action="/search" method="post">
                 <fieldset>
                     <legend>Site Search</legend>
-                    <input type="text" value="Search the site"
-                           onfocus="this.value=(this.value=='Search the site;')? '' : this.value ;"/>
-                    <input type="submit" name="go" id="go" value="GO"/>
+                    <input type="text" name="pattern" placeholder="Search" />
+                    <input type="submit" name="go" id="go" value="GO" />
                 </fieldset>
             </form>
         </div>
@@ -122,7 +121,7 @@
         <li><a href="" title="Contact">Contact</a></li>
         <div class="clear"></div>
     </ul>
-
+</div>
     <!-- works -->
     <div class="wrapper col4">
         <div id="works" class="artist_grid">
@@ -156,7 +155,7 @@
 <br class="clear"/>
 
 
-<div class="wrapper col7">
+<div class="wrapper col7" >
     <div id="copyright">
         <ul>
             <li><a href="#">Online Privacy Policy</a></li>

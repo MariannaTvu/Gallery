@@ -29,18 +29,16 @@ public class MyController {
     private GalleryService galleryService;
 
     @RequestMapping("/")
-    public String onIndex(Model model){
+    public String onIndex(Model model) {
 
         return "redirect:/index";
     }
 
     @RequestMapping("/auth")
-    public String authorize (Model model){
+    public String authorize(Model model) {
 
         return "redirect:/authorize";
     }
-
-
 
 
     @RequestMapping("/index")
@@ -52,8 +50,9 @@ public class MyController {
             long id = picture.getId();
             response.add(id);
         }
-        model.addAttribute("pictures", galleryPictures);
-        model.addAttribute("picture_id", response);
+       model.addAttribute("pictures", galleryService.listPictures());
+        model.addAttribute("picture_id", galleryService.listPictures());
+        // model.addAttribute("picture_id", response);
 
         return "index";
     }
@@ -69,6 +68,19 @@ public class MyController {
         return "redirect:/artist_gallery";
     }
 
+    @RequestMapping(value ="/sort_by_name")
+    public String sortedByName(Model model) {
+      //  galleryService.sortPicturesByName(null);
+        model.addAttribute("pictures", galleryService.sortPicturesByName());
+        model.addAttribute("picture_id", galleryService.sortPicturesByName());
+        return "index";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String search(@RequestParam String pattern, Model model) {
+        model.addAttribute("pictures", galleryService.searchPictures(pattern));
+        return "index";
+    }
 
     @RequestMapping(value = "/view_art/{picture_id}", method = RequestMethod.GET)
     public String viewArtById(@PathVariable("picture_id") long id, Model model) {
@@ -104,7 +116,7 @@ public class MyController {
         for (Picture picture : galleryPictures) {
             long id = picture.getId();
             response.add(id);
-            }
+        }
         model.addAttribute("picture_id", response);
         model.addAttribute("pictures", galleryPictures);
         return "/artist_gallery";
@@ -137,7 +149,7 @@ public class MyController {
     public String setAllGroup1(Model model) {
         UserGallery gal1 = galleryService.listUserGallerys().get(0);
         List<Picture> pic1 = galleryService.listPictures();
-            for (Picture pic2 : pic1) {
+        for (Picture pic2 : pic1) {
             pic2.setUserGallery(gal1);
             pic2 = galleryService.update(pic2);
         }
@@ -157,8 +169,8 @@ public class MyController {
     }
 
 
-    @RequestMapping(value="/add_comment", method = RequestMethod.GET)
-    public String addComment(@ModelAttribute("picture_id") long id,@RequestParam("comment") String comment,
+    @RequestMapping(value = "/add_comment", method = RequestMethod.GET)
+    public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
                              Model model) {
         model.addAttribute("picture_id", id);
         Picture pic = galleryService.getPictureById(id);
@@ -169,6 +181,9 @@ public class MyController {
         galleryService.update(pic);
         return "redirect:/view_art";
     }
+
+
+
 
 }
 

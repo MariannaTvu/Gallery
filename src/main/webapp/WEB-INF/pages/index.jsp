@@ -31,10 +31,10 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form action="#" method="post">
+            <form role="search" action="/search" method="post">
                 <fieldset>
                     <legend>Site Search</legend>
-                    <input type="text" value="Search the site&hellip;"  onfocus="this.value=(this.value=='Search the site&hellip;')? '' : this.value ;" />
+                    <input type="text" name="pattern" placeholder="Search" />
                     <input type="submit" name="go" id="go" value="GO" />
                 </fieldset>
             </form>
@@ -62,6 +62,20 @@
         <br class="clear" />
     </div>
 </div>
+<ul class="sort_navigation">
+    <li><form action="/sort_by_name" ><a href="/sort_by_name" title="Sort by name" >Sort by name</a></form> </li>
+    <li><a href="" title="About us">About us</a></li>
+    <li><a href="" title="Portfolio">Portfolio</a>
+        <!--  <ul>
+            <li><a href="" title="Websites">Websites</a></li>
+            <li><a href="" title="Webshops">Webshops</a></li>
+            <li><a href="" title="SEO">SEO</a></li>
+            <li><a href="" title="Responsive webdesign">Responsive webdesign</a></li>
+          </ul> -->
+    </li>
+    <li><a href="" title="Contact">Contact</a></li>
+    <div class="clear"></div>
+</ul>
 <div class="wrapper col3">
     <div id="photos">
         <c:forEach items="${pictures}" var="picture">
@@ -84,7 +98,7 @@
     </div>
 </div>
 
-<div class="wrapper col5">
+<div class="wrapper col5" style="margin-top: 5%">
     <div id="container">
         <div id="content">
             <h2>About This Free CSS Template</h2>

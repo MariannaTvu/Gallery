@@ -1,6 +1,7 @@
 package com.mariana.gallery.persistence.picture;
 
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
+import org.hibernate.annotations.OrderBy;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -102,5 +103,9 @@ public class PictureDAOImpl implements PictureDAO {
         return entityManager.find(Picture.class, id);
     }
 
-
+    @Override
+    public List<Picture> sortPicturesByName() {
+        Query query = entityManager.createQuery("SELECT g FROM Picture g ORDER BY g.name", Picture.class);
+        return (List<Picture>) query.getResultList();
+    }
 }

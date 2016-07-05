@@ -42,10 +42,10 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form action="#" method="post">
+            <form role="search" action="/search" method="post">
                 <fieldset>
                     <legend>Site Search</legend>
-                    <input type="text" value="Search the site&hellip;"  onfocus="this.value=(this.value=='Search the site&hellip;')? '' : this.value ;" />
+                    <input type="text" name="pattern" placeholder="Search" />
                     <input type="submit" name="go" id="go" value="GO" />
                 </fieldset>
             </form>
