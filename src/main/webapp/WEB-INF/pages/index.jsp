@@ -48,7 +48,7 @@
             <p>to share and sell you artwork</p>
         </div>
         <ul id="topnav">
-            <li class="last"><a href="#">Login</a></li>
+            <li class="last"><a href="/">Login</a></li>
             <li><a href="#">Profile</a>
                 <ul>
                     <li><a href="/upload_art">Submit art</a></li>
@@ -64,15 +64,15 @@
 </div>
 <div class="wrapper col3">
     <div id="photos">
-        <c:forEach items="${picture_id}" var="picture_id">
+        <c:forEach items="${pictures}" var="picture">
         <div class="container-fluid">
             <div class="row">
                 <div class="hovereffect"  >
 
 
-                <img  class="img-responsive"  src="picture/${picture_id}" alt="Image 1" >
+                <img  class="img-responsive"  src="picture/${picture.id}" alt="Image 1" >
                 <div class="overlay">
-                    <h2>Picture name by Author</h2>
+                    <h2><c:out value="${picture.name}"/> </h2>
                     <a class="info" href="html/artist_gallery.html" >view userGallery</a>
                 </div>
 
