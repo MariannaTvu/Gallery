@@ -53,6 +53,10 @@ public class MyController {
        model.addAttribute("pictures", galleryService.listPictures());
         model.addAttribute("picture_id", galleryService.listPictures());
         // model.addAttribute("picture_id", response);
+        org.springframework.security.core.userdetails.User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        model.addAttribute("login", user.getUsername());
+        model.addAttribute("roles", user.getAuthorities());
 
         return "index";
     }

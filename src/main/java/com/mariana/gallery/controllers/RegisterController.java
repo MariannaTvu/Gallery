@@ -6,6 +6,7 @@ import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +24,7 @@ public class RegisterController {
     private UserDAO userDAO;
 
     @Autowired
-    private ShaPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -34,7 +35,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("user") User userForm) {
-        String pass = passwordEncoder.encodePassword(userForm.getPassword(), null);
+        String pass = passwordEncoder.encode(userForm.getPassword());
         userForm.setPassword(pass);
         userForm.setRole(UserRole.USER);
 
