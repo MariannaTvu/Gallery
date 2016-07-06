@@ -20,14 +20,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private GalleryService galleryService;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        com.mariana.gallery.persistence.user.User account = galleryService.findUserByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        com.mariana.gallery.persistence.user.User account = galleryService.findUserByUsername(username);
         if (account == null)
-            throw new UsernameNotFoundException(email + " not found");
+            throw new UsernameNotFoundException(username + " not found");
 
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority("ROLE_" + account.getRole().name()));
 
-        return new User(account.getEmail(), account.getPassword(), roles);
+        return new User(account.getLogin(), account.getPassword(), roles);
     }
 }

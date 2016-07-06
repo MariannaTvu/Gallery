@@ -5,15 +5,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Repository
 @Transactional
 public class UserDAOImpl implements UserDAO {
 
-    public static final String JPQL_FIND_USER_BY_EMAIL = "SELECT u FROM User u WHERE u.email = :email";
-    public static final String PARAM_EMAIL = "email";
+    public static final String JPQL_FIND_USER_BY_USERNAME = "SELECT u FROM User u WHERE u.login = :login";
+    public static final String PARAM_USERNAME = "login";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -24,9 +23,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findUserByEmail(String email) {
-        TypedQuery<User> query = entityManager.createQuery(JPQL_FIND_USER_BY_EMAIL, User.class);
-        query.setParameter(PARAM_EMAIL, email);
+    public User findUserByUsername(String username) {
+        TypedQuery<User> query = entityManager.createQuery(JPQL_FIND_USER_BY_USERNAME, User.class);
+        query.setParameter(PARAM_USERNAME, username);
 
         return query.getSingleResult();
     }

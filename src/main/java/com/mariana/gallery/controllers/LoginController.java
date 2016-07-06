@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-public class LoginLogoutController {
+public class LoginController {
 
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String loginPage(Model model){
@@ -26,5 +26,10 @@ public class LoginLogoutController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";
+    }
+
+    @RequestMapping("/authorize")
+    public String authorizePage(Model model){
+        return "authorize";
     }
 }

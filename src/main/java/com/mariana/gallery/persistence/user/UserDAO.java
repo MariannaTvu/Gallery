@@ -5,7 +5,7 @@ package com.mariana.gallery.persistence.user;
  */
 public interface UserDAO {
     User findUserById(long id);
-    User findUserByEmail(String email);
+    User findUserByUsername(String username);
     User saveUser(User user);
     void deleteUser(User user);
 

@@ -38,16 +38,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/login");
-
-        http.formLogin()
+                .exceptionHandling().accessDeniedPage("/login")
+        .and()
+        .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
                 .failureUrl("/login?error")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
-                .permitAll();
-        http.logout()
+                .successForwardUrl("/index")
+                .permitAll()
+                .and()
+        .logout()
                 .permitAll()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")

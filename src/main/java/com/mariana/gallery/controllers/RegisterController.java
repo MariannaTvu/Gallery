@@ -4,7 +4,6 @@ import com.mariana.gallery.persistence.user.UserRole;
 import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user.UserDAO;
-import com.mariana.gallery.service.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,6 @@ public class RegisterController {
 
     @Autowired
     private GalleryService galleryService;
-@Autowired
-    private SecurityService securityService;
 
     @Autowired
     private UserDAO userDAO;
@@ -30,17 +27,19 @@ public class RegisterController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-       User user = new User();
-        user.setRole(UserRole.USER);
-        model.addAttribute("user", user);
+        model.addAttribute("user", new User());
 
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("user") User userForm) {
+        String pass = passwordEncoder.encodePassword(userForm.getPassword(), null);
+        userForm.setPassword(pass);
+        userForm.setRole(UserRole.USER);
+
         userDAO.saveUser(userForm);
-        securityService.autologin(userForm.getLogin(), userForm.getPassword());
+
         //  securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
         return "redirect:/index";
     }

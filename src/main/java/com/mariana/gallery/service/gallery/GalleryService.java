@@ -7,7 +7,6 @@ import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user.UserDAO;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import com.mariana.gallery.persistence.user_gallery.UserGalleryDAO;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +28,8 @@ public class GalleryService {
     }
 
     @Transactional
-    public User findUserByEmail(String email) {
-        return userDAO.findUserByEmail(email);
+    public User findUserByUsername(String username) {
+        return userDAO.findUserByUsername(username);
     }
 
     @Transactional

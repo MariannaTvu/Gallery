@@ -84,25 +84,26 @@
 </div>
 
 <!-- REGISTRATION FORM-->
-
-<h1 class="register-title">Welcome</h1>
-<div class="register">
-
-    <spring:url var="userActionUrl" value="/registration" />
-
-    <div class="container" style="width: 300px;">
-        <c:url value="/j_spring_security_check" var="loginUrl" />
-        <form action="${loginUrl}" method="post">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <input type="text" class="form-control" name="j_username" placeholder="Email address" required autofocus value="colibri">
-            <input type="password" class="form-control" name="j_password" placeholder="Password" required value="1234">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-        </form>
+<div class="container">
+<form name='loginForm' action="/j_spring_security_check" method='POST'>
+    <div>
+        <span>Email Address<label>*</label></span>
+        <input type="text" name="j_username">
     </div>
-
+    <div>
+        <span>Password<label>*</label></span>
+        <input type="password" name="j_password">
     </div>
+    <c:if test="${param.error ne null}">
+        <p>Wrong login or password!</p>
+    </c:if>
 
+    <input type="submit" value="Login" >
+</form>
 </div>
+
+
+
 
 <!--REGISTRATION FORM END-->
 
