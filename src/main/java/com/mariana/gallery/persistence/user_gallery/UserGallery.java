@@ -18,8 +18,13 @@ public class UserGallery {
     @OneToMany(mappedBy = "userGallery", cascade = CascadeType.ALL)
     private List<Picture> pictures = new ArrayList<Picture>();
 
-    @OneToOne(mappedBy = "userGallery")
+    @OneToOne(mappedBy = "userGallery", cascade=CascadeType.ALL)
     private User user;
+
+    public UserGallery(User user) {
+        this.name = user.getLogin();
+        this.user = user;
+    }
 
     public UserGallery() {
     }

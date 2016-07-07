@@ -1,6 +1,6 @@
-body {	color:#fff;	font:300 15px/15px Roboto,Arial,Helvetica;background:url(../images/bg.jpg) right no-repeat fixed #fff;background-size: cover; -webkit-font-smoothing:antialiased;}
+body {	color:#080808;	font:300 15px/15px Roboto,Arial,Helvetica;background:url(../images/bg.jpg) right no-repeat fixed #080808;background-size: cover; -webkit-font-smoothing:antialiased;}
 
-a{color:#00a9c6; text-decoration:none;}
+a{color:#fff; text-decoration:none;}
 a:hover{color:#666;}
 .btn,a,.btn:hover,a:hover {
 -webkit-transition: all 0.3s ease-in-out;
@@ -52,11 +52,6 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 .testimonails span b{font-weight: 400;}
 .carousel-indicators li{border: 1px solid #ccc;}
 .carousel-indicators{bottom: 0;}
-
-
-
-
-
 
 
 /*contact*/

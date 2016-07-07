@@ -14,8 +14,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_gallery")
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "userGallery")
     private UserGallery userGallery;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
@@ -28,16 +28,19 @@ public class User {
     private String email;
     private String password;
 
+    @Lob
+    @Basic(fetch=FetchType.EAGER)
+    private String bio;
+
     //    private String comments;
 //    private String name;
 //    private String surname;
     public User() {
     }
 
-    public User(String login, String password, UserRole role) {
+    public User(String login, String password) {
         this.login = login;
         this.password = password;
-        this.role = role;
     }
 
 //    public String getComments() {
@@ -127,6 +130,15 @@ public class User {
 
     public User setRole(UserRole role) {
         this.role = role;
+        return this;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public User setBio(String bio) {
+        this.bio = bio;
         return this;
     }
 }

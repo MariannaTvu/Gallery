@@ -1,8 +1,10 @@
 package com.mariana.gallery.persistence.picture;
 
+import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.hibernate.Session;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +35,19 @@ public interface PictureDAO {
 
     List<PictureComment> getCommentsByPictureId(long id);
 
+    String getCommentAuthor(User user);
+
+    PictureComment setCommentDate(PictureComment comment, String date);
+
     String getPictureNameById(long id);
 
     List<Picture> sortPicturesByName();
+
+    List<Picture> sortPicturesByComments();
+
+    List<Picture> sortPicturesByDate();
+
+    List<Picture> random();
+
+    void deletePictureById(long id);
 }

@@ -1,5 +1,7 @@
 package com.mariana.gallery.persistence.user;
 
+import com.mariana.gallery.persistence.user_gallery.UserGallery;
+
 /**
  * Created by Maryana on 21.06.2016.
  */
@@ -8,5 +10,7 @@ public interface UserDAO {
     User findUserByUsername(String username);
     User saveUser(User user);
     void deleteUser(User user);
-
+    User setGallery(User user, UserGallery gallery);
+    void setBio (User user, String bio);
+    User findUserByGallery(UserGallery gallery);
 }

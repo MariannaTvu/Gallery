@@ -36,11 +36,10 @@ background-color: #000000;
 .grid figure img {
 	position: relative;
 	display: block;
-max-height: 300%;
+max-height: 300px;
 min-height: 25%;
 	overflow: hidden;
 	min-width: 100%;
-
 	opacity: 1;
 }
 
@@ -78,8 +77,7 @@ min-height: 25%;
 }
 
 .grid figure h2 {
-	word-spacing: -0.15em;
-	font-weight: 700;
+	
 }
 
 .grid figure h2,

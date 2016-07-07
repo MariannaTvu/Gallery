@@ -38,33 +38,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .and()
                 .authorizeRequests()
-            //    .regexMatchers("/upload_art").authenticated()
+                .regexMatchers("/upload_art").authenticated()
+                .regexMatchers("/add_comment").authenticated()
+                .regexMatchers("/user_details.*").authenticated()
+                .regexMatchers("/delete_picture.*").authenticated()
+                .regexMatchers("/edit_gallery.*").authenticated()
                 .and()
                 .authorizeRequests()
                 .anyRequest().permitAll()
                 .and()
 
                 .exceptionHandling().accessDeniedPage("/login")
-        .and()
-        .formLogin()
+                .and()
+                .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
                 .failureUrl("/login?error")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
-                .successForwardUrl("/index")
+                .successForwardUrl("/profile")
                 .permitAll()
-                .and()
-        .logout()
+                .and();
+        http.logout()
                 .permitAll()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
     }
 
-        @Bean
-        public BCryptPasswordEncoder getBCryptPasswordEncoder () {
-            return new BCryptPasswordEncoder();
-        }
-
+    @Bean
+    public BCryptPasswordEncoder getBCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
+
+}

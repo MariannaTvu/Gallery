@@ -1,5 +1,6 @@
 package com.mariana.gallery.persistence.user;
 
+import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,9 @@ import javax.persistence.TypedQuery;
 public class UserDAOImpl implements UserDAO {
 
     public static final String JPQL_FIND_USER_BY_USERNAME = "SELECT u FROM User u WHERE u.login = :login";
+    public static final String JPQL_FIND_USER_BY_USERGALLERY = "SELECT u FROM User u WHERE u.userGallery = :userGallery";
     public static final String PARAM_USERNAME = "login";
+    public static final String PARAM_USERGALLERY = "userGallery";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -39,5 +42,25 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void deleteUser(User user) {
         entityManager.remove(user);
+    }
+
+    @Override
+    public User setGallery(User user, UserGallery gallery){
+        user.setUserGallery(gallery);
+      return  entityManager.merge(user);
+    }
+
+    @Override
+    public void setBio (User user, String bio){
+        user.setBio(bio);
+        entityManager.merge(user);
+    }
+
+    @Override
+    public User findUserByGallery(UserGallery gallery){
+        TypedQuery<User> query = entityManager.createQuery(JPQL_FIND_USER_BY_USERGALLERY, User.class);
+        query.setParameter(PARAM_USERGALLERY, gallery);
+
+        return query.getSingleResult();
     }
 }

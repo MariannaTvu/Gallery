@@ -303,7 +303,7 @@
 						
 						(dir === 1)
 							? animParam.top = $el.position().top - $el.height() + 'px'
-							: animParam.top = $el.position().top + $el.height() + 'px';;;
+							: animParam.top = $el.position().top + $el.height() + 'px';
 						
 						$el.stop().animate(animParam, opts.type.speed, opts.type.easing, function() {
 							if( parseInt( animParam.top ) < 0 || parseInt( animParam.top ) > $el.height() * (opts.rows - 1) )
@@ -388,7 +388,7 @@
 							
 							(dir === 1)
 								? animParam.top = $el.position().top - $el.height() + 'px'
-								: animParam.top = $el.position().top + $el.height() + 'px';;;
+								: animParam.top = $el.position().top + $el.height() + 'px';
 							
 							$el.stop().animate(animParam, opts.type.speed, opts.type.easing, function() {
 								if( parseInt( animParam.top ) < 0 || parseInt( animParam.top ) > $el.height() * (opts.rows - 1) )

@@ -3,68 +3,86 @@ package com.mariana.gallery.controllers;
 import com.mariana.gallery.controllers.exeptions.FileErrorException;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.picture.PictureComment;
+import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
+import com.mariana.gallery.service.picture.PictureService;
+import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import javax.persistence.NoResultException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping
 public class MyController {
-
     @Autowired
     private GalleryService galleryService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PictureService pictureService;
 
     @RequestMapping("/")
     public String onIndex(Model model) {
-
         return "redirect:/index";
     }
 
-    @RequestMapping("/auth")
-    public String authorize(Model model) {
-
-        return "redirect:/authorize";
-    }
-
-
-    @RequestMapping("/index")
-    public String index(Model model) {
-        UserGallery gal = galleryService.listUserGallerys().get(0);
-        List<Picture> galleryPictures = galleryService.getPicturesByGallery(gal);
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index(Model model, Principal principal) {
+        List<Picture> galleryPictures = pictureService.random();
+        if (galleryPictures.size() > 26) {
+            galleryPictures = galleryPictures.subList(0, 25);
+        }
         List<Long> response = new ArrayList<>();
         for (Picture picture : galleryPictures) {
             long id = picture.getId();
             response.add(id);
         }
-       model.addAttribute("pictures", galleryService.listPictures());
-        model.addAttribute("picture_id", galleryService.listPictures());
-        // model.addAttribute("picture_id", response);
-        org.springframework.security.core.userdetails.User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        model.addAttribute("login", user.getUsername());
-        model.addAttribute("roles", user.getAuthorities());
-
+        model.addAttribute("pictures", galleryPictures);
+        model.addAttribute("picture_id", response);
+        if (principal != null) {
+            String name = principal.getName(); //get logged in username
+            model.addAttribute("login", name);
+        }
         return "index";
     }
 
 
+    @RequestMapping("/art")
+    public String artGalleries(Model model, Principal principal) {
+        List<Picture> galleryPictures = pictureService.random();
+        List<Long> response = new ArrayList<>();
+        for (Picture picture : galleryPictures) {
+            long id = picture.getId();
+            response.add(id);
+        }
+        model.addAttribute("pictures", galleryPictures);
+        model.addAttribute("picture_id", response);
+
+        if (principal != null) {
+            String name = principal.getName(); //get logged in username
+            model.addAttribute("login", name);
+        }
+        return "/art";
+    }
+
     @RequestMapping("/reg")
     public String registration() {
         return "redirect:/registration";
+    }
+
+    @RequestMapping("/profile")
+    public String userDetails() {
+        return "redirect:/user_details";
     }
 
     @RequestMapping("/gal")
@@ -72,18 +90,10 @@ public class MyController {
         return "redirect:/artist_gallery";
     }
 
-    @RequestMapping(value ="/sort_by_name")
-    public String sortedByName(Model model) {
-      //  galleryService.sortPicturesByName(null);
-        model.addAttribute("pictures", galleryService.sortPicturesByName());
-        model.addAttribute("picture_id", galleryService.sortPicturesByName());
-        return "index";
-    }
-
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String search(@RequestParam String pattern, Model model) {
-        model.addAttribute("pictures", galleryService.searchPictures(pattern));
-        return "index";
+        model.addAttribute("pictures", pictureService.searchPictures(pattern));
+        return "/search_result";
     }
 
     @RequestMapping(value = "/view_art/{picture_id}", method = RequestMethod.GET)
@@ -92,17 +102,20 @@ public class MyController {
         return "redirect:/view_art";
     }
 
-
     @RequestMapping(value = "/view_art", method = RequestMethod.GET)
     public String viewArt(@ModelAttribute("picture_id") long id, Model model) {
-        Picture pic = galleryService.getPictureById(id);
-        List<PictureComment> comments = pic.getPictureComments();
-        model.addAttribute("picture_id", id);
-        model.addAttribute("picture", pic);
-        model.addAttribute("comments", comments);
-        return "/view_art";
+        try {
+            Picture pic = pictureService.getPictureById(id);
+            List<PictureComment> comments = pic.getPictureComments();
+            model.addAttribute("author", pic.getAuthor().getLogin());
+            model.addAttribute("picture_id", id);
+            model.addAttribute("picture", pic);
+            model.addAttribute("comments", comments);
+            return "/view_art";
+        } catch (NullPointerException e) {
+        }
+        return "redirect:/index";
     }
-
 
     @RequestMapping("picture/{picture_id}")
     public ResponseEntity<byte[]> onPhoto(@PathVariable("picture_id") long id, Model model) {
@@ -110,84 +123,49 @@ public class MyController {
         return pictureById(id);
     }
 
+    @RequestMapping(value = "/artist_gallery/{gallery_id}", method = RequestMethod.GET)
+    public String viewGalleryById(@PathVariable("gallery_id") long galleryId, Model model) {
+        try {
+            model.addAttribute("gallery_id", galleryId);
+            return "redirect:/artist_gallery";
+        } catch (NoResultException e) {
+        }
+        return "redirect:/index";
+    }
 
     @RequestMapping("/artist_gallery")
-    public String artistGallery(Model model) {
-        UserGallery gal = galleryService.listUserGallerys().get(0);
-        List<Picture> galleryPictures = galleryService.getPicturesByGallery(gal);
-        List<Long> response = new ArrayList<>();
-
-        for (Picture picture : galleryPictures) {
-            long id = picture.getId();
-            response.add(id);
+    public String artistGallery(@ModelAttribute("gallery_id") long galleryId, Model model, Principal principal) {
+        try {
+            UserGallery gallery = galleryService.findUserGallery(galleryId);
+            User user = userService.findUserByGallery(gallery);
+            List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
+            List<Long> response = new ArrayList<>();
+            for (Picture picture : galleryPictures) {
+                long id = picture.getId();
+                response.add(id);
+            }
+            if (principal != null) {
+                String name = principal.getName(); //get logged in username
+                model.addAttribute("login", name);
+            }
+            model.addAttribute("picture_id", response);
+            model.addAttribute("pictures", galleryPictures);
+            model.addAttribute("author", user);
+            return "/artist_gallery";
+        } catch (NoResultException e) {
         }
-        model.addAttribute("picture_id", response);
-        model.addAttribute("pictures", galleryPictures);
-        return "/artist_gallery";
-    }
-
-    @RequestMapping("/upload_art")
-    public String uploadArt(Model model) {
-        return "/upload_art";
-    }
-
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String pictureAdd(@RequestParam("picture_name") String pictureName, @RequestParam("file") MultipartFile file,
-                             Model model) throws IOException {
-
-        Picture picture = new Picture(file.getBytes());
-        picture.setName(pictureName);
-        galleryService.addPicture(picture);
-        return "artist_gallery";
-    }
-
-    @RequestMapping(value = "/gallery/add", method = RequestMethod.POST)
-    public String groupAdd(@RequestParam String name, Model model) {
-        galleryService.addUserGallery(new UserGallery(name));
-        model.addAttribute("pictures", galleryService.listUserGallerys());
-        return "index";
-    }
-
-    @RequestMapping(value = "/set/group", method = RequestMethod.POST)
-    public String setAllGroup1(Model model) {
-        UserGallery gal1 = galleryService.listUserGallerys().get(0);
-        List<Picture> pic1 = galleryService.listPictures();
-        for (Picture pic2 : pic1) {
-            pic2.setUserGallery(gal1);
-            pic2 = galleryService.update(pic2);
-        }
-
-        return "/";
+        return "redirect:/index";
     }
 
     private ResponseEntity<byte[]> pictureById(long id) {
-        byte[] bytes = galleryService.getPictureBytesById(id);
-        if (bytes == null)
+        byte[] bytes = pictureService.getPictureBytesById(id);
+        if (bytes == null) {
             throw new FileErrorException();
-
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
-
         return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
     }
-
-
-    @RequestMapping(value = "/add_comment", method = RequestMethod.GET)
-    public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
-                             Model model) {
-        model.addAttribute("picture_id", id);
-        Picture pic = galleryService.getPictureById(id);
-        PictureComment text = new PictureComment(comment);
-        galleryService.addComment(text);
-        text.setPicture(pic);
-        galleryService.updateComment(text);
-        galleryService.update(pic);
-        return "redirect:/view_art";
-    }
-
-
-
 
 }
 

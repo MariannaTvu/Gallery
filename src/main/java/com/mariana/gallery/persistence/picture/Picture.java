@@ -5,6 +5,7 @@ import com.mariana.gallery.persistence.user_gallery.UserGallery;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,27 +22,23 @@ public class Picture {
     @ManyToOne
     @JoinColumn(name = "users")
     private User author;
-//
-//    private String category;
-//    private String description;
-//    private String comments;
-//    private String likes;//int
-//    private int price;
-//    private boolean forSale;
-//    private Date dateAdded;//long
+
+    @Basic(fetch=FetchType.LAZY)
+    private String likes;//int
+    @Basic(fetch=FetchType.LAZY)
+    private String dateAdded;//long
 
     @Lob
     @Basic(fetch=FetchType.LAZY)
     private byte[] bytes;//content
 
     private String name;
+
+    @Lob
+    @Basic(fetch=FetchType.LAZY)
     private String description;
 
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name="picture_comments", joinColumns=@JoinColumn(name="picture_id"))
-//    @Column(name="comment")
-//    private List<String> comments = new ArrayList<>();
-
+    @Lob
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.ALL)
     private List<PictureComment> comments = new ArrayList<>();
 
@@ -107,13 +104,27 @@ public class Picture {
         return this;
     }
 
-
-
     public List<PictureComment> getPictureComments() {
         return comments;
     }
 
+    public String getDateAdded() {
+        return dateAdded;
+    }
 
+    public Picture setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+        return this;
+    }
+
+    public String getLikes() {
+        return likes;
+    }
+
+    public Picture setLikes(String likes) {
+        this.likes = likes;
+        return this;
+    }
 }
 
 

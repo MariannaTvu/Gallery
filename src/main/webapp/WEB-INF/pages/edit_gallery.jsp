@@ -43,15 +43,14 @@
 
 </head>
 <body id="top">
-
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
             <form role="search" action="/search" method="post">
                 <fieldset>
                     <legend>Site Search</legend>
-                    <input type="text" name="pattern" placeholder="Search" />
-                    <input type="submit" name="go" id="go" value="GO" />
+                    <input type="text" name="pattern" placeholder="Search"/>
+                    <input type="submit" name="go" id="go" value="GO"/>
                 </fieldset>
             </form>
         </div>
@@ -76,30 +75,9 @@
                     </ul>
                 </li>
             </sec:authorize>
-            <li class="active"><a href="/artist_gallery">Art</a></li>
-            <li ><a href="/">Main</a></li>
+            <li><a href="/art">Art</a></li>
+            <li class="active"><a href="/">Main</a></li>
         </ul>
-        <br class="clear"/>
-    </div>
-</div>
-
-<div class="wrapper col5">
-    <div id="container">
-        <div id="content">
-            <h2>About ${author.login}</h2>
-            <p>${author.bio}</p>
-        </div>
-        <div id="column">
-            <div class="flickrbox">
-
-                <ul>
-                    <li><a href="#"><img src="" alt="" style="width: auto; height: 100%;"/></a>
-                    </li>
-
-                </ul>
-                <br class="clear"/>
-            </div>
-        </div>
         <br class="clear"/>
     </div>
 </div>
@@ -112,40 +90,70 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}</a></li>
-    </sec:authorize>
-
+    <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication
+            property="principal.username"/>
+        </sec:authorize></a></li>
     <div class="clear"></div>
 </ul>
-<div class="wrapper col3">
 
-</div>
-    <!-- works -->
-    <div class="wrapper col4">
-        <div id="works" class="artist_grid">
-            <div class="artist_grid">
-                <c:forEach items="${pictures}" var="picture">
+<div class="wrapper col5">
+    <div id="container">
+        <div id="content">
+            <h2>About ${author.login}   <a href="/user_details">Edit bio</a></h2>
+            <p>${author.bio}</p>
+        </div>
+        <div id="column">
+            <div class="flickrbox">
+                <ul>
+                    <li><a href="#"><img src="" alt="" style="width: auto; height: 100%;"/></a>
+                    </li>
 
-                        <figure class="art_hovereffect" style="width: 25%">
-                            <img src=picture/${picture.id} />
-
-                            <a href="<c:url value='/view_art/${picture.id}'/>">
-                                <div class="overlay">
-
-                                    <h2 > <c:out value="${picture.name}"/> </h2>
-
-                                </div>
-                            </a>
-
-                        </figure>
-
-                </c:forEach>
+                </ul>
+                <br class="clear"/>
             </div>
         </div>
-        <!-- works -->
-
+        <br class="clear"/>
     </div>
-    <!-- close container -->
+</div>
+
+<div class="wrapper col3">
+    <ul class="sort_navigation">
+        <sec:authorize access="isAuthenticated()">
+            <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication
+                    property="principal.username"/></a></li>
+        </sec:authorize>
+
+        <div class="clear"></div>
+    </ul>
+</div>
+
+<div class="wrapper col4">
+    <div id="works" class="artist_grid">
+        <div class="artist_grid">
+            <c:forEach items="${pictures}" var="picture">
+
+                <figure class="art_hovereffect" style="width: 25%">
+                    <img src=picture/${picture.id} />
+
+                    <a href="<c:url value='/view_art/${picture.id}'/>">
+                        <div class="overlay">
+
+                            <h2><c:out value="${picture.name}"/></h2>
+                            <br>
+                            <br>
+                            <p><a href="/delete_picture/${picture.id}" data-userGallery>Delete</a></p>
+                        </div>
+                    </a>
+
+                </figure>
+
+            </c:forEach>
+        </div>
+    </div>
+    <!-- works -->
+
+</div>
+<!-- close container -->
 
 
 </div>
@@ -153,7 +161,7 @@
 <br class="clear"/>
 
 
-<div class="wrapper col7" >
+<div class="wrapper col7">
     <div id="copyright">
         <ul>
             <li><a href="#">Online Privacy Policy</a></li>
@@ -168,3 +176,4 @@
 </div>
 </body>
 </html>
+

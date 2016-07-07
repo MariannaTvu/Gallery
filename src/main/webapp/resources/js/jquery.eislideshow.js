@@ -297,7 +297,7 @@
 					  .css( 'margin-right', -50 + 'px' )
 					  .stop()
 					  .delay( this.options.speed * this.options.titlesFactor )
-					  .animate({ marginRight : 0 + 'px', opacity : 1 }, this.options.titlespeed, this.options.titleeasing );;;
+					  .animate({ marginRight : 0 + 'px', opacity : 1 }, this.options.titlespeed, this.options.titleeasing );
 			
 			$.when(
 				

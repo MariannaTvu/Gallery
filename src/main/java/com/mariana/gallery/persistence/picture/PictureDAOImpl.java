@@ -1,5 +1,6 @@
 package com.mariana.gallery.persistence.picture;
 
+import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.hibernate.annotations.OrderBy;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -22,7 +24,7 @@ public class PictureDAOImpl implements PictureDAO {
 
     @Override
     public void addComment(PictureComment comment) {
-       entityManager.persist(comment);
+        entityManager.persist(comment);
     }
 
     @Override
@@ -37,6 +39,13 @@ public class PictureDAOImpl implements PictureDAO {
             c = entityManager.getReference(Picture.class, id);
             entityManager.remove(c);
         }
+    }
+
+    @Override
+    public void deletePictureById(long id) {
+        Picture c;
+        c = entityManager.getReference(Picture.class, id);
+        entityManager.remove(c);
     }
 
     @Override
@@ -84,7 +93,7 @@ public class PictureDAOImpl implements PictureDAO {
     }
 
     @Override
-    public List<PictureComment> getCommentsByPictureId(long id){
+    public List<PictureComment> getCommentsByPictureId(long id) {
         Query query = entityManager.createQuery("SELECT g FROM PictureComment g", Picture.class);
         return query.getResultList();
     }
@@ -106,6 +115,35 @@ public class PictureDAOImpl implements PictureDAO {
     @Override
     public List<Picture> sortPicturesByName() {
         Query query = entityManager.createQuery("SELECT g FROM Picture g ORDER BY g.name", Picture.class);
-        return (List<Picture>) query.getResultList();
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Picture> sortPicturesByComments() {
+        Query query = entityManager.createQuery("SELECT g FROM Picture g ORDER BY g.comments.size DESC", Picture.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Picture> sortPicturesByDate() {
+        Query query = entityManager.createQuery("SELECT g FROM Picture g ORDER BY g.dateAdded DESC", Picture.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Picture> random() {
+        Query query = entityManager.createQuery("SELECT n FROM Picture n ORDER BY RAND()", Picture.class);
+        List<Picture> randomList = query.getResultList();
+        return randomList;
+    }
+
+    @Override
+    public String getCommentAuthor(User user) {
+        return user.getLogin();
+    }
+
+    @Override
+    public PictureComment setCommentDate(PictureComment comment, String date) {
+        return comment.setDate(date);
     }
 }

@@ -1,6 +1,7 @@
 package com.mariana.gallery.persistence.user;
 
 import com.mariana.gallery.service.gallery.GalleryService;
+import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,11 +18,11 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private GalleryService galleryService;
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.mariana.gallery.persistence.user.User account = galleryService.findUserByUsername(username);
+        com.mariana.gallery.persistence.user.User account = userService.findUserByUsername(username);
         if (account == null)
             throw new UsernameNotFoundException(username + " not found");
 
