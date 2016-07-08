@@ -90,16 +90,15 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-    <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication
-            property="principal.username"/>
-        </sec:authorize></a></li>
+        <li style=" position: absolute; right: 0px"><a>Logged in as: ${author.login}</a></li>
+    </sec:authorize>
     <div class="clear"></div>
 </ul>
 
 <div class="wrapper col5">
     <div id="container">
         <div id="content">
-            <h2>About ${author.login}   <a href="/user_details">Edit bio</a></h2>
+            <h2>About ${author.login} <a href="/user_details">Edit bio</a></h2>
             <p>${author.bio}</p>
         </div>
         <div id="column">
@@ -117,17 +116,20 @@
 </div>
 
 <div class="wrapper col3">
-    <ul class="sort_navigation">
-        <sec:authorize access="isAuthenticated()">
-            <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication
-                    property="principal.username"/></a></li>
-        </sec:authorize>
-
-        <div class="clear"></div>
-    </ul>
+    <div id="container">
+        <div id="content">
+            <div class="form-group" style="float:none; text-aling:center">
+                <h3>Upload</h3>
+                <form action="/upload_art"><input type="submit" class="btn btn-primary"
+                                                  value="Click here to upload pictures">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="wrapper col4">
+<div class="wrapper col4"style="margin-top:10%; ">
+
     <div id="works" class="artist_grid">
         <div class="artist_grid">
             <c:forEach items="${pictures}" var="picture">
@@ -152,6 +154,7 @@
     </div>
     <!-- works -->
 
+
 </div>
 <!-- close container -->
 
@@ -160,7 +163,27 @@
 
 <br class="clear"/>
 
+<div class="wrapper col5" style="margin-top:5%;">
 
+    <div id="container">
+        <div id="content">
+
+        <h2>About </h2>
+        <p>Sedsemporttis sit intesque felit
+            quis elis et cursuspenatibulum tincidunt non curabitae.</p>
+        <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+            laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
+        Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+        laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.
+        <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+            laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
+        <p>Semalique tor sempus vestibulum libero nibh pretium eget eu elit montes. Sedsemporttis sit intesque felit
+            quis elis et cursuspenatibulum tincidunt non curabitae.</p>
+    </div>
+
+    <br class="clear"/>
+</div>
+</div>
 <div class="wrapper col7">
     <div id="copyright">
         <ul>
@@ -176,4 +199,5 @@
 </div>
 </body>
 </html>
+
 

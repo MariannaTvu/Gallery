@@ -88,8 +88,7 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-    <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication
-            property="principal.username"/>
+    <li style=" position: absolute; right: 0px"><a>Logged in as: ${user.login}
         </sec:authorize></a></li>
     <div class="clear"></div>
 </ul>

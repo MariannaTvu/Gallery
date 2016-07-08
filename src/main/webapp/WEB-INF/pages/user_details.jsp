@@ -66,7 +66,7 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li><a href="/user_details">Profile</a>
+                <li class="active"><a href="/user_details">Profile</a>
                     <ul>
                         <li><a href="/upload_art">Submit art</a></li>
                         <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
@@ -74,7 +74,7 @@
                 </li>
             </sec:authorize>
             <li><a href="/art">Art</a></li>
-            <li class="active"><a href="/">Main</a></li>
+            <li ><a href="/">Main</a></li>
         </ul>
         <br class="clear"/>
     </div>
@@ -88,12 +88,8 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as:
-            <sec:authentication
-                    property="principal.username"/>
-            </a></li>
-    </sec:authorize>
-
+        <li style=" position: absolute; right: 0px"><a>Logged in as:  ${user.login}
+</a></li></sec:authorize>
     <div class="clear"></div>
 </ul>
 <div class="wrapper col5" style="border-bottom: 0">
@@ -128,20 +124,37 @@
 
 </div>
 
+    <div class="wrapper col5" style="margin-top:5%;">
+        <div id="container">
+            <div id="content">
+                <h2>About </h2>
+                <p>Sedsemporttis sit intesque felit
+                    quis elis et cursuspenatibulum tincidunt non curabitae.</p>
+                <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+                    laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
+                Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+                laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.
+                <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+                    laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
+                <p>Semalique tor sempus vestibulum libero nibh pretium eget eu elit montes. Sedsemporttis sit intesque felit
+                    quis elis et cursuspenatibulum tincidunt non curabitae.</p>
+            </div>
 
-
-<div class="wrapper col7" style="position: absolute; bottom: 0;">
-    <div id="copyright">
-        <ul>
-            <li><a href="#">Online Privacy Policy</a></li>
-            <li><a href="#">Terms of Use</a></li>
-            <li><a href="#">Permissions &amp; Trademarks</a></li>
-            <li class="last"><a href="#">Product License Agreements</a></li>
-        </ul>
-        <p>Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS
-            Templates</a></p>
-        <div class="clear"></div>
+            <br class="clear" />
+        </div>
     </div>
-</div>
+    <div class="wrapper col7">
+        <div id="copyright">
+            <ul>
+                <li><a href="#">Online Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Permissions &amp; Trademarks</a></li>
+                <li class="last"><a href="#">Product License Agreements</a></li>
+            </ul>
+            <p>Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+            <div class="clear"></div>
+        </div>
+    </div>
+    </div>
 </body>
 </html>

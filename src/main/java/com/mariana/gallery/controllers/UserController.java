@@ -49,7 +49,9 @@ public class UserController {
     }
 
     @RequestMapping("/upload_art")
-    public String uploadArt(Model model) {
+    public String uploadArt(Model model, Principal principal) {
+        User user = userService.findUserByUsername(principal.getName());
+        model.addAttribute("user", user);
         return "/upload_art";
     }
 
