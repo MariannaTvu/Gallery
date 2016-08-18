@@ -50,7 +50,7 @@ public class Picture {
     private List<PictureComment> comments = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "picture", cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "picture", orphanRemoval=true)
     private List<Cart> orders = new ArrayList<>();
 
 

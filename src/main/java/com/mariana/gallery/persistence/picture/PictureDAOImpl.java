@@ -53,8 +53,9 @@ public class PictureDAOImpl implements PictureDAO {
         Query query;
         query = entityManager.createQuery("SELECT c FROM Picture c WHERE c.id = :id", Picture.class);
         query.setParameter("id", id);
-        Picture p = (Picture)query.getSingleResult();
+        Picture p = (Picture) query.getSingleResult();
         entityManager.remove(entityManager.merge(p));
+        entityManager.flush();
     }
 
     @Override

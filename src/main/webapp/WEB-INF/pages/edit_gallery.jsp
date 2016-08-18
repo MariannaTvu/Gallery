@@ -146,7 +146,7 @@
                             <h2><c:out value="${picture.name}"/></h2>
                             <br>
                             <br>
-                            <p><a href="/delete_picture/${picture.id}" data-userGallery>Delete</a></p>
+                            <p><a href="/delete_picture/${picture.id}" var="picture_id" value="${picture.id}">Delete</a></p>
                         </div>
                     </a>
 
