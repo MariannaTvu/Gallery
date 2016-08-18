@@ -17,7 +17,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE )
+    @ManyToOne()
     @JoinColumn(name = "picture")
     private Picture picture;
 

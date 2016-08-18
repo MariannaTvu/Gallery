@@ -50,7 +50,7 @@ public class Picture {
     private List<PictureComment> comments = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "picture", orphanRemoval=true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Cart> orders = new ArrayList<>();
 
 
@@ -138,14 +138,14 @@ public class Picture {
         return this;
     }
 
-//    public List<Cart> getOrders() {
-//        return orders;
-//    }
-//
-//    public Picture setOrders(List<Cart> orders) {
-//        this.orders = orders;
-//        return this;
-//    }
+    public List<Cart> getOrders() {
+        return orders;
+    }
+
+    public Picture setOrders(List<Cart> orders) {
+        this.orders = orders;
+        return this;
+    }
 }
 
 
