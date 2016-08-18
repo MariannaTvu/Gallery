@@ -13,8 +13,9 @@ public class UserGalleryDAOImpl implements UserGalleryDAO {
     private EntityManager entityManager;
 
     @Override
-    public void add(UserGallery userGallery) {
-        entityManager.merge(userGallery);
+    public UserGallery add(UserGallery userGallery) {
+        entityManager.persist(userGallery);
+        return userGallery;
     }
 
     @Override

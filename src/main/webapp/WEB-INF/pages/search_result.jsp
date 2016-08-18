@@ -12,14 +12,8 @@
 <html>
 <head>
     <title>Gallery</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <link rel="stylesheet" href="/resources/layout/styles/layout.css" type="text/css"/>
 
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" type="text/css" media="screen" href="/resourcescss/style.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/resourcesmenu/css/simple_menu.css">
-    <link rel="stylesheet" href="/resources/css/nivo-slider.css" type="text/css" media="screen">
+    <link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css"/>
     <!--    photo header styles 1 -->
     <link rel='stylesheet' type='text/css'
           href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
@@ -28,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
     <!--    photo header styles 1 end -->
+
     <!-- userGallery -->
     <!-- animate.css -->
     <link rel="stylesheet" href="/resources/assets/animate/animate.css"/>
@@ -36,10 +31,8 @@
     <!-- userGallery -->
     <link rel="stylesheet" href="/resources/assets/userGallery/blueimp-userGallery.min.css">
     <link rel="stylesheet" href="/resources/assets/style.css">
-    <link rel="stylesheet" href="/resources/css/screen.css">
 
     <!--userGallery end-->
-
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -59,7 +52,7 @@
     <div id="header">
         <div id="logo">
             <h1><a href="/">Gallery</a></h1>
-            <p>to share you artwork</p>
+            <p>to share and sell your artwork</p>
         </div>
         <ul id="topnav">
             <sec:authorize access="!isAuthenticated()">
@@ -67,15 +60,18 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li><a href="/user_details">Profile</a>
+                <li><a href="/shop">Cart</a></li>
+                <li><a href="/upload_art">Submit art</a></li>
+                <li class="active"><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/upload_art">Submit art</a></li>
+                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_details">User info</a></li>
                         <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
                     </ul>
                 </li>
             </sec:authorize>
-            <li><a href="/art">Art</a></li>
-            <li class="active"><a href="/">Main</a></li>
+            <li class="active"><a href="/art">Art</a></li>
+            <li><a href="/">Main</a></li>
         </ul>
         <br class="clear"/>
     </div>
@@ -89,9 +85,9 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-    <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication
-            property="principal.username"/>
-        </sec:authorize></a></li>
+        <li style=" position: absolute; right: 0px"><a>Logged in as: ${user.login}
+        </a></li>
+        </sec:authorize>
     <div class="clear"></div>
 </ul>
 <div class="wrapper col3">

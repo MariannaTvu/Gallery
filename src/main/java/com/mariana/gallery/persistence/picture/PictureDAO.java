@@ -7,9 +7,6 @@ import org.hibernate.Session;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Maryana on 21.06.2016.
- */
 public interface PictureDAO {
     void add(Picture picture);
 
@@ -50,4 +47,8 @@ public interface PictureDAO {
     List<Picture> random();
 
     void deletePictureById(long id);
+
+    void setPrice(Picture picture, int price);
+
+    User getPictureAuthor(Picture picture);
 }

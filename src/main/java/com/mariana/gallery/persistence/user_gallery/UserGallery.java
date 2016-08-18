@@ -34,7 +34,6 @@ public class UserGallery {
         this.pictures = pictures;
         this.user = user;
     }
-
     public UserGallery(String name) {
         this.name = name;
     }

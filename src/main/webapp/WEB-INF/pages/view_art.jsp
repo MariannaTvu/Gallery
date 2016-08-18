@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -58,7 +60,7 @@
     <div id="header">
         <div id="logo">
             <h1><a href="/">Gallery</a></h1>
-            <p>to share you artwork</p>
+            <p>to share and sell your artwork</p>
         </div>
         <ul id="topnav">
             <sec:authorize access="!isAuthenticated()">
@@ -66,9 +68,12 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li><a href="/user_details">Profile</a>
+                <li ><a href="/shop">Cart</a></li>
+                <li><a href="/upload_art">Submit art</a></li>
+                <li ><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/upload_art">Submit art</a></li>
+                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_details">User info</a></li>
                         <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
                     </ul>
                 </li>
@@ -87,15 +92,11 @@
         <div id="content">
             <h1>${picture.name} by ${author}</h1>
             <img class="imgr" src="picture/${picture.id}" alt="" width="100%" height="auto"/>
-            <c:if test="${picture.description ne null}">
-                <div id="column" >
-                    <h5 style="border-bottom: 0px;">Description:</h5>
-                    <p>${picture.description}</p>
-                </div>
-            </c:if>
+
 
             <div id="comments">
                 <h2>Comments</h2>
+                <c:if test="${empty comments}"><p>No comments yet</p></c:if>
                 <ul class="commentlist">
                     <c:forEach items="${comments}" var="comment">
                         <li class="comment_odd">
@@ -110,6 +111,7 @@
                     <p>To add a comment, <a href="/login">login</a> or <a href="/reg">register</a></p>
                 </sec:authorize>
             </div>
+
             <sec:authorize access="isAuthenticated()">
                 <h2>Write A Comment</h2>
                 <div id="respond" style="margin-bottom:50px;">
@@ -125,9 +127,74 @@
 
                 </div>
             </sec:authorize>
+
+        </div>
+
+        <div id="column">
+            <div class="subnav">
+                <c:if test="${picture.description ne null}">
+                    <div>
+                        <h5>Description:</h5>
+                        <p style=" margin: 2%">${picture.description}</p>
+                        <p style="border-bottom: 1px dashed #666666;"></p>
+                    </div>
+                </c:if>
+            </div>
+            <br>
+            <c:if test="${(picture.price ne 0) && (same_user ne null)}">
+                <h2 style="text-align: center; color:white">Buy This Print
+                    <a href="#" data-toggle="popover" data-trigger="hover"
+                       data-content="Buy a printed version of this art">*</a>
+                </h2>
+
+                <script>
+                    $(document).ready(function () {
+                        $('[data-toggle="popover"]').popover();
+                    });
+                </script>
+
+                <div class="dev-view-meta">
+                    <div id="buy-tabs" class="newprintbutton open">
+                        <div class="product-tab-all-container">
+                            <div align="center">
+                                <h3><b><span class="symbol">$</span>
+                                    <span class="dollars">
+                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                      value='${picture.price/100}' pattern='##,###.##'/>
+                                   </span>
+                                </b></h3>
+                            </div>
+                            <sec:authorize access="isAuthenticated()">
+                                <form role="form" enctype="multipart/form-data" id="form1" class="form-horizontal"
+                                      action="/add_to_cart" method="post">
+                                    <input type="hidden" name="picture_id" value=${picture.id}>
+                                    <div class="action dual" style="text-align: center">
+                                        <a href="" class="smbutton smbutton-blue addToCart"
+                                           onclick="document.getElementById('form1').submit();"><b>Add to Cart</b></a>
+                                    </div>
+                                </form>
+                            </sec:authorize>
+                            <sec:authorize access="!isAuthenticated()">
+                                <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a></p>
+                            </sec:authorize>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+            </c:if> <a href="/artist_gallery/${picture.userGallery.id}" style="margin:37%">Back
+            to ${picture.author.login}'s gallery</a>
         </div>
     </div>
-    <div class="clear"></div>
+</div>
+
+
+<div class="clear"></div>
 </div>
 
 

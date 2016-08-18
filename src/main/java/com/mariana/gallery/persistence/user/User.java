@@ -1,7 +1,10 @@
 package com.mariana.gallery.persistence.user;
 
+import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import com.mariana.gallery.persistence.picture.Picture;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,11 +17,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userGallery")
     private UserGallery userGallery;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Picture> pictures = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -27,10 +31,11 @@ public class User {
     private String login;
     private String email;
     private String password;
-
+    private String passwordConfirm;
     @Lob
-    @Basic(fetch=FetchType.EAGER)
+    @Basic(fetch = FetchType.EAGER)
     private String bio;
+    private int balance;
 
     //    private String comments;
 //    private String name;
@@ -43,14 +48,6 @@ public class User {
         this.password = password;
     }
 
-//    public String getComments() {
-//        return comments;
-//    }
-//
-//    public User setComments(String comments) {
-//        this.comments = comments;
-//        return this;
-//    }
 
     public String getEmail() {
         return email;
@@ -83,12 +80,29 @@ public class User {
         return password;
     }
 
+    @Transient
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
     public User setPassword(String password) {
         this.password = password;
         return this;
     }
 
-//    public String getSurname() {
+    public int getBalance() {
+        return balance;
+    }
+
+    public User setBalance(int balance) {
+        this.balance = balance;
+        return this;
+    }
+
+    //    public String getSurname() {
 //        return surname;
 //    }
 //
@@ -96,6 +110,7 @@ public class User {
 //        this.surname = surname;
 //        return this;
 //    }
+
 
     public UserGallery getUserGallery() {
         return userGallery;
@@ -115,7 +130,7 @@ public class User {
         return this;
     }
 
-     public List<Picture> getPictures() {
+    public List<Picture> getPictures() {
         return pictures;
     }
 

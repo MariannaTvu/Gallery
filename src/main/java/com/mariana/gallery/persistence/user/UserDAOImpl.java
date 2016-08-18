@@ -1,5 +1,6 @@
 package com.mariana.gallery.persistence.user;
 
+import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User saveUser(User user) {
-        entityManager.persist(user);
+        entityManager.merge(user);
         return user;
     }
 
@@ -45,22 +46,28 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User setGallery(User user, UserGallery gallery){
+    public User setGallery(User user, UserGallery gallery) {
         user.setUserGallery(gallery);
-      return  entityManager.merge(user);
+        return entityManager.merge(user);
     }
 
     @Override
-    public void setBio (User user, String bio){
+    public void setBio(User user, String bio) {
         user.setBio(bio);
         entityManager.merge(user);
     }
 
     @Override
-    public User findUserByGallery(UserGallery gallery){
+    public User findUserByGallery(UserGallery gallery) {
         TypedQuery<User> query = entityManager.createQuery(JPQL_FIND_USER_BY_USERGALLERY, User.class);
         query.setParameter(PARAM_USERGALLERY, gallery);
 
         return query.getSingleResult();
+    }
+
+    @Override
+    public void setBalance(User user, int balance) {
+        user.setBalance(balance);
+        entityManager.merge(user);
     }
 }

@@ -13,7 +13,7 @@ public class PictureComment {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "picture")
+    @JoinColumn(name = "picture", nullable = false)
     private Picture picture;
 
     private String user;

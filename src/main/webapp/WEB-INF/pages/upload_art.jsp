@@ -58,7 +58,7 @@
     <div id="header">
         <div id="logo">
             <h1><a href="/">Gallery</a></h1>
-            <p>to share you artwork</p>
+            <p>to share and sell your artwork</p>
         </div>
         <ul id="topnav">
             <sec:authorize access="!isAuthenticated()">
@@ -66,9 +66,12 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li class="active"><a href="/user_details">Profile</a>
+                <li ><a href="/shop">Cart</a></li>
+                <li class="active"><a href="/upload_art">Submit art</a></li>
+                <li ><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/upload_art">Submit art</a></li>
+                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_details">User info</a></li>
                         <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
                     </ul>
                 </li>
@@ -107,6 +110,9 @@
                 <div class="form-group" style="margin-top:5%;">Name<input type="text" class="form-control"
                                                                           name="picture_name"
                                                                           placeholder="Picture name"></div>
+                <div class="form-group" style="margin-top:5%;">Set price<input type="text" class="form-control"
+                                                                          name="picture_price"
+                                                                          placeholder="Picture price"></div>
                 <div class="form-group">Add description<input type="text" class="form-control"
                                                               name="picture_description"
                                                               placeholder="Description"></div>

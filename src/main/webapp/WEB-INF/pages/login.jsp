@@ -16,14 +16,6 @@
 <head>
     <title>Gallery</title>
     <link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css"/>
-
-    <link rel="stylesheet" href="/resources/layout/styles/layout.css" type="text/css"/>
-
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" type="text/css" media="screen" href="/resources/css/style.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/resources/menu/css/simple_menu.css">
-    <link rel="stylesheet" href="/resources/css/nivo-slider.css" type="text/css" media="screen">
     <!--    photo header styles 1 -->
     <link rel='stylesheet' type='text/css'
           href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
@@ -32,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
     <!--    photo header styles 1 end -->
+
     <!-- userGallery -->
     <!-- animate.css -->
     <link rel="stylesheet" href="/resources/assets/animate/animate.css"/>
@@ -40,11 +33,6 @@
     <!-- userGallery -->
     <link rel="stylesheet" href="/resources/assets/userGallery/blueimp-userGallery.min.css">
     <link rel="stylesheet" href="/resources/assets/style.css">
-
-    <!--userGallery end-->
-    <link rel="stylesheet" href="/resources/css/screen.css" type="text/css" media="screen" title="default"/>
-
-    <link rel="stylesheet" href="/resources/css/layout.css" type="text/css"/>
 
     <link rel="stylesheet" href="/resources/css/registration.css">
 
@@ -67,7 +55,7 @@
     <div id="header">
         <div id="logo">
             <h1><a href="/">Gallery</a></h1>
-            <p>to share you artwork</p>
+            <p>to share and sell your artwork</p>
         </div>
         <ul id="topnav">
             <sec:authorize access="!isAuthenticated()">

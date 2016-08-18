@@ -3,6 +3,9 @@ package com.mariana.gallery.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -83,5 +86,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         resolver.setViewClass(JstlView.class);
         resolver.setOrder(1);
         return resolver;
+    }
+    @Bean
+    public ReloadableResourceBundleMessageSource messageSource() {
+        ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:validation");
+        return source;
     }
 }

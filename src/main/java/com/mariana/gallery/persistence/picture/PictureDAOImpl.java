@@ -5,6 +5,7 @@ import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.hibernate.annotations.OrderBy;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
+@Transactional
 public class PictureDAOImpl implements PictureDAO {
     @PersistenceContext
     private EntityManager entityManager;
@@ -29,7 +31,7 @@ public class PictureDAOImpl implements PictureDAO {
 
     @Override
     public void delete(Picture picture) {
-        entityManager.remove(picture);
+        entityManager.remove(entityManager.merge(picture));
     }
 
     @Override
@@ -43,9 +45,16 @@ public class PictureDAOImpl implements PictureDAO {
 
     @Override
     public void deletePictureById(long id) {
-        Picture c;
-        c = entityManager.getReference(Picture.class, id);
-        entityManager.remove(c);
+//        Picture c;
+//        c = entityManager.find(Picture.class, id);
+        //  c = entityManager.getReference(Picture.class, id);
+        //  entityManager.remove(entityManager.merge(c));
+
+        Query query;
+        query = entityManager.createQuery("SELECT c FROM Picture c WHERE c.id = :id", Picture.class);
+        query.setParameter("id", id);
+        Picture p = (Picture)query.getSingleResult();
+        entityManager.remove(entityManager.merge(p));
     }
 
     @Override
@@ -84,12 +93,18 @@ public class PictureDAOImpl implements PictureDAO {
         Query query = entityManager.createQuery("SELECT c FROM Picture c WHERE c.name LIKE :pattern", Picture.class);
         query.setParameter("pattern", "%" + pattern + "%");
         return (List<Picture>) query.getResultList();
-    } //разобрать
+    }
 
     @Override
     public List<Picture> pictureList() {
         Query query = entityManager.createQuery("SELECT g FROM Picture g", Picture.class);
         return (List<Picture>) query.getResultList();
+    }
+
+    @Override
+    public User getPictureAuthor(Picture picture) {
+        User user = picture.getAuthor();
+        return user;
     }
 
     @Override
@@ -145,5 +160,11 @@ public class PictureDAOImpl implements PictureDAO {
     @Override
     public PictureComment setCommentDate(PictureComment comment, String date) {
         return comment.setDate(date);
+    }
+
+    @Override
+    public void setPrice(Picture picture, int price) {
+        picture.setPrice(price);
+        entityManager.merge(picture);
     }
 }

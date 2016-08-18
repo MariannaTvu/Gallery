@@ -1,9 +1,14 @@
 package com.mariana.gallery.persistence.picture;
 
+import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,34 +25,41 @@ public class Picture {
     private UserGallery userGallery;
 
     @ManyToOne
-    @JoinColumn(name = "users")
+    @JoinColumn(name = "author")
     private User author;
 
-    @Basic(fetch=FetchType.LAZY)
-    private String likes;//int
-    @Basic(fetch=FetchType.LAZY)
+    //    @Basic(fetch = FetchType.LAZY)
+//    private String likes;//int
+    @Basic(fetch = FetchType.LAZY)
     private String dateAdded;//long
 
     @Lob
-    @Basic(fetch=FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
     private byte[] bytes;//content
 
     private String name;
 
+    private int price;
+
     @Lob
-    @Basic(fetch=FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
     private String description;
 
     @Lob
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<PictureComment> comments = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "picture", cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<Cart> orders = new ArrayList<>();
+
 
     public Picture() {
     }
 
     public Picture(byte[] bytes) {
         this.bytes = bytes;
-    }//get/set лишнее, оставить как можно меньше
+    }
 
     public User getAuthor() {
         return author;
@@ -85,7 +97,7 @@ public class Picture {
         return id;
     }
 
-     public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -117,14 +129,23 @@ public class Picture {
         return this;
     }
 
-    public String getLikes() {
-        return likes;
+    public int getPrice() {
+        return price;
     }
 
-    public Picture setLikes(String likes) {
-        this.likes = likes;
+    public Picture setPrice(int price) {
+        this.price = price;
         return this;
     }
+
+//    public List<Cart> getOrders() {
+//        return orders;
+//    }
+//
+//    public Picture setOrders(List<Cart> orders) {
+//        this.orders = orders;
+//        return this;
+//    }
 }
 
 

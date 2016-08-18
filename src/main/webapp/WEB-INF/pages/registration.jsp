@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
-    <link rel="stylesheet" href="/resources/css/screen.css" type="text/css" media="screen" title="default"/>
+
 
     <link rel="stylesheet" href="/resources/css/layout.css" type="text/css"/>
 
@@ -60,7 +60,7 @@
     <div id="header">
         <div id="logo">
             <h1><a href="/">Gallery</a></h1>
-            <p>to share you artwork</p>
+            <p>to share and sell your artwork</p>
         </div>
         <ul id="topnav">
             <sec:authorize access="!isAuthenticated()">
@@ -105,13 +105,24 @@
         <form:form action="${userActionUrl}" method="POST" modelAttribute="user">
             <p>Enter login and password</p>
             <spring:bind path="login">
-                <div class="form-group ">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="login" placeholder="Username"></form:input>
+                    <form:errors path="login"></form:errors>
                 </div>
             </spring:bind>
+
             <spring:bind path="password">
-                <div class="form-group ">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="password" path="password" placeholder="Password"></form:input>
+                    <form:errors path="password"></form:errors>
+                </div>
+            </spring:bind>
+
+            <spring:bind path="passwordConfirm">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                    <form:input type="password" path="passwordConfirm"
+                                placeholder="Confirm your password"></form:input>
+                    <form:errors path="passwordConfirm"></form:errors>
                 </div>
             </spring:bind>
             <c:if test="${error ne null}">

@@ -1,11 +1,13 @@
 package com.mariana.gallery.controllers;
 
 import com.mariana.gallery.controllers.exeptions.FileErrorException;
+import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.picture.PictureComment;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
+import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.persistence.NoResultException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -30,6 +35,8 @@ public class MyController {
     private UserService userService;
     @Autowired
     private PictureService pictureService;
+    @Autowired
+    private CartService cartService;
 
     @RequestMapping("/")
     public String onIndex(Model model) {
@@ -69,7 +76,7 @@ public class MyController {
         model.addAttribute("picture_id", response);
 
         if (principal != null) {
-            String name = principal.getName(); //get logged in username
+            String name = principal.getName();
             model.addAttribute("login", name);
         }
         return "/art";
@@ -91,7 +98,12 @@ public class MyController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@RequestParam String pattern, Model model) {
+    public String search(@RequestParam String pattern, Model model, Principal principal) {
+
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+        }
         model.addAttribute("pictures", pictureService.searchPictures(pattern));
         return "/search_result";
     }
@@ -103,7 +115,7 @@ public class MyController {
     }
 
     @RequestMapping(value = "/view_art", method = RequestMethod.GET)
-    public String viewArt(@ModelAttribute("picture_id") long id, Model model) {
+    public String viewArt(@ModelAttribute("picture_id") long id, Model model, Principal principal) {
         try {
             Picture pic = pictureService.getPictureById(id);
             List<PictureComment> comments = pic.getPictureComments();
@@ -111,10 +123,19 @@ public class MyController {
             model.addAttribute("picture_id", id);
             model.addAttribute("picture", pic);
             model.addAttribute("comments", comments);
+            if (principal != null) {
+                User user = userService.findUserByUsername(principal.getName());
+                if (pictureService.getPictureAuthor(pic).getId() != (user.getId())) {
+                    model.addAttribute("same_user", false);
+                }
+            }
+            if (principal == null) {
+                model.addAttribute("same_user", false);
+            }
             return "/view_art";
         } catch (NullPointerException e) {
+            return "redirect:/index";
         }
-        return "redirect:/index";
     }
 
     @RequestMapping("picture/{picture_id}")
@@ -134,7 +155,7 @@ public class MyController {
     }
 
     @RequestMapping("/artist_gallery")
-    public String artistGallery(@ModelAttribute("gallery_id") long galleryId, Model model, Principal principal) {
+    public String artistGallery(@RequestParam("gallery_id") long galleryId, Model model, Principal principal) {
         try {
             UserGallery gallery = galleryService.findUserGallery(galleryId);
             User user = userService.findUserByGallery(gallery);
@@ -166,6 +187,7 @@ public class MyController {
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
     }
-
 }
+
+
 

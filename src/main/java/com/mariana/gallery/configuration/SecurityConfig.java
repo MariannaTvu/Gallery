@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .regexMatchers("/user_details.*").authenticated()
                 .regexMatchers("/delete_picture.*").authenticated()
                 .regexMatchers("/edit_gallery.*").authenticated()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .authorizeRequests()
                 .anyRequest().permitAll()

@@ -1,10 +1,12 @@
 package com.mariana.gallery.controllers;
 
+import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.picture.PictureComment;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import com.mariana.gallery.service.gallery.GalleryService;
+import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private PictureService pictureService;
+    @Autowired
+    private CartService cartService;
 
     @RequestMapping(value = "/add_comment", method = RequestMethod.GET)
     public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
@@ -58,7 +62,12 @@ public class UserController {
     @RequestMapping("/user_details")
     public String seeUserDetails(Model model, Principal principal) {
         User user = userService.findUserByUsername(principal.getName());
+        List<Cart> orderHistory = cartService.getUsersOrderHistory(user);
+        if (orderHistory.size() == 0) {
+            model.addAttribute("msg", "You have no orders yet");
+        }
         model.addAttribute("user", user);
+        model.addAttribute("orders", orderHistory);
         return "/user_details";
     }
 
@@ -81,23 +90,26 @@ public class UserController {
     @RequestMapping("/delete_picture")
     public String editGallery(@ModelAttribute("picture_id") long id, Model model) {
         try {
+
+//            Picture pic = pictureService.getPictureById(id);
+//            pictureService.deletePicture(pic);
             pictureService.deletePictureById(id);
             return "/user_details";
         } catch (EntityNotFoundException e) {
         }
-        return "/user_details";
+        return "/";
     }
 
     //add picture
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String pictureAdd(@RequestParam("picture_name") String pictureName,
                              @RequestParam("picture_description") String pictureDescription,
+                             @RequestParam("picture_price") Double rawPicturePrice,
                              @RequestParam("file") MultipartFile file,
                              Principal principal, Model model) throws IOException {
         User user = userService.findUserByUsername(principal.getName());
         try {
             if (!file.isEmpty()) {
-
                 Picture picture = new Picture(file.getBytes());
                 if (!pictureName.isEmpty()) {
                     picture.setName(pictureName);
@@ -115,6 +127,10 @@ public class UserController {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 picture.setDateAdded(dateFormat.format(date));
+                if (rawPicturePrice != null) {
+                    Double picturePrice = rawPicturePrice * 100;
+                    picture.setPrice(picturePrice.intValue());
+                }
                 pictureService.addPicture(picture);
                 return "redirect:/art";
             } else {
@@ -155,5 +171,23 @@ public class UserController {
         model.addAttribute("pictures", galleryPictures);
         model.addAttribute("author", user);
         return "/edit_gallery";
+    }
+
+    @RequestMapping("/admin")
+    public String adminPage(//@ModelAttribute("gallery_id") long galleryId,
+                            //  @ModelAttribute("user_id") long userId,
+                            //@ModelAttribute("picture_id") long pictureId,
+                            //@ModelAttribute("new_balance") int newBalance,
+                            Model model, Principal principal) {
+
+
+        return "/admin";
+    }
+
+    @RequestMapping("/admin/delete_picture")
+    public String adminDeletePicture(@ModelAttribute("picture_id") long pictureId, Model model) {
+        model.addAttribute("picture_id", pictureId);
+        return "redirect:/delete_picture";
+
     }
 }

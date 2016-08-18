@@ -15,8 +15,8 @@ public class GalleryService {
     private UserGalleryDAO userGalleryDAO;
 
     @Transactional
-    public void addUserGallery(UserGallery userGallery) {
-        userGalleryDAO.add(userGallery);
+    public UserGallery addUserGallery(UserGallery userGallery) {
+        return userGalleryDAO.add(userGallery);
     }
 
     @Transactional

@@ -17,20 +17,20 @@ public class SortingController {
     public String sortedByName(Model model) {
         model.addAttribute("pictures", pictureService.sortPicturesByName());
         model.addAttribute("picture_id", pictureService.sortPicturesByName());
-        return "/art";
+        return "redirect:/art";
     }
 
     @RequestMapping(value = "/sort_by_comments")
     public String sortedByComments(Model model) {
         model.addAttribute("pictures", pictureService.sortPicturesByComments());
         model.addAttribute("picture_id", pictureService.sortPicturesByComments());
-        return "/art";
+        return "redirect:/art";
     }
 
     @RequestMapping(value = "/sort_by_date")
     public String sortedByDate(Model model) {
         model.addAttribute("pictures", pictureService.sortPicturesByDate());
         model.addAttribute("picture_id", pictureService.sortPicturesByDate());
-        return "/art";
+        return "redirect:/art";
     }
 }

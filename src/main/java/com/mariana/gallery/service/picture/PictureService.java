@@ -105,4 +105,19 @@ public class PictureService {
     public List<Picture> getPicturesByGallery(UserGallery userGallery) {
         return pictureDAO.getByGallery(userGallery);
     }
+
+    @Transactional
+    public void setPrice(Picture picture, int price) {
+        pictureDAO.setPrice(picture, price);
+    }
+
+    @Transactional
+    public void deletePicture(Picture picture) {
+        pictureDAO.delete(picture);
+    }
+
+    @Transactional
+    public User getPictureAuthor(Picture picture) {
+        return pictureDAO.getPictureAuthor(picture);
+    }
 }

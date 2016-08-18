@@ -44,7 +44,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 .col3{color:#DBDBDB; background-color:#080808; }
 .col4{color:#DBDBDB; background-color:#080808; }
 .col5{color:#CCCCCC; background-color:#080808;}
-.col5 a{color:#99CC00; background-color:#080808;}
+.col5 a{color:#99CC00; }
 .col6{color:#FFFFFF; background-color:#1B1B1B; border-bottom:1px solid #3B3B3B;}
 .col7, .col7 a{color:#CCCCCC; background-color:#2E2E2E;}
 
@@ -86,7 +86,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 
 #container{padding:15px 0;}
 #container h1, #container h2, #container h3, #container h4, #container h5, #container h6{margin:0 0 15px 0; padding:0 0 8px 0; color:#CCCCCC; background-color:#080808; border-bottom:1px solid #CCCCCC;}
-#content{display:block; float:left; width:850px; 	margin-left: 15%;}
+#content{display:block; float:left; width:600px; 	margin-left: 10%;}
 
 /* Comments */
 
@@ -105,7 +105,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 
 /* ----------------------------------------------Column------------------------------------- */
 
-#column{}
+#column{display:block; float:right; width:500px;}
 .flickrbox ul{margin:0; padding:0; list-style:none;box-sizing: content-box;}
 .flickrbox li{display:block; float:left; width:80px; height:80px; margin:0 15px 15px 0; padding:4px;}
 .flickrbox li.last{margin-right:0;}

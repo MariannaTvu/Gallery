@@ -1,5 +1,6 @@
 package com.mariana.gallery.service.user;
 
+import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user.UserDAO;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
@@ -28,6 +29,13 @@ public class UserService {
         user.setUserGallery(gallery);
         return user;
     }
+
+    @Transactional
+    public User save (User user){
+        userDAO.saveUser(user);
+        return user;
+    }
+
     @Transactional
     public User setUserGallery(User user, UserGallery gallery) {
         return userDAO.setGallery(user, gallery);
@@ -41,6 +49,11 @@ public class UserService {
     @Transactional
     public User findUserByGallery(UserGallery gallery) {
         return userDAO.findUserByGallery(gallery);
+    }
+
+    @Transactional
+    public void setBalance(User user, int balance) {
+        userDAO.setBalance(user, balance);
     }
 
 }

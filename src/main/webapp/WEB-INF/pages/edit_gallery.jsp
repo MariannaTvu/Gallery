@@ -60,7 +60,7 @@
     <div id="header">
         <div id="logo">
             <h1><a href="/">Gallery</a></h1>
-            <p>to share you artwork</p>
+            <p>to share and sell your artwork</p>
         </div>
         <ul id="topnav">
             <sec:authorize access="!isAuthenticated()">
@@ -68,15 +68,18 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li><a href="/user_details">Profile</a>
+                <li><a href="/shop">Cart</a></li>
+                <li><a href="/upload_art">Submit art</a></li>
+                <li class="active"><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/upload_art">Submit art</a></li>
+                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_details">User info</a></li>
                         <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
                     </ul>
                 </li>
             </sec:authorize>
             <li><a href="/art">Art</a></li>
-            <li class="active"><a href="/">Main</a></li>
+            <li ><a href="/">Main</a></li>
         </ul>
         <br class="clear"/>
     </div>
