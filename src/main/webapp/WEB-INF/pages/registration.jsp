@@ -47,7 +47,7 @@
     <div id="topbar">
         <div id="search">
             <form role="search" action="/search" method="get">
-                <fieldset>
+                <fieldset class="search">
                     <legend>Site Search</legend>
                     <input type="text" name="pattern" placeholder="Search"/>
                     <input type="submit" name="go" id="go" value="GO"/>

@@ -142,20 +142,3 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 #copyright li.last{margin-right:0; padding-right:0; border-right:none;}
 
 
-.center-cropped {
- 
-  background-position: center center;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-
-/* Set the image to fill its parent and make transparent */
-.center-cropped img {
-  
-  /* IE 8 */
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  /* IE 5-7 */
-  filter: alpha(opacity=0);
-  /* modern browsers */
-
-}

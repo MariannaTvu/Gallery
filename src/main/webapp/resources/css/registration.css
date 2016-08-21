@@ -29,6 +29,10 @@ body {
   background: #080808;
 }
 
+.search {
+font:300 15px/15px Roboto,Arial,Helvetica;
+}
+
 .register-title {
   width: 270px;
   line-height: 43px;

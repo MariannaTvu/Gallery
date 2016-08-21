@@ -108,7 +108,7 @@
         <div id="works" class="artist_grid" align="center">
             <div class="artist_grid" align="center">
                 <c:forEach items="${pictures}" var="picture">
-                        <figure class="art_hovereffect" >
+                        <figure class="art_hovereffect" style="width: 25%">
                             <div id="crop" class="crop-image-box">
                                 <div id="image" class="crop-image" style="background-image: url(<c:url value='picture/${picture.id}'/>);" />
                             </div>
@@ -126,8 +126,8 @@
     </div>
     <!-- close container -->
 </div>
-<div class="wrapper col5" style="margin-top: 5%">
-    <div id="container">
+<div class="wrapper col5" >
+    <div id="container"style="padding-top: 5%">
         <div id="content">
             <h2>About </h2>
             <p>Sedsemporttis sit intesque felit

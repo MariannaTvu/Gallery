@@ -5,12 +5,8 @@
 <html>
 <head>
     <title>Gallery</title>
-
-
     <link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css"/>
     <!--    photo header styles 1 -->
-    <link rel='stylesheet' type='text/css'
-          href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/ekko-lightbox.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/font-awesome/css/font-awesome.min.css">
