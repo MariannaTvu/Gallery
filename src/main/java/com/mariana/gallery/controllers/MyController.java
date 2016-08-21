@@ -1,13 +1,13 @@
 package com.mariana.gallery.controllers;
 
 import com.mariana.gallery.controllers.exeptions.FileErrorException;
-import com.mariana.gallery.persistence.orders.Cart;
+//import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.picture.PictureComment;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
-import com.mariana.gallery.service.orders.CartService;
+//import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +35,9 @@ public class MyController {
     private UserService userService;
     @Autowired
     private PictureService pictureService;
-    @Autowired
-    private CartService cartService;
 
     @RequestMapping("/")
-    public String onIndex(Model model) {
+    public String onIndex() {
         return "redirect:/index";
     }
 
@@ -93,11 +91,11 @@ public class MyController {
     }
 
     @RequestMapping("/gal")
-    public String artistGal(Model model) {
+    public String artistGal() {
         return "redirect:/artist_gallery";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@RequestParam String pattern, Model model, Principal principal) {
 
         if (principal != null) {
@@ -105,17 +103,22 @@ public class MyController {
             model.addAttribute("login", name);
         }
         model.addAttribute("pictures", pictureService.searchPictures(pattern));
-        return "/search_result";
+
+       return "/search_result";
     }
 
     @RequestMapping(value = "/view_art/{picture_id}", method = RequestMethod.GET)
-    public String viewArtById(@PathVariable("picture_id") long id, Model model) {
+    public String viewArtById(@PathVariable("picture_id") long id, Model model, Principal principal) {
         model.addAttribute("picture_id", id);
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+        }
         return "redirect:/view_art";
     }
 
     @RequestMapping(value = "/view_art", method = RequestMethod.GET)
-    public String viewArt(@ModelAttribute("picture_id") long id, Model model, Principal principal) {
+    public String viewArt(@ModelAttribute("picture_id") long id, @ModelAttribute("login") String name, Model model, Principal principal) {
         try {
             Picture pic = pictureService.getPictureById(id);
             List<PictureComment> comments = pic.getPictureComments();
@@ -166,7 +169,7 @@ public class MyController {
                 response.add(id);
             }
             if (principal != null) {
-                String name = principal.getName(); //get logged in username
+                String name = principal.getName();
                 model.addAttribute("login", name);
             }
             model.addAttribute("picture_id", response);

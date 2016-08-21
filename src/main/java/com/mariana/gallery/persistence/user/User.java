@@ -1,12 +1,16 @@
 package com.mariana.gallery.persistence.user;
 
+//import com.mariana.gallery.persistence.orders.Cart;
+
 import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import com.mariana.gallery.persistence.picture.Picture;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +23,20 @@ public class User {
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userGallery")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserGallery userGallery;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Picture> pictures = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Cart> orders = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserRole role;
 
     private String login;
@@ -37,9 +48,6 @@ public class User {
     private String bio;
     private int balance;
 
-    //    private String comments;
-//    private String name;
-//    private String surname;
     public User() {
     }
 
@@ -47,7 +55,6 @@ public class User {
         this.login = login;
         this.password = password;
     }
-
 
     public String getEmail() {
         return email;
@@ -67,15 +74,6 @@ public class User {
         return this;
     }
 
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public User setName(String name) {
-//        this.name = name;
-//        return this;
-//    }
-
     public String getPassword() {
         return password;
     }
@@ -88,6 +86,7 @@ public class User {
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
     }
+
     public User setPassword(String password) {
         this.password = password;
         return this;
@@ -101,16 +100,6 @@ public class User {
         this.balance = balance;
         return this;
     }
-
-    //    public String getSurname() {
-//        return surname;
-//    }
-//
-//    public User setSurname(String surname) {
-//        this.surname = surname;
-//        return this;
-//    }
-
 
     public UserGallery getUserGallery() {
         return userGallery;
@@ -154,6 +143,15 @@ public class User {
 
     public User setBio(String bio) {
         this.bio = bio;
+        return this;
+    }
+
+    public List<Cart> getOrders() {
+        return orders;
+    }
+
+    public User setOrders(List<Cart> orders) {
+        this.orders = orders;
         return this;
     }
 }

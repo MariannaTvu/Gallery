@@ -5,25 +5,15 @@
 <html>
 <head>
     <title>Gallery</title>
-
-
     <link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css"/>
-    <!--    photo header styles 1 -->
-    <link rel='stylesheet' type='text/css'
-          href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
-    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/ekko-lightbox.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
-    <!--    photo header styles 1 end -->
 
-    <!-- userGallery -->
-    <!-- animate.css -->
+    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
+
     <link rel="stylesheet" href="/resources/assets/animate/animate.css"/>
     <link rel="stylesheet" href="/resources/assets/animate/set.css"/>
 
     <!-- userGallery -->
-    <link rel="stylesheet" href="/resources/assets/userGallery/blueimp-userGallery.min.css">
     <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
@@ -33,7 +23,7 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form role="search" action="/search" method="post">
+            <form role="search" action="/search" method="get">
                 <fieldset>
                     <legend>Site Search</legend>
                     <input type="text" name="pattern" placeholder="Search"/>
@@ -55,13 +45,13 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li><a href="/shop">Cart</a></li>
+                <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Logout</a></li>
                 <li><a href="/upload_art">Submit art</a></li>
-                <li ><a href="/user_details">Profile</a>
+                <li><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_pictures">Edit gallery</a></li>
                         <li><a href="/user_details">User info</a></li>
-                        <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
+                        <li><a href="/shop">Shop</a></li>
                     </ul>
                 </li>
             </sec:authorize>
@@ -85,6 +75,7 @@
 
     <div class="clear"></div>
 </ul>
+<div class="clear"></div>
 <div class="wrapper col3">
     <div id="photos">
         <c:forEach items="${pictures}" var="picture">
@@ -93,8 +84,9 @@
                     <div class="hovereffect">
                         <img class="img-responsive" src="picture/${picture.id}" alt="Image 1">
                         <div class="overlay">
-                            <h2>${picture.name} by ${picture.author.login}</h2>
-                            <a class="info" href="/artist_gallery/${picture.userGallery.id}" style="padding: 3%;">view
+                            <h2 style="margin: 0">${picture.name} by ${picture.author.login}</h2>
+                            <a class="info" href="/artist_gallery/${picture.userGallery.id}"
+                               style="padding: 3%; margin: 30% 15%">view
                                 artist gallery</a>
                         </div>
                     </div>
@@ -120,7 +112,7 @@
                 quis elis et cursuspenatibulum tincidunt non curabitae.</p>
         </div>
 
-        <br class="clear" />
+        <br class="clear"/>
     </div>
 </div>
 
@@ -132,7 +124,8 @@
             <li><a href="#">Permissions &amp; Trademarks</a></li>
             <li class="last"><a href="#">Product License Agreements</a></li>
         </ul>
-        <p>Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+        <p>Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS
+            Templates</a></p>
         <div class="clear"></div>
     </div>
 </div>

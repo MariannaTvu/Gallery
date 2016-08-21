@@ -1,9 +1,10 @@
 package com.mariana.gallery.persistence.picture;
 
-import com.mariana.gallery.persistence.user.User;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "picture_comments")
@@ -13,8 +14,9 @@ public class PictureComment {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "picture", nullable = false)
-    private Picture picture;
+    @JoinColumn(name = "pictures")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Picture pictures;
 
     private String user;
 
@@ -38,12 +40,12 @@ public class PictureComment {
         return this;
     }
 
-    public Picture getPicture() {
-        return picture;
+    public Picture getPictures() {
+        return pictures;
     }
 
-    public PictureComment setPicture(Picture picture) {
-        this.picture = picture;
+    public PictureComment setPictures(Picture picture) {
+        this.pictures = picture;
         return this;
     }
 

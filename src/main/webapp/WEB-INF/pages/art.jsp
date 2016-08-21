@@ -33,7 +33,7 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form role="search" action="/search" method="post">
+            <form role="search" action="/search" method="get">
                 <fieldset>
                     <legend>Site Search</legend>
                     <input type="text" name="pattern" placeholder="Search"/>
@@ -55,13 +55,13 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li><a href="/shop">Cart</a></li>
+                <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Logout</a></li>
                 <li><a href="/upload_art">Submit art</a></li>
                 <li><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_pictures">Edit gallery</a></li>
                         <li><a href="/user_details">User info</a></li>
-                        <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
+                        <li><a href="/shop">Shop</a></li>
                     </ul>
                 </li>
             </sec:authorize>
@@ -83,23 +83,27 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as:  ${login}
-        </a></li></sec:authorize>
+        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}
+        </a></li>
+    </sec:authorize>
     <div class="clear"></div>
 </ul>
-<div class="wrapper col3">
-    <div class=" clearfix grid"><c:forEach items="${pictures}" var="picture">
+
+<div class="wrapper col3" align="center">
+    <div class=" clearfix grid" align="center" ><c:forEach items="${pictures}" var="picture" >
         <figure class="effect-oscar  wowload fadeInUp">
-            <img src="picture/${picture.id}"/>
-            <figcaption>
-                <h2>${picture.name} by ${picture.author.login}</h2>
-                <br>
-                <br>
-                <br>
-                <p><a href="/view_art/${picture.id}" data-userGallery>View art</a></p>
-                <br>
-                <p><a href="/artist_gallery/${picture.author.id}" data-userGallery>View gallery</a></p>
-            </figcaption>
+            <div style="max-width: 300px;">
+                <img src="picture/${picture.id}" style=""/>
+                <figcaption>
+                    <h2>${picture.name} by ${picture.author.login}</h2>
+                    <br>
+                    <br>
+                    <br>
+                    <p><a href="/view_art/${picture.id}" data-userGallery>View art</a></p>
+                    <br>
+                    <p><a href="/artist_gallery/${picture.author.id}" data-userGallery>View gallery</a></p>
+                </figcaption>
+            </div>
         </figure>
     </c:forEach>
     </div>
@@ -114,7 +118,7 @@
             <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
                 laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
             Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
-                laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.
+            laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.
             <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
                 laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
             <p>Semalique tor sempus vestibulum libero nibh pretium eget eu elit montes. Sedsemporttis sit intesque felit

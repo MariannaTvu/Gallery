@@ -1,6 +1,5 @@
 package com.mariana.gallery.persistence.user;
 
-import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,11 +37,6 @@ public class UserDAOImpl implements UserDAO {
     public User saveUser(User user) {
         entityManager.merge(user);
         return user;
-    }
-
-    @Override
-    public void deleteUser(User user) {
-        entityManager.remove(user);
     }
 
     @Override

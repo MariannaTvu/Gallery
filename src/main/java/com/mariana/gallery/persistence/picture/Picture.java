@@ -1,6 +1,5 @@
 package com.mariana.gallery.persistence.picture;
 
-import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.hibernate.annotations.*;
@@ -10,7 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,14 +26,12 @@ public class Picture {
     @JoinColumn(name = "author")
     private User author;
 
-    //    @Basic(fetch = FetchType.LAZY)
-//    private String likes;//int
     @Basic(fetch = FetchType.LAZY)
-    private String dateAdded;//long
+    private String dateAdded;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte[] bytes;//content
+    private byte[] bytes;
 
     private String name;
 
@@ -46,13 +42,11 @@ public class Picture {
     private String description;
 
     @Lob
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pictures", cascade = CascadeType.REMOVE)
     private List<PictureComment> comments = new ArrayList<>();
 
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<Cart> orders = new ArrayList<>();
-
+    @Type(type = "yes_no")
+    private boolean available;
 
     public Picture() {
     }
@@ -87,7 +81,6 @@ public class Picture {
         this.bytes = bytes;
         return this;
     }
-
 
     public String getDescription() {
         return description;
@@ -138,12 +131,21 @@ public class Picture {
         return this;
     }
 
-    public List<Cart> getOrders() {
-        return orders;
+    public List<PictureComment> getComments() {
+        return comments;
     }
 
-    public Picture setOrders(List<Cart> orders) {
-        this.orders = orders;
+    public Picture setComments(List<PictureComment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public Picture setAvailable(boolean available) {
+        this.available = available;
         return this;
     }
 }

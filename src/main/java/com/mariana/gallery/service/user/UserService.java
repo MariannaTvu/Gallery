@@ -1,12 +1,12 @@
 package com.mariana.gallery.service.user;
-
-import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user.UserDAO;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -55,5 +55,4 @@ public class UserService {
     public void setBalance(User user, int balance) {
         userDAO.setBalance(user, balance);
     }
-
 }

@@ -1,15 +1,6 @@
 body {	color:#080808;	font:300 15px/15px Roboto,Arial,Helvetica;background:url(../images/bg.jpg) right no-repeat fixed #080808;background-size: cover; -webkit-font-smoothing:antialiased;}
 
-a{color:#fff; text-decoration:none;}
-a:hover{color:#666;}
-.btn,a,.btn:hover,a:hover {
--webkit-transition: all 0.3s ease-in-out;
--moz-transition: all 0.3s ease-in-out;
--ms-transition: all 0.3s ease-in-out;
--o-transition: all 0.3s ease-in-out;
-transition: all 0.3s ease-in-out;
-outline: none !important;
-}
+
 
 h1,h2,h3,h4{margin: 0;line-height: 1em;}
 h2{font:300 2.5em Josefin Sans,Arial,Helvetica;margin-bottom: 1.5em;}
@@ -64,6 +55,17 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 .gototop{position: fixed;bottom: 20px; right: 20px;background: rgba(0,0,0,0.5);padding: 10px;color: #fff;}
 .gototop i{line-height: 0.5em;}
 
+
+
+.buy-btn{
+   -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  color: #ffffff;
+  font-size: 17px;
+  background: #54ab37;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
 
 @media (max-width: 1200px) {
 	body{font:300 13px/13px Roboto,Arial,Helvetica;}

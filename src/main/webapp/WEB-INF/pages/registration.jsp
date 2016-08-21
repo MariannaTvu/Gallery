@@ -46,7 +46,7 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form role="search" action="/search" method="post">
+            <form role="search" action="/search" method="get">
                 <fieldset>
                     <legend>Site Search</legend>
                     <input type="text" name="pattern" placeholder="Search"/>

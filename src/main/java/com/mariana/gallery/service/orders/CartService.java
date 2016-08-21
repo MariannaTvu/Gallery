@@ -70,4 +70,5 @@ public class CartService {
     public List<Cart> getOrdersOfPicture(Picture picture) {
       return cartDAO.getOrdersOfPicture(picture);
     }
+
 }

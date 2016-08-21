@@ -13,15 +13,6 @@ File: Layout CSS
 @import url("tables.css");
 @import url("gallery.css");
 
-html{overflow-y:scroll;}
-body{margin:0; padding:0; font-size:12px; font-family:verdana, Arial, Helvetica, sans-serif; color:#CCCCCC; background-color:#2E2E2E;}
-
-.justify{text-align:justify;}
-.bold{font-weight:bold;}
-.center{text-align:center;}
-.right{text-align:right;}
-.nostart{margin:0; padding:0; list-style-type:none;}
-
 .clear{clear:both;}
 br.clear{clear:both; margin-top:-15px;}
 
@@ -38,7 +29,7 @@ img{margin:0; padding:0; border:0;}
 /* ----------------------------------------------Wrapper------------------------------------- */
 
 div.wrapper{display:block; width:100%; margin:0, 1%; text-align:left;}
-div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, div.wrapper h6{margin:0 0 20px 0; padding:0 0 8px 0; font-size:22px; font-weight:normal; font-family:Georgia, "Times New Roman", Times, serif; border-bottom:1px dashed #DDDDDD;}
+div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, div.wrapper h6{margin:0 0 15px 0; padding:8px ; margin:8px; font-size:18px; font-weight:normal; font-family:Georgia, "Times New Roman", Times, serif; border-bottom:1px dashed #DDDDDD;}
 .col1{color:#333333; background-color:#080808;}
 .col2{color:#DBDBDB; background-color:#080808; }
 .col3{color:#DBDBDB; background-color:#080808; }
@@ -106,9 +97,7 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 /* ----------------------------------------------Column------------------------------------- */
 
 #column{display:block; float:right; width:500px;}
-.flickrbox ul{margin:0; padding:0; list-style:none;box-sizing: content-box;}
-.flickrbox li{display:block; float:left; width:80px; height:80px; margin:0 15px 15px 0; padding:4px;}
-.flickrbox li.last{margin-right:0;}
+.flickrbox {margin:0; padding:0; list-style:none;z-index:-10000;}
 #column .holder, #column #featured{display:block; width:300px; margin-bottom:20px;}
 #column .holder p{line-height:1.6em;}
 #column h2{font-size:20px;}
@@ -151,3 +140,22 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 #copyright ul{display:block; float:left; margin:0; padding:0; width:700px;}
 #copyright li{display:inline; margin-right:8px; padding-right:10px; border-right:1px solid #CCCCCC;}
 #copyright li.last{margin-right:0; padding-right:0; border-right:none;}
+
+
+.center-cropped {
+ 
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Set the image to fill its parent and make transparent */
+.center-cropped img {
+  
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  /* IE 5-7 */
+  filter: alpha(opacity=0);
+  /* modern browsers */
+
+}

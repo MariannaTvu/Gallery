@@ -96,34 +96,29 @@
 
 </div>
 
-<form role="form" enctype="multipart/form-data" class="form-horizontal" action="/admin/delete_user" method="post">
-    <div class="form-group" style="margin-top:5%;"><h3>Enter user's id</h3><input type="text" class="form-control" name="user_id">
-    </div>
-    <div class="form-group"><input type="submit" class="btn btn-primary" value="delete"></div>
-</form>
-
-<form role="form" enctype="multipart/form-data" class="form-horizontal" action="/admin/delete_gallery" method="post">
-    <div class="form-group" style="margin-top:5%;"><h3>Enter gallery id</h3><input type="text" class="form-control" name="gallery_id">
-    </div>
-    <div class="form-group"><input type="submit" class="btn btn-primary" value="delete"></div>
-</form>
-
-<form role="form" enctype="multipart/form-data" class="form-horizontal" action="/admin/delete_picture" method="post">
-    <div class="form-group" style="margin-top:5%;"><h3>Enter picture id</h3><input type="text" class="form-control" name="picture_id">
-    </div>
-    <div class="form-group"><input type="submit" class="btn btn-primary" value="delete"></div>
-</form>
-
-<form role="form" enctype="multipart/form-data" class="form-horizontal" action="/admin/delete_picture" method="post">
-    <div class="form-group" style="margin-top:5%;"><h3>Enter user's id</h3><input type="text" class="form-control" name="user_id">
-    </div>
-    <div class="form-group" style="margin-top:5%;"><h3>Enter new balance</h3><input type="text" class="form-control" name="new_balance">
-    </div>
-    <div class="form-group"><input type="submit" class="btn btn-primary" value="set"></div>
-</form>
 
 <div class="wrapper col5" style="margin-top:5%;">
     <div id="container">
+
+        <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/admin/delete_user" method="post">
+            <div class="form-group" style="margin-top:5%;"><p>Enter user's id</p><input type="text" class="form-control" name="user_id">
+            </div>
+            <div class="form-group"><input type="submit" class="btn btn-primary" value="delete"></div>
+        </form>
+
+        <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/admin/delete_picture" method="post">
+            <div class="form-group" style="margin-top:5%;"><p>Enter picture id</p><input type="text" class="form-control" name="picture_id">
+            </div>
+            <div class="form-group"><input type="submit" class="btn btn-primary" value="delete"></div>
+        </form>
+
+        <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/admin/set_balance" method="get">
+            <div class="form-group" style="margin-top:5%;"><p>Enter user's id</p><input type="text" class="form-control" name="user_id">
+            </div>
+            <div class="form-group" style="margin-top:5%;"><p>Enter new balance</p><input type="text" class="form-control" name="new_balance">
+            </div>
+            <div class="form-group"><input type="submit" class="btn btn-primary" value="set"></div>
+        </form>
         <div id="content">
             <h2>About </h2>
             <p>Sedsemporttis sit intesque felit

@@ -112,11 +112,6 @@ public class PictureService {
     }
 
     @Transactional
-    public void deletePicture(Picture picture) {
-        pictureDAO.delete(picture);
-    }
-
-    @Transactional
     public User getPictureAuthor(Picture picture) {
         return pictureDAO.getPictureAuthor(picture);
     }

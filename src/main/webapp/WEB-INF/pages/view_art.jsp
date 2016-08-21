@@ -46,7 +46,7 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form role="search" action="/search" method="post">
+            <form role="search" action="/search" method="get">
                 <fieldset>
                     <legend>Site Search</legend>
                     <input type="text" name="pattern" placeholder="Search"/>
@@ -68,14 +68,15 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li ><a href="/shop">Cart</a></li>
+                <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Logout</a></li>
                 <li><a href="/upload_art">Submit art</a></li>
-                <li ><a href="/user_details">Profile</a>
+                <li><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_pictures">Edit gallery</a></li>
                         <li><a href="/user_details">User info</a></li>
-                        <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
+                        <li><a href="/shop">Shop</a></li>
                     </ul>
+                </li>
                 </li>
             </sec:authorize>
             <li class="active"><a href="/art">Art</a></li>
@@ -87,6 +88,8 @@
 <div class="wrapper col3">
 
 </div>
+
+
 <div class="wrapper col5">
     <div id="container">
         <div id="content">
@@ -166,16 +169,16 @@
                             </div>
                             <sec:authorize access="isAuthenticated()">
                                 <form role="form" enctype="multipart/form-data" id="form1" class="form-horizontal"
-                                      action="/add_to_cart" method="post">
+                                      action="/add_to_cart" method="get">
                                     <input type="hidden" name="picture_id" value=${picture.id}>
-                                    <div class="action dual" style="text-align: center">
-                                        <a href="" class="smbutton smbutton-blue addToCart"
-                                           onclick="document.getElementById('form1').submit();"><b>Add to Cart</b></a>
+                                    <div align="center">
+                                        <button class="buy-btn" type="submit"> Add to Cart</button>
                                     </div>
                                 </form>
                             </sec:authorize>
                             <sec:authorize access="!isAuthenticated()">
-                                <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a></p>
+                                <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a>
+                                </p>
                             </sec:authorize>
                             <br>
                             <br>
@@ -187,7 +190,7 @@
                         </div>
                     </div>
                 </div>
-            </c:if> <a href="/artist_gallery/${picture.userGallery.id}" style="margin:37%">Back
+            </c:if> <a href="/artist_gallery/${picture.userGallery.id}" style="margin:36%">Back
             to ${picture.author.login}'s gallery</a>
         </div>
     </div>

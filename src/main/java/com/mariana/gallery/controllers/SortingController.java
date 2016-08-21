@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
+
 @Controller
 @RequestMapping("/")
 public class SortingController {
@@ -14,23 +17,32 @@ public class SortingController {
     private PictureService pictureService;
 
     @RequestMapping(value = "/sort_by_name")
-    public String sortedByName(Model model) {
+    public String sortedByName(Model model, Principal principal) {
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+        }
         model.addAttribute("pictures", pictureService.sortPicturesByName());
-        model.addAttribute("picture_id", pictureService.sortPicturesByName());
-        return "redirect:/art";
+        return "/art";
     }
 
     @RequestMapping(value = "/sort_by_comments")
-    public String sortedByComments(Model model) {
+    public String sortedByComments(Model model, Principal principal) {
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+        }
         model.addAttribute("pictures", pictureService.sortPicturesByComments());
-        model.addAttribute("picture_id", pictureService.sortPicturesByComments());
-        return "redirect:/art";
+        return "/art";
     }
 
     @RequestMapping(value = "/sort_by_date")
-    public String sortedByDate(Model model) {
+    public String sortedByDate(Model model, Principal principal) {
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+        }
         model.addAttribute("pictures", pictureService.sortPicturesByDate());
-        model.addAttribute("picture_id", pictureService.sortPicturesByDate());
-        return "redirect:/art";
+        return "/art";
     }
 }

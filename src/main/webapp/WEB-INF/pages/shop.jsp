@@ -36,7 +36,7 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form role="search" action="/search" method="post">
+            <form role="search" action="/search" method="get">
                 <fieldset>
                     <legend>Site Search</legend>
                     <input type="text" name="pattern" placeholder="Search"/>
@@ -58,13 +58,13 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li class="active"><a href="/shop">Cart</a></li>
+                <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Logout</a></li>
                 <li><a href="/upload_art">Submit art</a></li>
-                <li ><a href="/user_details">Profile</a>
+                <li class="active"><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_pictures">Edit gallery</a></li>
                         <li><a href="/user_details">User info</a></li>
-                        <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
+                        <li><a href="/shop">Shop</a></li>
                     </ul>
                 </li>
             </sec:authorize>
@@ -89,24 +89,14 @@
     <div class="clear"></div>
 </ul>
 <div class="wrapper col5" style="border-bottom: 0; width:100%">
-
     <table border="0" width="100%" cellpadding="0" cellspacing="0" id="shop">
-
-        <tr >
+        <tr>
             <td>
-                <!--  start content-table-inner ...................................................................... START -->
+                <c:if test="${msg ne null}"><p>${msg}</p></c:if>
                 <div>
-
-                    <!--  start table-content  -->
-
-
-                    <!--  start product-table ..................................................................................... -->
-
                     <form role="form" enctype="multipart/form-data" id="form1"
                           class="form-horizontal" action="/buy" method="get">
-
                         <table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-
                             <tr>
                                 <th class="table-header-check"><a id="toggle-all"></a></th>
                                 <th class="table-header-repeat line-left minwidth-1"><a href="">Name</a></th>
@@ -117,7 +107,6 @@
                             </tr>
                             <c:forEach items="${orders}" var="cart">
                                 <tr>
-
                                     <td><input type="checkbox" name="selectedItems"
                                                value="${cart.id}"/></td>
                                     <td>${cart.picture.name}</td>
@@ -131,8 +120,6 @@
                                     </td>
                                 </tr>
                             </c:forEach>
-
-                            <!--  start paging..................................................... -->
 
                             <tr>
                                 <td>
@@ -156,7 +143,6 @@
                     </form>
                     <div class="clear"></div>
                 </div>
-                <!--  end content-table-inner ............................................END  -->
             </td>
         </tr>
         <div class="clear">&nbsp;</div>
@@ -164,8 +150,6 @@
     </form>
 
 </div>
-<!--  end content -->
-
 
 <div class="wrapper col5" style="margin-top:5%; color:#CCCCCC">
     <div id="container">

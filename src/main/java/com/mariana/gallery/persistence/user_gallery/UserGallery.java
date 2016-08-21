@@ -2,6 +2,8 @@ package com.mariana.gallery.persistence.user_gallery;
 
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.user.User;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,10 +17,11 @@ public class UserGallery {
     private long id;
     private String name;
 
-    @OneToMany(mappedBy = "userGallery", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userGallery", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Picture> pictures = new ArrayList<Picture>();
 
     @OneToOne(mappedBy = "userGallery", cascade=CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     public UserGallery(User user) {

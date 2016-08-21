@@ -28,6 +28,4 @@ public interface CartDAO {
     List<Cart> getUserConfirmedOrders(User user);
 
     void setPurchaseDate(Cart order, Date date);
-
-
 }

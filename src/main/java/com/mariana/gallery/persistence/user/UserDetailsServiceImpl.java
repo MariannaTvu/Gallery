@@ -1,6 +1,5 @@
 package com.mariana.gallery.persistence.user;
 
-import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

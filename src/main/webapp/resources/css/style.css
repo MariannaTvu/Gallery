@@ -112,8 +112,7 @@ li #topnav{ width: 300px;
 }
 
 .sort_navigation li:first-child {
-  -webkit-border-radius: 5px 5px 0 0;
-  border-radius: 5px 0 0 5px;
+ 
 }
 
 .sort_navigation li a {
@@ -140,19 +139,15 @@ li #topnav{ width: 300px;
 .sort_navigation li:hover > ul {
   display: block;
   background: #222;
-  border: solid 3px #fff;
+  
   border-top: 0;
-  
-  -webkit-border-radius: 0 0 8px 8px;
-  border-radius: 0 0 8px 8px;
-  
+ 
   -webkit-box-shadow:  0px 3px 3px 0px rgba(0, 0, 0, 0.25);
   box-shadow:  0px 3px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
 .sort_navigation li:hover > ul li:hover {
-  -webkit-border-radius: 0 0 5px 5px;
-  border-radius: 0 0 5px 5px;
+  
 }
 
 .sort_navigation li li a:hover {
@@ -161,8 +156,7 @@ li #topnav{ width: 300px;
 
 .sort_navigation ul li:last-child a,
 .sort_navigation ul li:last-child a:hover {
-  -webkit-border-radius: 0 0 5px 5px;
-  border-radius: 0 0 5px 5px;
+  
 }
 
 /*INDEX GRID*/
@@ -391,17 +385,18 @@ height:auto !important;
 /*HOVER*/
 
 .art_hovereffect {
-  width: 100%;
+  width: 100%;-webkit-backface-visibility: hidden;
   height: 100%;
   float: left;
   overflow: hidden;
   position: relative;
   text-align: center;
   cursor: default;
+  background-position: 0 -40px; 
 }
 
-.art_hovereffect .overlay {
-  position: absolute;
+.art_hovereffect .overlay {color:#fff !important;
+  position: absolute;-webkit-backface-visibility: hidden;
   overflow: hidden;
   width: 80%;
   height: 80%;
@@ -413,35 +408,35 @@ height:auto !important;
   transition: opacity 0.35s, transform 0.35s;
   -webkit-transform: scale(0,1);
   -ms-transform: scale(0,1);
-  transform: scale(0,1);
+  transform: scale(0,1);background-position: 0 -40px; 
 }
 
 .art_hovereffect:hover .overlay {
-  opacity: 1;
+  opacity: 1;-webkit-backface-visibility: hidden;
   filter: alpha(opacity=100);
-  -webkit-transform: scale(1);
+  -webkit-transform: scale(1);background-position: 0 -40px; 
   -ms-transform: scale(1);
   transform: scale(1);
 }
 
 .art_hovereffect img {
-  display: block;
+  display: block;-webkit-backface-visibility: hidden;
   position: relative;
-  -webkit-transition: all 0.35s;
+  -webkit-transition: all 0.35s;background-position: 0 -40px; 
   transition: all 0.35s;
 }
 
 .art_hovereffect:hover img {
   filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="linear" slope="0.6" /><feFuncG type="linear" slope="0.6" /><feFuncB type="linear" slope="0.6" /></feComponentTransfer></filter></svg>#filter');
-  filter: brightness(0.6);
-  -webkit-filter: brightness(0.6);
+  filter: brightness(0.6);-webkit-backface-visibility: hidden;
+  -webkit-filter: brightness(0.6);background-position: 0 -40px; 
 }
 
 .art_hovereffect h2 {
- 
+ -webkit-backface-visibility: hidden;
   text-align: center;
   position: relative;
-  font-size: 17px;
+  font-size: 17px;background-position: 0 -40px; 
   background-color: transparent;
   color: #FFF;
   padding: 1em 0;
@@ -455,8 +450,8 @@ height:auto !important;
 
 .art_hovereffect a, hovereffect p {
   color: #FFF;
-  padding: 1em 0;
-  opacity: 0;
+  padding: 1em 0;-webkit-backface-visibility: hidden;
+  opacity: 0;background-position: 0 -40px; 
   filter: alpha(opacity=0);
   -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
   transition: opacity 0.35s, transform 0.35s;
@@ -466,9 +461,9 @@ height:auto !important;
 
 .art_hovereffect:hover a, .art_hovereffect:hover p, .art_hovereffect:hover h2 {
   opacity: 1;
-  filter: alpha(opacity=100);
+  filter: alpha(opacity=100);-webkit-backface-visibility: hidden;
   -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);background-position: 0 -40px; 
 }
 
 
@@ -478,8 +473,8 @@ height:auto !important;
 
 .hovereffect {
 
-
-float:left;
+-webkit-backface-visibility: hidden;
+float:left;background-position: 0 -40px; 
 overflow:hidden;
 position:relative;
 text-align:center;
@@ -487,7 +482,7 @@ cursor:default;
 }
 
 .hovereffect .overlay {
-width:100%;
+width:100%;background-position: 0 -40px; 
 height:100%;
 position:absolute;
 overflow:hidden;
@@ -496,22 +491,24 @@ left:0;
 opacity:0;
 background-color:rgba(0,0,0,0.5);
 -webkit-transition:all .4s ease-in-out;
-transition:all .4s ease-in-out
+transition:all .4s ease-in-out;
+-webkit-backface-visibility: hidden;
 }
 
 .hovereffect img {
 width:100%;
+-webkit-backface-visibility: hidden;
 display:block;
-position:relative;
+position:relative;background-position: 0 -40px; 
 -webkit-transition:all .4s linear;
 transition:all .4s linear;
 }
 
 .hovereffect h2 {
-color:#fff;
-text-align:center;
+color:#fff !important;
+text-align:center;-webkit-backface-visibility: hidden;
 position:relative;
-font-size:17px;
+font-size:17px;background-position: 0 -40px !important;
 background:rgba(0,0,0,0.6);
 -webkit-transform:translatey(-100px);
 -ms-transform:translatey(-100px);
@@ -523,8 +520,8 @@ padding:10px;
 
 .hovereffect a.info {
 text-decoration:none;
-display:inline-block;
-color:#fff;
+display:inline-block;-webkit-backface-visibility: hidden;
+color:#fff;background-position: 0 -40px; 
 border:1px solid #fff;
 background-color:transparent;
 opacity:0;
@@ -536,33 +533,51 @@ padding:7px 14px;
 }
 
 .hovereffect a.info:hover {
-box-shadow:0 0 5px #fff;
+box-shadow:0 0 5px #fff;-webkit-backface-visibility: hidden;background-position: 0 -40px; 
 }
 
 .hovereffect:hover img {
 width:100%;
--ms-transform:scale(1.2);
--webkit-transform:scale(1.2);
+-ms-transform:scale(1.2);-webkit-backface-visibility: hidden;
+-webkit-transform:scale(1.2);background-position: 0 -40px; 
 transform:scale(1.2);
 }
 
 .hovereffect:hover .overlay {
 opacity:1;
-filter:alpha(opacity=100);
+filter:alpha(opacity=100);-webkit-backface-visibility: hidden;background-position: 0 -40px; 
 }
 
 .hovereffect:hover h2,.hovereffect:hover a.info {
 opacity:1;
-filter:alpha(opacity=100);
--ms-transform:translatey(0);
+filter:alpha(opacity=100);-webkit-backface-visibility: hidden;
+-ms-transform:translatey(0);background-position: 0 -40px; 
 -webkit-transform:translatey(0);
 transform:translatey(0);
 }
 
 .hovereffect:hover a.info {
--webkit-transition-delay:.2s;
+-webkit-transition-delay:.2s;-webkit-backface-visibility: hidden;background-position: 0 -40px; 
 transition-delay:.2s;
 }
+.crop-image{
+  position: absolute;
+  background-position: center center;
+  background-size: cover;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.crop-image-box{
+
+ width: 100%;
+  height: 100%;
+  position: relative;}
+ 
+
+
+
 
 
 /*HOVER END*/

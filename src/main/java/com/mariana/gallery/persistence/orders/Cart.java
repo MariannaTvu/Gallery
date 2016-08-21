@@ -2,12 +2,9 @@ package com.mariana.gallery.persistence.orders;
 
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.user.User;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
@@ -17,7 +14,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "picture")
     private Picture picture;
 
@@ -30,7 +27,7 @@ public class Cart {
 
     private int sumCost;
 
-    @Type(type = "yes_no")
+    @Type(type="yes_no")
     private boolean confirmedOrder;
 
     public Cart() {

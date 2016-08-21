@@ -14,19 +14,12 @@
     <title>Gallery</title>
     <link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css"/>
 
-    <link rel="stylesheet" href="/resources/layout/styles/layout.css" type="text/css"/>
-
-
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" media="screen" href="/resources/css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/resources/menu/css/simple_menu.css">
     <link rel="stylesheet" href="/resources/css/nivo-slider.css" type="text/css" media="screen">
     <!--    photo header styles 1 -->
-    <link rel='stylesheet' type='text/css'
-          href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/css/ekko-lightbox.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
     <!--    photo header styles 1 end -->
     <!-- userGallery -->
@@ -45,7 +38,7 @@
 <div class="wrapper col1">
     <div id="topbar">
         <div id="search">
-            <form role="search" action="/search" method="post">
+            <form role="search" action="/search" method="get">
                 <fieldset>
                     <legend>Site Search</legend>
                     <input type="text" name="pattern" placeholder="Search"/>
@@ -67,13 +60,13 @@
                 <li class="last"><a href="/reg">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <li ><a href="/shop">Cart</a></li>
+                <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Logout</a></li>
                 <li><a href="/upload_art">Submit art</a></li>
                 <li class="active"><a href="/user_details">Profile</a>
                     <ul>
-                        <li><a href="/user_pictures">Edit profile</a></li>
+                        <li><a href="/user_pictures">Edit gallery</a></li>
                         <li><a href="/user_details">User info</a></li>
-                        <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Log Out</a></li>
+                        <li><a href="/shop">Shop</a></li>
                     </ul>
                 </li>
             </sec:authorize>

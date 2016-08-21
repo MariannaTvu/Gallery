@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import java.io.IOException;
 import java.security.Principal;
@@ -40,22 +41,27 @@ public class UserController {
     @RequestMapping(value = "/add_comment", method = RequestMethod.GET)
     public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
                              Model model, Principal principal) {
-        model.addAttribute("picture_id", id);
-        Picture pic = pictureService.getPictureById(id);
-        PictureComment text = new PictureComment(comment);
-        text.setPicture(pic);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        text.setDate(dateFormat.format(date));
-        text.setAuthor(principal.getName());
-        pictureService.updateComment(text);
+        if (principal != null) {
+            model.addAttribute("picture_id", id);
+            Picture pic = pictureService.getPictureById(id);
+            PictureComment text = new PictureComment(comment);
+            text.setPictures(pic);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            text.setDate(dateFormat.format(date));
+            text.setAuthor(principal.getName());
+            pictureService.update(pic);
+            pictureService.updateComment(text);
+        }
         return "redirect:/view_art";
     }
 
     @RequestMapping("/upload_art")
     public String uploadArt(Model model, Principal principal) {
-        User user = userService.findUserByUsername(principal.getName());
-        model.addAttribute("user", user);
+        if (principal != null) {
+            User user = userService.findUserByUsername(principal.getName());
+            model.addAttribute("user", user);
+        }
         return "/upload_art";
     }
 
@@ -73,11 +79,12 @@ public class UserController {
 
     @RequestMapping("/user_pictures")
     public String userPictures(Model model, Principal principal) {
-        UserGallery gallery = galleryService.findUserGallery(userService.findUserByUsername(principal.getName()).getId());
-
-        model.addAttribute("picture_id", pictureService.getPicturesByGallery(gallery));
-        model.addAttribute("pictures", pictureService.getPicturesByGallery(gallery));
-        model.addAttribute("author", userService.findUserByUsername(principal.getName()));
+        if (principal != null) {
+            UserGallery gallery = galleryService.findUserGallery(userService.findUserByUsername(principal.getName()).getId());
+            model.addAttribute("picture_id", pictureService.getPicturesByGallery(gallery));
+            model.addAttribute("pictures", pictureService.getPicturesByGallery(gallery));
+            model.addAttribute("author", userService.findUserByUsername(principal.getName()));
+        }
         return "/edit_gallery";
     }
 
@@ -90,14 +97,18 @@ public class UserController {
     @RequestMapping("/delete_picture")
     public String editGallery(@ModelAttribute("picture_id") long id, Model model) {
         try {
-
-//            Picture pic = pictureService.getPictureById(id);
-//            pictureService.deletePicture(pic);
             pictureService.deletePictureById(id);
-            return "/user_details";
+            return "redirect:/user_details";
         } catch (EntityNotFoundException e) {
         }
-        return "/";
+        return "/user_details";
+    }
+
+
+    @RequestMapping(value = "/user_picture/{user_id}", method = RequestMethod.GET)
+    public String findToDeleteUserById(@PathVariable("user_id") long id, Model model) {
+        model.addAttribute("user_id", id);
+        return "redirect:/delete_user";
     }
 
     //add picture
@@ -107,49 +118,55 @@ public class UserController {
                              @RequestParam("picture_price") Double rawPicturePrice,
                              @RequestParam("file") MultipartFile file,
                              Principal principal, Model model) throws IOException {
-        User user = userService.findUserByUsername(principal.getName());
-        try {
-            if (!file.isEmpty()) {
-                Picture picture = new Picture(file.getBytes());
-                if (!pictureName.isEmpty()) {
-                    picture.setName(pictureName);
+        if (principal != null) {
+            User user = userService.findUserByUsername(principal.getName());
+            try {
+                if (!file.isEmpty()) {
+                    Picture picture = new Picture(file.getBytes());
+                    if (!pictureName.isEmpty()) {
+                        picture.setName(pictureName);
 
+                    } else {
+                        String msg = "Please, name the picture";
+                        model.addAttribute("error", msg);
+                        return "/upload_art";
+                    }
+                    if (!pictureDescription.isEmpty()) {
+                        picture.setDescription(pictureDescription);
+                    }
+                    picture.setAuthor(user);
+                    picture.setAvailable(true);
+                    picture.setUserGallery(user.getUserGallery());
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = new Date();
+                    picture.setDateAdded(dateFormat.format(date));
+                    if (rawPicturePrice != null) {
+                        Double picturePrice = rawPicturePrice * 100;
+                        picture.setPrice(picturePrice.intValue());
+                    }
+                    pictureService.addPicture(picture);
+                    return "redirect:/art";
                 } else {
-                    String msg = "Please, name the picture";
+                    String msg = "Please, upload file";
                     model.addAttribute("error", msg);
                     return "/upload_art";
                 }
-                if (!pictureDescription.isEmpty()) {
-                    picture.setDescription(pictureDescription);
-                }
-                picture.setAuthor(user);
-                picture.setUserGallery(user.getUserGallery());
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date date = new Date();
-                picture.setDateAdded(dateFormat.format(date));
-                if (rawPicturePrice != null) {
-                    Double picturePrice = rawPicturePrice * 100;
-                    picture.setPrice(picturePrice.intValue());
-                }
-                pictureService.addPicture(picture);
-                return "redirect:/art";
-            } else {
-                String msg = "Please, upload file";
+            } catch (PersistenceException e) {
+                String msg = "File, that you are trying to upload, is too large";
                 model.addAttribute("error", msg);
                 return "/upload_art";
             }
-        } catch (PersistenceException e) {
-            String msg = "File, that you are trying to upload, is too large";
-            model.addAttribute("error", msg);
-            return "/upload_art";
         }
+        return "/upload_art";
     }
 
     @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
     public String bioAdd(@RequestParam String bio, Model model, Principal principal) {
-        User user = userService.findUserByUsername(principal.getName());
-        userService.addUserBio(user, bio);
-        model.addAttribute("gallery_id", user.getId());
+        if (principal != null) {
+            User user = userService.findUserByUsername(principal.getName());
+            userService.addUserBio(user, bio);
+            model.addAttribute("gallery_id", user.getId());
+        }
         return "redirect:/artist_gallery/{gallery_id}";
     }
 
@@ -174,13 +191,7 @@ public class UserController {
     }
 
     @RequestMapping("/admin")
-    public String adminPage(//@ModelAttribute("gallery_id") long galleryId,
-                            //  @ModelAttribute("user_id") long userId,
-                            //@ModelAttribute("picture_id") long pictureId,
-                            //@ModelAttribute("new_balance") int newBalance,
-                            Model model, Principal principal) {
-
-
+    public String adminPage() {
         return "/admin";
     }
 
@@ -188,6 +199,16 @@ public class UserController {
     public String adminDeletePicture(@ModelAttribute("picture_id") long pictureId, Model model) {
         model.addAttribute("picture_id", pictureId);
         return "redirect:/delete_picture";
+    }
 
+    @RequestMapping(value = "/admin/set_balance", method = RequestMethod.GET)
+    public String setBalance(@RequestParam("new_balance") int newBalance, @RequestParam("user_id") long userId) {
+        try {
+            User user = userService.findUserById(userId);
+            user.setBalance(newBalance);
+            userService.save(user);
+        } catch (NoResultException ex) {
+        }
+        return "redirect:/admin";
     }
 }

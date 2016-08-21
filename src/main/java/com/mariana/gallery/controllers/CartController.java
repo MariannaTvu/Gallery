@@ -21,56 +21,63 @@ import java.util.List;
 @Controller
 public class CartController {
     @Autowired
-    private GalleryService galleryService;
-    @Autowired
     private UserService userService;
     @Autowired
     private PictureService pictureService;
     @Autowired
     private CartService cartService;
 
-    @RequestMapping(value = "/add_to_cart", method = RequestMethod.POST)
-    public String addToCart(@ModelAttribute("picture_id") long pictureId, Model model, Principal principal) {
-        User user = userService.findUserByUsername(principal.getName());
-        Picture picture = pictureService.getPictureById(pictureId);
-        if (pictureService.getPictureAuthor(picture).getId()!=(user.getId())) {
-            Date date = new Date();
-            Cart cart = new Cart(date, picture, user);
-            cart.setSumCost(picture.getPrice());
-            cartService.createOrder(cart);
+    @RequestMapping(value = "/add_to_cart", method = RequestMethod.GET)
+    public String addToCart(@ModelAttribute("picture_id") long pictureId, Principal principal) {
+        if (principal != null) {
+            User user = userService.findUserByUsername(principal.getName());
+            Picture picture = pictureService.getPictureById(pictureId);
+            if (pictureService.getPictureAuthor(picture).getId() != (user.getId())) {
+                Date date = new Date();
+                Cart cart = new Cart(date, picture, user);
+                cart.setSumCost(picture.getPrice());
+                cartService.createOrder(cart);
+            }
         }
-
-
         return "redirect:/view_art";
     }
 
     @RequestMapping(value = "/buy", method = RequestMethod.GET)
-    public String buyArt(@RequestParam("selectedItems") long[] orderIds,
-                         Model model, Principal principal) {
-        User user = userService.findUserByUsername(principal.getName());
-        for (long id : orderIds) {
-            Cart cart = cartService.getOrderById(id);
-            Picture picture = cart.getPicture();
-            int newBalance = user.getBalance() - picture.getPrice();
-            user.setBalance(newBalance);
-            Date date = new Date();
-            cartService.setPurchaseDate(cart, date);
-            cartService.confirmOrder(id);
-            pictureService.update(picture);
-            userService.save(user);
+    public String buyArt(@RequestParam("selectedItems") long[] orderIds, Principal principal, Model model) {
+        if (principal != null) {
+            User user = userService.findUserByUsername(principal.getName());
+            for (long id : orderIds) {
+                Cart cart = cartService.getOrderById(id);
+                Picture picture = cart.getPicture();
+                int newBalance = user.getBalance() - picture.getPrice();
+                if(newBalance>=0) {
+                    user.setBalance(newBalance);
+                    Date date = new Date();
+                    cartService.setPurchaseDate(cart, date);
+                    cartService.confirmOrder(id);
+                    pictureService.update(picture);
+                    userService.save(user);
+                }else{
+                    String msg = "Sorry, there is not enough money on your balance";
+                    model.addAttribute("msg", msg);
+
+                }
+            }
         }
         return "redirect:/shop";
     }
 
     @RequestMapping(value = "/shop", method = RequestMethod.GET)
-    public String shop(Model model, Principal principal) {
-        User user = userService.findUserByUsername(principal.getName());
-        List<Cart> userCarts = cartService.getUserCart(user);
+    public String shop(@ModelAttribute("msg") String msg, Model model, Principal principal) {
+        if (principal != null) {
+            User user = userService.findUserByUsername(principal.getName());
+            List<Cart> userCarts = cartService.getUserCart(user);
+            String name = principal.getName();
+            model.addAttribute("login", name);
+            model.addAttribute("orders", userCarts);
+            model.addAttribute("msg", msg);
 
-
-        String name = principal.getName();
-        model.addAttribute("login", name);
-        model.addAttribute("orders", userCarts);
+        }
         return "/shop";
     }
 
@@ -82,7 +89,7 @@ public class CartController {
     }
 
     @RequestMapping("/remove")
-    public String editGallery(@ModelAttribute("idToRemove") long idToRemove, Model model) {
+    public String editGallery(@ModelAttribute("idToRemove") long idToRemove) {
         try {
             cartService.deleteOrderById(idToRemove);
             return "redirect:/shop";
@@ -90,6 +97,4 @@ public class CartController {
         }
         return "redirect:/shop";
     }
-
-
 }
