@@ -1,12 +1,23 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Maryana
+  Date: 28.06.2016
+  Time: 21:51
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page isErrorPage="true"%>
 <html>
 <head>
     <title>Gallery</title>
+
     <link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css"/>
     <!--    photo header styles 1 -->
+    <link rel='stylesheet' type='text/css'
+          href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic'>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/ekko-lightbox.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/font-awesome/css/font-awesome.min.css">
@@ -23,7 +34,6 @@
     <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
-
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -69,46 +79,26 @@
 </div>
 <ul class="sort_navigation">
     <li>
-        <form action="/for_sale"><a href="/for_sale" title="Show pictures for sale">Show pictures for sale</a></form>
-    </li>
-    <li>
-        <form action="/sort_by_name"><a href="/sort_by_name" title="Sort by name">Sort by name</a></form>
-    </li>
-    <li>
-        <form action="/sort_by_comments"><a href="/sort_by_comments" title="Sort by comments">Show most commented
-            first</a></form>
+        <form action="/sort_by_comments"><a href="/sort_by_comments" title="Sort by comments">View most commented
+            art</a></form>
     </li>
     <li>
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
-    <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}
-        </a></li>
-    </sec:authorize>
+    <li>
+        <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
+    </li>
     <div class="clear"></div>
 </ul>
-
 <div class="wrapper col3" align="center">
-    <div class=" clearfix grid" align="center" ><c:forEach items="${pictures}" var="picture" >
-        <figure class="effect-oscar  wowload fadeInUp">
-            <div style="max-width: 300px;">
-                <img src="picture/${picture.id}" style=""/>
-                <figcaption>
-                    <h2>${picture.name} by ${picture.author.login}</h2>
-                    <br>
-                    <br>
-                    <br>
-                    <p><a href="/view_art/${picture.id}" data-userGallery>View art</a></p>
-                    <br>
-                    <p><a href="/artist_gallery/${picture.author.id}" data-userGallery>View gallery</a></p>
-                </figcaption>
-            </div>
-        </figure>
-    </c:forEach>
-    </div>
+  <br> <br> <br> <br>
+    <p align="center">Sorry, there must be an error</p>
+    <br> <br> <br> <br> <br>
 </div>
 
-<div class="wrapper col5" style="margin-top: 5%">
+
+<br class="clear"/>
+<div class="wrapper col5">
     <div id="container">
         <div id="content">
             <h2>About </h2>
@@ -123,7 +113,9 @@
             <p>Semalique tor sempus vestibulum libero nibh pretium eget eu elit montes. Sedsemporttis sit intesque felit
                 quis elis et cursuspenatibulum tincidunt non curabitae.</p>
         </div>
+        <div id="column">
 
+        </div>
         <br class="clear"/>
     </div>
 </div>

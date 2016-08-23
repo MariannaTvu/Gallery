@@ -89,6 +89,9 @@
     <li>
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
+    <li>
+        <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
+    </li>
     <sec:authorize access="isAuthenticated()">
     <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication
             property="principal.username"/>

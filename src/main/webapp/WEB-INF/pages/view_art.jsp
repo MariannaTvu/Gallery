@@ -176,6 +176,11 @@
                                     </div>
                                 </form>
                             </sec:authorize>
+                            <c:if test="${msg ne null}">
+                                <br>
+                                <a href="/shop">${msg}</a>
+                                <br>
+                            </c:if>
                             <sec:authorize access="!isAuthenticated()">
                                 <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a>
                                 </p>

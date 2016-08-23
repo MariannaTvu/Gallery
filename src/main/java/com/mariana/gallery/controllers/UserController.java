@@ -42,16 +42,18 @@ public class UserController {
     public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
                              Model model, Principal principal) {
         if (principal != null) {
-            model.addAttribute("picture_id", id);
-            Picture pic = pictureService.getPictureById(id);
-            PictureComment text = new PictureComment(comment);
-            text.setPictures(pic);
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = new Date();
-            text.setDate(dateFormat.format(date));
-            text.setAuthor(principal.getName());
-            pictureService.update(pic);
-            pictureService.updateComment(text);
+            if (!comment.isEmpty()) {
+                model.addAttribute("picture_id", id);
+                Picture pic = pictureService.getPictureById(id);
+                PictureComment text = new PictureComment(comment);
+                text.setPictures(pic);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                text.setDate(dateFormat.format(date));
+                text.setAuthor(principal.getName());
+                pictureService.update(pic);
+                pictureService.updateComment(text);
+            }
         }
         return "redirect:/view_art";
     }
@@ -115,11 +117,13 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String pictureAdd(@RequestParam("picture_name") String pictureName,
                              @RequestParam("picture_description") String pictureDescription,
-                             @RequestParam("picture_price") Double rawPicturePrice,
+                             @RequestParam("picture_price") String rawPicturePrice,
                              @RequestParam("file") MultipartFile file,
                              Principal principal, Model model) throws IOException {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
+            model.addAttribute("user", user);
+
             try {
                 if (!file.isEmpty()) {
                     Picture picture = new Picture(file.getBytes());
@@ -141,8 +145,15 @@ public class UserController {
                     Date date = new Date();
                     picture.setDateAdded(dateFormat.format(date));
                     if (rawPicturePrice != null) {
-                        Double picturePrice = rawPicturePrice * 100;
-                        picture.setPrice(picturePrice.intValue());
+                        try {
+                            double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
+                            Double picturePrice = rawDoublePicturePrice * 100;
+                            picture.setPrice(picturePrice.intValue());
+                        }catch (Exception e){
+                            String msg = "Please, set the price using numbers";
+                            model.addAttribute("error", msg);
+                            return "/upload_art";
+                        }
                     }
                     pictureService.addPicture(picture);
                     return "redirect:/art";

@@ -90,6 +90,9 @@
     <li>
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
+    <li>
+        <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
+    </li>
     <sec:authorize access="isAuthenticated()">
     <li style=" position: absolute; right: 0px"><a>Logged in as: ${user.login}
         </sec:authorize></a></li>
@@ -105,9 +108,9 @@
             </c:if>
             <!---->
             <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add" method="post">
-                <div class="form-group"><h3>Upload art</h3></div>
+                <div class="form-group"><h3>Upload art*</h3></div>
                 <input type="file" id="exampleInputFile" name="file">
-                <div class="form-group" style="margin-top:5%;">Name<input type="text" class="form-control"
+                <div class="form-group" style="margin-top:5%;">Name*<input type="text" class="form-control"
                                                                           name="picture_name"
                                                                           placeholder="Picture name"></div>
                 <div class="form-group" style="margin-top:5%;">Set price<input type="text" class="form-control"
@@ -119,7 +122,8 @@
                 <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
             </form>
             <!--UPLOAD SECTION END-->
-
+<br>
+            <p>* Necessary row</p>
         </div>
 
     </div>

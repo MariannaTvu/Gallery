@@ -44,6 +44,11 @@ public interface PictureDAO {
 
     List<Picture> sortPicturesByDate();
 
+    List<Picture> sortForSalePicturesByName();
+    List<Picture> sortForSalePicturesByComments();
+    List<Picture> sortForSalePicturesByDate();
+    List<Picture> getForSalePictures();
+
     List<Picture> random();
 
     void deletePictureById(long id);

@@ -220,4 +220,45 @@ public class PictureDAOImpl implements PictureDAO {
         picture.setPrice(price);
         entityManager.merge(picture);
     }
+
+    @Override
+    public List<Picture> getForSalePictures() {
+        boolean available = true;
+        Query query = entityManager.createQuery("SELECT n FROM Picture n WHERE n.price <> 0 AND " +
+                "n.available = :available" +
+                " ORDER BY RAND()", Picture.class);
+        query.setParameter("available", available);
+
+        List<Picture> forSaleList = query.getResultList();
+        return forSaleList;
+    }
+
+    @Override
+    public List<Picture> sortForSalePicturesByComments() {
+        boolean available = true;
+        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.price <> 0 AND " +
+                "g.available = :available" +
+                " ORDER BY g.comments.size DESC", Picture.class);
+        query.setParameter("available", available);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Picture> sortForSalePicturesByDate() {
+        boolean available = true;
+        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.price <> 0 AND " +
+                "g.available = :available" +
+                " ORDER BY g.dateAdded DESC", Picture.class);
+        query.setParameter("available", available);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Picture> sortForSalePicturesByName() {
+        boolean available = true;
+        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.price <> 0 AND " +
+                        "g.available = :available ORDER BY g.name", Picture.class);
+        query.setParameter("available", available);
+        return query.getResultList();
+    }
 }

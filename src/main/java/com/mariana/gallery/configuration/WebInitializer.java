@@ -20,7 +20,10 @@ public class WebInitializer implements WebApplicationInitializer{
         ctx.register(SecurityConfig.class);
         servletContext.addListener(new ContextLoaderListener(ctx));
 
-        ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(ctx);
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", dispatcherServlet);
         servlet.addMapping("/");
         servlet.setLoadOnStartup(1);
     }

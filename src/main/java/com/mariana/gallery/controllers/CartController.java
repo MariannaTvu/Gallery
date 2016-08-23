@@ -28,7 +28,7 @@ public class CartController {
     private CartService cartService;
 
     @RequestMapping(value = "/add_to_cart", method = RequestMethod.GET)
-    public String addToCart(@ModelAttribute("picture_id") long pictureId, Principal principal) {
+    public String addToCart(@ModelAttribute("picture_id") long pictureId, Principal principal, Model model) {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
             Picture picture = pictureService.getPictureById(pictureId);
@@ -37,6 +37,8 @@ public class CartController {
                 Cart cart = new Cart(date, picture, user);
                 cart.setSumCost(picture.getPrice());
                 cartService.createOrder(cart);
+                String msg = "Order added. You now can see it in your cart.";
+                model.addAttribute("msg", msg);
             }
         }
         return "redirect:/view_art";
@@ -60,7 +62,6 @@ public class CartController {
                 }else{
                     String msg = "Sorry, there is not enough money on your balance";
                     model.addAttribute("msg", msg);
-
                 }
             }
         }

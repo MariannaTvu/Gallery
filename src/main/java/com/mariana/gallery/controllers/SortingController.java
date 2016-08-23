@@ -45,4 +45,14 @@ public class SortingController {
         model.addAttribute("pictures", pictureService.sortPicturesByDate());
         return "/art";
     }
+
+    @RequestMapping(value = "/for_sale")
+    public String forSale(Model model, Principal principal) {
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+        }
+        model.addAttribute("pictures", pictureService.forSalePictures());
+        return "/art";
+    }
 }

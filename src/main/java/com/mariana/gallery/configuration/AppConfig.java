@@ -1,11 +1,14 @@
 package com.mariana.gallery.configuration;
 
+import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.ResolverDirectHTTP;
+import com.sun.org.apache.xml.internal.utils.URI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -18,11 +21,14 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.net.URISyntaxException;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan("com.mariana.gallery")
@@ -93,5 +99,19 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
         source.setBasename("classpath:validation");
         return source;
+    }
+
+    @Bean
+    public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver simpleMEResolver = new SimpleMappingExceptionResolver();
+
+        Properties mappings = new Properties();
+        mappings.setProperty("Exception", "error");
+        mappings.setProperty("Error", "error");
+
+        simpleMEResolver.setExceptionMappings(mappings);
+
+        simpleMEResolver.setDefaultErrorView("error");
+        return simpleMEResolver;
     }
 }

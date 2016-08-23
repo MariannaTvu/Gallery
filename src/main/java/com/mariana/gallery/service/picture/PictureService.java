@@ -62,6 +62,21 @@ public class PictureService {
     }
 
     @Transactional
+    public List<Picture> sortForSalePicturesByName() {
+        return pictureDAO.sortForSalePicturesByName();
+    }
+
+    @Transactional
+    public List<Picture> sortForSalePicturesByComments() {
+        return pictureDAO.sortForSalePicturesByComments();
+    }
+
+    @Transactional
+    public List<Picture> sortForSalePicturesByDate() {
+        return pictureDAO.sortForSalePicturesByDate();
+    }
+
+    @Transactional
     public List<Picture> random() {
         return pictureDAO.random();
     }
@@ -115,4 +130,11 @@ public class PictureService {
     public User getPictureAuthor(Picture picture) {
         return pictureDAO.getPictureAuthor(picture);
     }
+
+    @Transactional
+    public List<Picture> forSalePictures() {
+        return pictureDAO.getForSalePictures();
+    }
+
+
 }

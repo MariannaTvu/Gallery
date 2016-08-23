@@ -2,6 +2,7 @@ package com.mariana.gallery.controllers;
 
 import com.mariana.gallery.controllers.exeptions.FileErrorException;
 //import com.mariana.gallery.persistence.orders.Cart;
+import com.mariana.gallery.controllers.exeptions.ResourceNotFoundException;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.picture.PictureComment;
 import com.mariana.gallery.persistence.user.User;
@@ -18,8 +19,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 import javax.persistence.NoResultException;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +32,6 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping
 public class MyController {
     @Autowired
     private GalleryService galleryService;
@@ -102,6 +106,11 @@ public class MyController {
             String name = principal.getName();
             model.addAttribute("login", name);
         }
+        List<Picture> result = pictureService.searchPictures(pattern);
+        if (result.isEmpty()){
+            String msg = "No matching results";
+            model.addAttribute("msg",msg );
+        }
         model.addAttribute("pictures", pictureService.searchPictures(pattern));
 
        return "/search_result";
@@ -118,7 +127,8 @@ public class MyController {
     }
 
     @RequestMapping(value = "/view_art", method = RequestMethod.GET)
-    public String viewArt(@ModelAttribute("picture_id") long id, @ModelAttribute("login") String name, Model model, Principal principal) {
+    public String viewArt(@ModelAttribute("picture_id") long id, @ModelAttribute("login") String name,
+                          @ModelAttribute("msg") String msg, Model model, Principal principal) {
         try {
             Picture pic = pictureService.getPictureById(id);
             List<PictureComment> comments = pic.getPictureComments();
@@ -126,6 +136,7 @@ public class MyController {
             model.addAttribute("picture_id", id);
             model.addAttribute("picture", pic);
             model.addAttribute("comments", comments);
+            model.addAttribute("msg", msg);
             if (principal != null) {
                 User user = userService.findUserByUsername(principal.getName());
                 if (pictureService.getPictureAuthor(pic).getId() != (user.getId())) {
@@ -190,6 +201,7 @@ public class MyController {
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
     }
+
 }
 
 

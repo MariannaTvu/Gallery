@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Maryana
-  Date: 28.06.2016
-  Time: 21:51
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -84,6 +78,9 @@
     <li>
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
+    <li>
+        <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
+    </li>
     <sec:authorize access="isAuthenticated()">
         <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}
         </a></li>
@@ -91,7 +88,13 @@
     <div class="clear"></div>
 </ul>
 <div class="wrapper col3">
-    <div class=" clearfix grid"><c:forEach items="${pictures}" var="picture">
+    <div class=" clearfix grid">
+        <c:if test="${msg ne null}">
+            <br>
+            <p>${msg}</p>
+            <br>
+        </c:if>
+        <c:forEach items="${pictures}" var="picture">
         <figure class="effect-oscar  wowload fadeInUp">
             <div style="max-width: 300px;">
             <img src="picture/${picture.id}"/>
