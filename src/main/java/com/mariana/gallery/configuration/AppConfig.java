@@ -74,15 +74,18 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return adapter;
     }
 
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/gallery");
-        ds.setUsername("root");
-        ds.setPassword("rootpass888");
-        return ds;
-    }
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource ds = new DriverManagerDataSource();
+//        ds.setDriverClassName("com.mysql.jdbc.Driver");
+//        ds.setUrl("jdbc:mysql://localhost:3306/gallery");
+//        ds.setUsername("root");
+//        ds.setPassword("rootpass888");
+//        return ds;
+//    }
+
+
+
 
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
@@ -107,7 +110,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
         Properties mappings = new Properties();
         mappings.setProperty("Exception", "error");
-        mappings.setProperty("Error", "error");
 
         simpleMEResolver.setExceptionMappings(mappings);
 
