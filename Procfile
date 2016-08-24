@@ -1,1 +1,1 @@
-web:    java $JAVA_OPTS -jar target/*.war
+web: sh target/bin/webapp
