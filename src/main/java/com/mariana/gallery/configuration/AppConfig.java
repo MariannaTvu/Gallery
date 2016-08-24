@@ -2,6 +2,7 @@ package com.mariana.gallery.configuration;
 
 import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.ResolverDirectHTTP;
 import com.sun.org.apache.xml.internal.utils.URI;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -74,15 +75,26 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return adapter;
     }
 
-//    @Bean
-//    public DataSource dataSource() {
+    @Bean
+    public DataSource dataSource() {
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        String username = System.getenv("JDBC_DATABASE_USERNAME");
+        String password = System.getenv("JDBC_DATABASE_PASSWORD");
+
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setUrl(dbUrl);
+        basicDataSource.setUsername(username);
+        basicDataSource.setPassword(password);
+
+        return basicDataSource;
+
 //        DriverManagerDataSource ds = new DriverManagerDataSource();
 //        ds.setDriverClassName("com.mysql.jdbc.Driver");
 //        ds.setUrl("jdbc:mysql://localhost:3306/gallery");
 //        ds.setUsername("root");
 //        ds.setPassword("rootpass888");
 //        return ds;
-//    }
+    }
 
 
 
