@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar server/jetty-runner.jar --port $PORT target/*.war
+web: java -jar target/spring2-1.0-SNAPSHOT.war
