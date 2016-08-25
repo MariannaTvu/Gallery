@@ -114,7 +114,7 @@ public class UserController {
     }
 
     //add picture
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String pictureAdd(@RequestParam("picture_name") String pictureName,
                              @RequestParam("picture_description") String pictureDescription,
                              @RequestParam("picture_price") String rawPicturePrice,

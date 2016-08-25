@@ -107,7 +107,7 @@
                 <p>${error}</p>
             </c:if>
             <!---->
-            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add" method="post">
+            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add" method="get">
                 <div class="form-group"><h3>Upload art*</h3></div>
                 <input type="file" id="exampleInputFile" name="file">
                 <div class="form-group" style="margin-top:5%;">Name*<input type="text" class="form-control"
