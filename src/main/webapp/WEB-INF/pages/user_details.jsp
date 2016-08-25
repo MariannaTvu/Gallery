@@ -106,7 +106,7 @@
             </div>
 
             <c:if test="${user.bio ne null}">
-                <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add_bio" method="post">
+                <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add_bio" method="get">
                     <div class="form-group" style="margin-top:5%;"><h3>Update bio</h3><input type="text"
                                                                                              class="form-control"
                                                                                              name="bio"

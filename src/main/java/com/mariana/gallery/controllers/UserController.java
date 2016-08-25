@@ -174,7 +174,7 @@ public class UserController {
         return "/upload_art";
     }
 
-    @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
+    @RequestMapping(value = "/add_bio", method = RequestMethod.GET)
     public String bioAdd(@RequestParam String bio, Model model, Principal principal) {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
