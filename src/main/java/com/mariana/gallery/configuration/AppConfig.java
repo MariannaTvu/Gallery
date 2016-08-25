@@ -129,12 +129,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
         SimpleMappingExceptionResolver simpleMEResolver = new SimpleMappingExceptionResolver();
 
-        Properties mappings = new Properties();
-        mappings.setProperty("Exception", "error");
-
-        simpleMEResolver.setExceptionMappings(mappings);
-
-        simpleMEResolver.setDefaultErrorView("error");
+//        Properties mappings = new Properties();
+//        mappings.setProperty("Exception", "error");
+//
+//        simpleMEResolver.setExceptionMappings(mappings);
+//
+//        simpleMEResolver.setDefaultErrorView("error");
         return simpleMEResolver;
     }
 }
