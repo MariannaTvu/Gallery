@@ -7,13 +7,13 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class ControllerAdvisor {
-    @ExceptionHandler(RuntimeException.class)
-    public String handleResourceNotFoundException() {
-        return "/error";
-    }
-
-    @ExceptionHandler(Exception.class)
-    public String handleException() {
-        return "/error";
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public String handleResourceNotFoundException() {
+//        return "/error";
+//    }
+//
+//    @ExceptionHandler(Exception.class)
+//    public String handleException() {
+//        return "/error";
+//    }
 }
