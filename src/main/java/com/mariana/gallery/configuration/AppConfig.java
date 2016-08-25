@@ -76,10 +76,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public DataSource dataSource() {
-        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+    public DataSource dataSource() throws URI.MalformedURIException {
+        URI dbUri = new URI(System.getenv("mysql://beee8d71b0625f:d9719262@eu-cdbr-west-01.cleardb.com/heroku_4cfb82943020c35?reconnect=true"));
         String username = System.getenv("JDBC_DATABASE_USERNAME");
         String password = System.getenv("JDBC_DATABASE_PASSWORD");
+        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
 
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(dbUrl);
