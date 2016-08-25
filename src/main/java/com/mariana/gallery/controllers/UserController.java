@@ -135,9 +135,7 @@ public class UserController {
                         model.addAttribute("error", msg);
                         return "/upload_art";
                     }
-                    if (!pictureDescription.isEmpty()) {
-                        picture.setDescription(pictureDescription);
-                    }
+
                     picture.setAuthor(user);
                     picture.setAvailable(true);
                     picture.setUserGallery(user.getUserGallery());
@@ -156,6 +154,9 @@ public class UserController {
                         }
                     } else {
                         picture.setPrice(0);
+                    }
+                    if (!pictureDescription.isEmpty()) {
+                        picture.setDescription(pictureDescription);
                     }
                     pictureService.addPicture(picture);
                     return "redirect:/art";
