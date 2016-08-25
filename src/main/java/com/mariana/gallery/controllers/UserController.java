@@ -114,10 +114,10 @@ public class UserController {
     }
 
     //add picture
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String pictureAdd(@RequestParam("picture_name") String pictureName,
-                             @RequestParam("picture_description") String pictureDescription,
-                             @RequestParam("picture_price") String rawPicturePrice,
+                             @ModelAttribute("picture_description") String pictureDescription,
+                             @ModelAttribute("picture_price") String rawPicturePrice,
                              @RequestParam("file") MultipartFile file,
                              Principal principal, Model model) throws IOException {
         if (principal != null) {
