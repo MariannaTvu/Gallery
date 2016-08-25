@@ -92,7 +92,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
      //   String dbUrl = "jdbc:mysql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
 
 
-basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+//basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
 
         return basicDataSource;
