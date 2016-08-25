@@ -179,6 +179,7 @@ public class UserController {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
             userService.addUserBio(user, bio);
+            userService.save(user);
             model.addAttribute("gallery_id", user.getId());
         }
         return "redirect:/artist_gallery/{gallery_id}";
