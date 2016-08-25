@@ -154,6 +154,8 @@ public class UserController {
                             model.addAttribute("error", msg);
                             return "/upload_art";
                         }
+                    } else {
+                        picture.setPrice(0);
                     }
                     pictureService.addPicture(picture);
                     return "redirect:/art";
