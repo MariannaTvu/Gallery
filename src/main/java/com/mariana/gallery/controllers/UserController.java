@@ -144,7 +144,7 @@ public class UserController {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Date date = new Date();
                     picture.setDateAdded(dateFormat.format(date));
-                    if (rawPicturePrice != null) {
+                    if (!rawPicturePrice.isEmpty()) {
                         try {
                             double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
                             Double picturePrice = rawDoublePicturePrice * 100;
