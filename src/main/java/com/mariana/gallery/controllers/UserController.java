@@ -169,7 +169,7 @@ public class UserController {
     @RequestMapping(value = "/edit_picture", method = RequestMethod.POST)
     public String editThisArt(@RequestParam("picture_description") String pictureDescription,
                               @RequestParam("picture_price") String rawPicturePrice,
-                              @RequestParam("picture_id") long id,
+                              @ModelAttribute("picture_id") long id,
                               Principal principal, Model model) {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
@@ -203,9 +203,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit_art", method = RequestMethod.GET)
-    public String editArtPage(Model model, Principal principal) {
+    public String editArtPage(@ModelAttribute("picture_id") long id, Model model, Principal principal) {
         if (principal != null) {
-
+            model.addAttribute("picture_id", id);
+            model.addAttribute("picture", pictureService.getPictureById(id));
         }
         return "/edit_art";
     }

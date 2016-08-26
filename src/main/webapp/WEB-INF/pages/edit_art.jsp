@@ -102,9 +102,10 @@
 </div>
 <div class="wrapper col5">
     <div id="container">
-        <input type="hidden" name="picture_id" value="${picture.id}">
-        <input type="hidden" name="picture" value="${picture}">
+
+
         <div id="content" style="margin-bottom:10%">
+            <input type="hidden" name="picture" value="${picture}">
             <p>Set/change a price or description for a picture ${picture.name}</p>
             <!---->
             <c:if test="${error ne null}">
