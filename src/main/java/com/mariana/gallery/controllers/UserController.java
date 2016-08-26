@@ -169,7 +169,7 @@ public class UserController {
     @RequestMapping(value = "/edit_picture", method = RequestMethod.POST)
     public String editThisArt(@RequestParam("picture_description") String pictureDescription,
                               @RequestParam("picture_price") String rawPicturePrice,
-                              @PathVariable("picture_id") long id,
+                              @RequestParam("picture_id") long id,
                               Principal principal, Model model) {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
