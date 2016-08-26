@@ -29,6 +29,9 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
@@ -77,25 +80,34 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public BasicDataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
-       // URI dbUri = new URI(System.getenv("mysql://beee8d71b0625f:d9719262@eu-cdbr-west-01.cleardb.com/heroku_4cfb82943020c35"));
-        URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(dbUrl);
         if (dbUri.getUserinfo() != null) {
-            String username = System.getenv("JDBC_DATABASE_USERNAME");
-            String password = System.getenv("JDBC_DATABASE_PASSWORD");
+            String username = dbUri.getUserinfo().split(":")[0];
+            String password = dbUri.getUserinfo().split(":")[1];
 
             basicDataSource.setUsername(username);
             basicDataSource.setPassword(password);
         }
-     //   String dbUrl = "jdbc:mysql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
-
-//basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-
 
         return basicDataSource;
+
+
+//        URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
+//        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
+//        BasicDataSource basicDataSource = new BasicDataSource();
+//        basicDataSource.setUrl(dbUrl);
+//        if (dbUri.getUserinfo() != null) {
+//            String username = System.getenv("JDBC_DATABASE_USERNAME");
+//            String password = System.getenv("JDBC_DATABASE_PASSWORD");
+//
+//            basicDataSource.setUsername(username);
+//            basicDataSource.setPassword(password);
+//        }
+//
+//        return basicDataSource;
 
 //        DriverManagerDataSource ds = new DriverManagerDataSource();
 //        ds.setDriverClassName("com.mysql.jdbc.Driver");
@@ -105,7 +117,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 //        return ds;
     }
 
-
+    private static Connection getConnection() throws URISyntaxException, SQLException {
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        return DriverManager.getConnection(dbUrl);
+    }
 
 
     @Bean
