@@ -18,7 +18,7 @@ background-color: #000000;
 	position: relative;
 	float: left;
 	overflow: hidden;
-	margin:  1.2%, 0, 1.2%, 4%;	/*change here for spacing*/	
+	margin:  1.2%, 4%;	/*change here for spacing*/	
 
 	text-align: center;
 	cursor: pointer;
