@@ -133,7 +133,7 @@
 
         </div>
 
-        <div id="column">
+        <div id="column" align="center">
             <div class="subnav">
                 <c:if test="${picture.description ne null}">
                     <div>
@@ -195,7 +195,7 @@
                         </div>
                     </div>
                 </div>
-            </c:if> <a href="/artist_gallery/${picture.userGallery.id}" style="margin:36%">Back
+            </c:if> <a href="/artist_gallery/${picture.userGallery.id}" style="margin:30%">Back
             to ${picture.author.login}'s gallery</a>
         </div>
     </div>
