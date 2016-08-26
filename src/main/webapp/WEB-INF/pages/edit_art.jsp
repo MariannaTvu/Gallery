@@ -105,7 +105,7 @@
         <div id="content" style="margin-bottom:10%">
             <p>Set/change a price or description for a picture ${picture.name}</p>
             <!---->
-            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add" method="post">
+            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add" method="get">
                 <c:if test="${error ne null}">
                     <p>${error}</p>
                 </c:if>

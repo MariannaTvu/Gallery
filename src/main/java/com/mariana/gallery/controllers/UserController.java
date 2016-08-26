@@ -173,18 +173,18 @@ public class UserController {
         return "/upload_art";
     }
 
-    @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
-    public String editArt(@RequestParam("picture_description") String pictureDescription,
-                          @RequestParam("picture_price") String rawPicturePrice,
-                          @PathVariable("picture_id") long id,
-                          Principal principal, Model model) {
+    @RequestMapping(value = "/edit_art", method = RequestMethod.GET)
+    public String editThisArt(@RequestParam("picture_description") String pictureDescription,
+                              @RequestParam("picture_price") String rawPicturePrice,
+                              @ModelAttribute("picture_id") long id,
+                              Principal principal, Model model) {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
             Picture pic = pictureService.getPictureById(id);
             if (!pictureDescription.isEmpty()) {
                 pic.setDescription(pictureDescription);
             }
-            if(!rawPicturePrice.isEmpty()){
+            if (!rawPicturePrice.isEmpty()) {
                 try {
                     double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
                     Double picturePrice = rawDoublePicturePrice * 100;
@@ -200,6 +200,12 @@ public class UserController {
         }
 
         return "/edit_gallery";
+    }
+
+    @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
+    public String editArt(@PathVariable("picture_id") long id, Model model) {
+        model.addAttribute("picture_id", id);
+        return "redirect:/edit_art";
     }
 
     @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
