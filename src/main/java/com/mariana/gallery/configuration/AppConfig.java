@@ -99,6 +99,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(dbUrl);
+        basicDataSource.setInitialSize(3);
         if (dbUri.getUserinfo() != null) {
             String username = System.getenv("JDBC_DATABASE_USERNAME");
             String password = System.getenv("JDBC_DATABASE_PASSWORD");
