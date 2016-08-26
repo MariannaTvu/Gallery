@@ -141,6 +141,8 @@
                             <br>
                             <br>
                             <p><a href="/delete_picture/${picture.id}" var="picture_id" value="${picture.id}">Delete</a></p>
+                            <br>
+                            <p><a href="/edit_art/${picture.id}" var="picture_id" value="${picture.id}">Edit</a></p>
                         </div>
                     </a>
                 </figure>

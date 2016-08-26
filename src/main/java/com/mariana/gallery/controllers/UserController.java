@@ -149,7 +149,7 @@ public class UserController {
                             double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
                             Double picturePrice = rawDoublePicturePrice * 100;
                             picture.setPrice(picturePrice.intValue());
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             String msg = "Please, set the price using numbers";
                             model.addAttribute("error", msg);
                             return "/upload_art";
@@ -171,6 +171,35 @@ public class UserController {
             }
         }
         return "/upload_art";
+    }
+
+    @RequestMapping(value = "/edit_art", method = RequestMethod.POST)
+    public String editArt(@RequestParam("picture_description") String pictureDescription,
+                          @RequestParam("picture_price") String rawPicturePrice,
+                          @ModelAttribute("picture_id") long id,
+                          Principal principal, Model model) {
+        if (principal != null) {
+            User user = userService.findUserByUsername(principal.getName());
+            Picture pic = pictureService.getPictureById(id);
+            if (!pictureDescription.isEmpty()) {
+                pic.setDescription(pictureDescription);
+            }
+            if(!rawPicturePrice.isEmpty()){
+                try {
+                    double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
+                    Double picturePrice = rawDoublePicturePrice * 100;
+                    pic.setPrice(picturePrice.intValue());
+                } catch (Exception e) {
+                    String msg = "Please, set the price using numbers";
+                    model.addAttribute("error", msg);
+                    return "/edit_art";
+                }
+            }
+            pictureService.update(pic);
+            model.addAttribute("picture", pic);
+        }
+
+        return "/edit_gallery";
     }
 
     @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
