@@ -173,10 +173,10 @@ public class UserController {
         return "/upload_art";
     }
 
-    @RequestMapping(value = "/edit_art", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.POST)
     public String editArt(@RequestParam("picture_description") String pictureDescription,
                           @RequestParam("picture_price") String rawPicturePrice,
-                          @ModelAttribute("picture_id") long id,
+                          @PathVariable("picture_id") long id,
                           Principal principal, Model model) {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
