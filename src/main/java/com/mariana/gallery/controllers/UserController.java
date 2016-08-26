@@ -166,7 +166,7 @@ public class UserController {
         return "/upload_art";
     }
 
-    @RequestMapping(value = "/edit_picture", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit_picture", method = RequestMethod.POST)
     public String editThisArt(@RequestParam("picture_description") String pictureDescription,
                               @RequestParam("picture_price") String rawPicturePrice,
                               @ModelAttribute("picture_id") long id,

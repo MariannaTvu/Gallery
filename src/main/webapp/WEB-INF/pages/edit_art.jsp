@@ -105,10 +105,11 @@
         <div id="content" style="margin-bottom:10%">
             <p>Set/change a price or description for a picture ${picture.name}</p>
             <!---->
-            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/edit_picture" method="get">
-                <c:if test="${error ne null}">
-                    <p>${error}</p>
-                </c:if>
+            <c:if test="${error ne null}">
+                <p>${error}</p>
+            </c:if>
+            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/edit_picture" method="post">
+
                 <div class="form-group" style="margin-top:5%;">Set price<input type="text" class="form-control"
                                                                                name="picture_price"
                                                                                placeholder="Picture price"></div>
