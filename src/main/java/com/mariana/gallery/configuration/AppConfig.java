@@ -117,10 +117,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 //        return ds;
     }
 
-//    private static Connection getConnection() throws URISyntaxException, SQLException {
-//        String dbUrl = System.getenv("JDBC_DATABASE_URL");
-//        return DriverManager.getConnection(dbUrl);
-//    }
+    private static Connection getConnection() throws URISyntaxException, SQLException {
+        String dbUrl = System.getenv("JDBC_DATABASE_URL");
+        return DriverManager.getConnection(dbUrl);
+    }
 
 
     @Bean
