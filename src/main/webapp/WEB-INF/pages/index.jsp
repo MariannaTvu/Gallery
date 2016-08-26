@@ -89,7 +89,7 @@
                         <div class="overlay">
                             <h2 style="margin: 0">${picture.name} by ${picture.author.login}</h2>
                             <a class="info" href="/artist_gallery/${picture.userGallery.id}"
-                               style="padding: 3%; margin: 30% 15%">view
+                               style="padding: 3%; margin: 0 0 15px 0">view
                                 artist gallery</a>
                         </div>
                     </div>
