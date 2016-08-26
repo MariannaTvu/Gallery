@@ -91,7 +91,7 @@
 <div class="wrapper col3" align="center">
     <div class=" clearfix grid" align="center" >
         <c:forEach items="${pictures}" var="picture" >
-        <figure class="effect-oscar  wowload fadeInUp" style="width: 20%">
+        <figure class="effect-oscar  wowload fadeInUp" >
             <div style="max-width: 300px;">
                 <img src="picture/${picture.id}" style=""/>
                 <figcaption>
