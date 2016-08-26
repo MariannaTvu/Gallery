@@ -201,7 +201,7 @@ public class UserController {
         return "redirect:/edit_art";
     }
 
-    @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/edit_art", method = RequestMethod.GET)
     public String editArtPage(Model model, Principal principal){
         if (principal!=null){
 
