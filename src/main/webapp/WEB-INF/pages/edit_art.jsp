@@ -106,7 +106,7 @@
 
         <div id="content" style="margin-bottom:10%">
             <input type="hidden" name="picture" value="${picture}">
-            <p>Set/change a price or description for a picture ${picture.name}</p>
+            <p>Set / change a price or description for a picture "${picture.name}"</p>
             <!---->
             <c:if test="${error ne null}">
                 <p>${error}</p>
@@ -119,7 +119,7 @@
                 <div class="form-group">Add description<input type="text" class="form-control"
                                                               name="picture_description"
                                                               placeholder="Description"></div>
-                <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
+                <div class="form-group"><input type="submit" class="btn btn-primary" value="Set"></div>
             </form>
         </div>
 
