@@ -192,19 +192,25 @@ public class UserController {
             model.addAttribute("picture", pic);
         }
 
-        return "redirect:/edit_gallery";
+        return "redirect:/user_pictures";
     }
 
     @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
-    public String editArt(@PathVariable("picture_id") long id, Model model) {
-        model.addAttribute("picture", pictureService.getPictureById(id));
-        model.addAttribute("picture_id", id);
+    public String editArt(@PathVariable("picture_id") long id, Model model, Principal principal) {
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+            model.addAttribute("picture", pictureService.getPictureById(id));
+            model.addAttribute("picture_id", id);
+        }
         return "redirect:/edit_art";
     }
 
     @RequestMapping(value = "/edit_art", method = RequestMethod.GET)
     public String editArtPage(@ModelAttribute("picture_id") long id, Model model, Principal principal) {
         if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
             model.addAttribute("picture_id", id);
             model.addAttribute("picture", pictureService.getPictureById(id));
         }
