@@ -89,8 +89,9 @@
 </ul>
 
 <div class="wrapper col3" align="center">
-    <div class=" clearfix grid" align="center" style="  display: table;
-  margin: 0 auto;">
+    <div class=" clearfix grid" align="center" style="  margin-left:auto;
+   margin-right:auto;
+   display:center;">
         <c:forEach items="${pictures}" var="picture" >
         <figure class="effect-oscar  wowload fadeInUp" >
             <div style="max-width: 300px;">
