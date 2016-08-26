@@ -108,7 +108,7 @@
             <c:if test="${error ne null}">
                 <p>${error}</p>
             </c:if>
-            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/edit_picture" method="post">
+            <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/edit_picture/${picture.id}" method="post">
 
                 <div class="form-group" style="margin-top:5%;">Set price<input type="text" class="form-control"
                                                                                name="picture_price"

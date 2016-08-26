@@ -169,7 +169,7 @@ public class UserController {
     @RequestMapping(value = "/edit_picture", method = RequestMethod.POST)
     public String editThisArt(@RequestParam("picture_description") String pictureDescription,
                               @RequestParam("picture_price") String rawPicturePrice,
-                              @ModelAttribute("picture_id") long id,
+                              @PathVariable("picture_id") long id,
                               Principal principal, Model model) {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
@@ -197,13 +197,14 @@ public class UserController {
 
     @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
     public String editArt(@PathVariable("picture_id") long id, Model model) {
+        model.addAttribute("picture", pictureService.getPictureById(id));
         model.addAttribute("picture_id", id);
         return "redirect:/edit_art";
     }
 
     @RequestMapping(value = "/edit_art", method = RequestMethod.GET)
-    public String editArtPage(Model model, Principal principal){
-        if (principal!=null){
+    public String editArtPage(Model model, Principal principal) {
+        if (principal != null) {
 
         }
         return "/edit_art";
