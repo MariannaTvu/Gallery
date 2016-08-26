@@ -16,7 +16,8 @@ background-color: #000000;
 margin-right: auto;
 }
 /* Common style */
-.grid figure {
+.grid figure { display: block;
+  margin: 15px auto;
 	position: relative;
 	float: left;
 	overflow: hidden;
@@ -35,7 +36,8 @@ margin-right: auto;
 	text-align: center;
 	cursor: pointer;
 }
-.grid figure img {
+.grid figure img { 
+  margin: 15px auto;
 	position: relative;
 	display: block;
 max-height: 300px;
