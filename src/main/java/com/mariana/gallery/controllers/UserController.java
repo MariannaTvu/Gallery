@@ -173,7 +173,7 @@ public class UserController {
         return "/upload_art";
     }
 
-    @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
     public String editArt(@RequestParam("picture_description") String pictureDescription,
                           @RequestParam("picture_price") String rawPicturePrice,
                           @PathVariable("picture_id") long id,
