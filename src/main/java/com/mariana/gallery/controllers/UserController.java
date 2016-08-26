@@ -106,13 +106,6 @@ public class UserController {
         return "/user_details";
     }
 
-
-    @RequestMapping(value = "/user_picture/{user_id}", method = RequestMethod.GET)
-    public String findToDeleteUserById(@PathVariable("user_id") long id, Model model) {
-        model.addAttribute("user_id", id);
-        return "redirect:/delete_user";
-    }
-
     //add picture
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String pictureAdd(@RequestParam("picture_name") String pictureName,
@@ -205,6 +198,14 @@ public class UserController {
     @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
     public String editArt(@PathVariable("picture_id") long id, Model model) {
         model.addAttribute("picture_id", id);
+        return "redirect:/edit_art";
+    }
+
+    @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
+    public String editArtPage(Model model, Principal principal){
+        if (principal!=null){
+
+        }
         return "/edit_art";
     }
 
