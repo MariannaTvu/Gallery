@@ -1,5 +1,6 @@
 package com.mariana.gallery.persistence.picture;
 
+import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.hibernate.annotations.*;
@@ -44,6 +45,11 @@ public class Picture {
     @Lob
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pictures", cascade = CascadeType.REMOVE)
     private List<PictureComment> comments = new ArrayList<>();
+
+
+    @Lob
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.REMOVE)
+    private List<Cart> orders = new ArrayList<>();
 
     @Type(type = "yes_no")
     private boolean available;
@@ -146,6 +152,15 @@ public class Picture {
 
     public Picture setAvailable(boolean available) {
         this.available = available;
+        return this;
+    }
+
+    public List<Cart> getOrders() {
+        return orders;
+    }
+
+    public Picture setOrders(List<Cart> orders) {
+        this.orders = orders;
         return this;
     }
 }
