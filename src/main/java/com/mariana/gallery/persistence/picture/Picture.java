@@ -48,7 +48,7 @@ public class Picture {
 
 
     @Lob
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Cart> orders = new ArrayList<>();
 
     @Type(type = "yes_no")
