@@ -205,7 +205,7 @@ public class UserController {
     @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
     public String editArt(@PathVariable("picture_id") long id, Model model) {
         model.addAttribute("picture_id", id);
-        return "redirect:/edit_art";
+        return "/edit_art";
     }
 
     @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
