@@ -172,6 +172,9 @@ public class UserController {
                               @ModelAttribute("picture_id") long id,
                               Principal principal, Model model) {
         if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+
             User user = userService.findUserByUsername(principal.getName());
             Picture pic = pictureService.getPictureById(id);
             if (!pictureDescription.isEmpty()) {
@@ -192,7 +195,7 @@ public class UserController {
             model.addAttribute("picture", pic);
         }
 
-        return "/edit_gallery";
+        return "redirect:/edit_gallery";
     }
 
     @RequestMapping(value = "/edit_art/{picture_id}", method = RequestMethod.GET)
@@ -205,6 +208,8 @@ public class UserController {
     @RequestMapping(value = "/edit_art", method = RequestMethod.GET)
     public String editArtPage(@ModelAttribute("picture_id") long id, Model model, Principal principal) {
         if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
             model.addAttribute("picture_id", id);
             model.addAttribute("picture", pictureService.getPictureById(id));
         }
