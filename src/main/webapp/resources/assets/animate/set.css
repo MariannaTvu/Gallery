@@ -1,10 +1,9 @@
 .grid {
 	position: relative;
 	flex-wrap: wrap;
-	margin-outside: 0%, 5%, 0%, 5%;
+	margin: 5%, 5%, 0%, 5%;
 	list-style: none;
-	text-align: center;margin-left: auto;
-margin-right: auto;
+	text-align: center;
 }
 .artist_grid {
 	position: relative;
@@ -12,12 +11,10 @@ width: 100%;
 background-color: #000000;
 	margin: auto;
 	list-style: none;
-	text-align: center;margin-left: auto;
-margin-right: auto;
+	text-align: center;
 }
 /* Common style */
-.grid figure { display: block;
-  margin: 15px auto;
+.grid figure {
 	position: relative;
 	float: left;
 	overflow: hidden;
@@ -36,8 +33,7 @@ margin-right: auto;
 	text-align: center;
 	cursor: pointer;
 }
-.grid figure img { 
-  margin: 15px auto;
+.grid figure img {
 	position: relative;
 	display: block;
 max-height: 300px;
