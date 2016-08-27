@@ -169,7 +169,7 @@ public class MyController {
     }
 
     @RequestMapping("/artist_gallery")
-    public String artistGallery(@PathVariable("gallery_id") long galleryId, Model model, Principal principal) {
+    public String artistGallery(@ModelAttribute("gallery_id") long galleryId, Model model, Principal principal) {
         try {
             UserGallery gallery = galleryService.findUserGallery(galleryId);
             User user = userService.findUserByGallery(gallery);
