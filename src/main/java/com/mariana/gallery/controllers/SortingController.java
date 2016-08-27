@@ -41,7 +41,7 @@ public class SortingController {
             model.addAttribute("login", name);
         }
         model.addAttribute("gallery_id", id);
-        model.addAttribute("pictures", pictureService.authorsPicturesByName(userService.findUserByGallery(galleryService.findUserGallery(id))));
+        model.addAttribute("sorting_type", "name");
         return "redirect:/artist_gallery";
     }
 

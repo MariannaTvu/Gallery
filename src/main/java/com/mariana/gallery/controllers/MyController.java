@@ -107,13 +107,13 @@ public class MyController {
             model.addAttribute("login", name);
         }
         List<Picture> result = pictureService.searchPictures(pattern);
-        if (result.isEmpty()){
+        if (result.isEmpty()) {
             String msg = "No matching results";
-            model.addAttribute("msg",msg );
+            model.addAttribute("msg", msg);
         }
         model.addAttribute("pictures", pictureService.searchPictures(pattern));
 
-       return "/search_result";
+        return "/search_result";
     }
 
     @RequestMapping(value = "/view_art/{picture_id}", method = RequestMethod.GET)
@@ -162,6 +162,7 @@ public class MyController {
     public String viewGalleryById(@PathVariable("gallery_id") long galleryId, Model model) {
         try {
             model.addAttribute("gallery_id", galleryId);
+            model.addAttribute("sorting_type", "none");
             return "redirect:/artist_gallery";
         } catch (NoResultException e) {
         }
@@ -169,22 +170,39 @@ public class MyController {
     }
 
     @RequestMapping("/artist_gallery")
-    public String artistGallery(@RequestParam("gallery_id") long galleryId, Model model, Principal principal) {
+    public String artistGallery(@RequestParam("gallery_id") long galleryId,
+                                @RequestParam("sorting_type") String sortingType,
+                                Model model, Principal principal) {
         try {
             UserGallery gallery = galleryService.findUserGallery(galleryId);
             User user = userService.findUserByGallery(gallery);
-            List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
-            List<Long> response = new ArrayList<>();
-            for (Picture picture : galleryPictures) {
-                long id = picture.getId();
-                response.add(id);
+            if (sortingType.equals("none")) {
+                List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
+                List<Long> response = new ArrayList<>();
+                for (Picture picture : galleryPictures) {
+                    long id = picture.getId();
+                    response.add(id);
+                }
+                model.addAttribute("picture_id", response);
+                model.addAttribute("pictures", galleryPictures);
             }
+            if (sortingType.equals("by_date")) {
+                model.addAttribute("pictures", pictureService.authorsPicturesByDate(user));
+            }
+            if (sortingType.equals("by_name")) {
+                model.addAttribute("pictures", pictureService.authorsPicturesByName(user));
+            }
+            if (sortingType.equals("by_comments")) {
+                model.addAttribute("pictures", pictureService.authorsPicturesByComments(user));
+            }
+//            if (sortingType.equals("for_sale")) {
+//                model.addAttribute("pictures", pictureService.authorsPictures(user));
+//            }
+
             if (principal != null) {
                 String name = principal.getName();
                 model.addAttribute("login", name);
             }
-            model.addAttribute("picture_id", response);
-            model.addAttribute("pictures", galleryPictures);
             model.addAttribute("author", user);
             return "/artist_gallery";
         } catch (NoResultException e) {
