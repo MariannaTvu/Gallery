@@ -234,31 +234,34 @@ public class PictureDAOImpl implements PictureDAO {
     }
 
     @Override
-    public List<Picture> sortForSalePicturesByComments() {
+    public List<Picture> authorsPicturesByComments(User user) {
         boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.price <> 0 AND " +
+        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
                 "g.available = :available" +
                 " ORDER BY g.comments.size DESC", Picture.class);
         query.setParameter("available", available);
+        query.setParameter("user", user);
         return query.getResultList();
     }
 
     @Override
-    public List<Picture> sortForSalePicturesByDate() {
+    public List<Picture> authorsPicturesByDate(User user) {
         boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.price <> 0 AND " +
+        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
                 "g.available = :available" +
                 " ORDER BY g.dateAdded DESC", Picture.class);
         query.setParameter("available", available);
+        query.setParameter("user", user);
         return query.getResultList();
     }
 
     @Override
-    public List<Picture> sortForSalePicturesByName() {
+    public List<Picture> authorsPicturesByName(User user) {
         boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.price <> 0 AND " +
+        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
                         "g.available = :available ORDER BY g.name", Picture.class);
         query.setParameter("available", available);
+        query.setParameter("user", user);
         return query.getResultList();
     }
 }

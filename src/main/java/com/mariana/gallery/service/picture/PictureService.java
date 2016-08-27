@@ -62,18 +62,18 @@ public class PictureService {
     }
 
     @Transactional
-    public List<Picture> sortForSalePicturesByName() {
-        return pictureDAO.sortForSalePicturesByName();
+    public List<Picture> authorsPicturesByName(User user) {
+        return pictureDAO.authorsPicturesByName(user);
     }
 
     @Transactional
-    public List<Picture> sortForSalePicturesByComments() {
-        return pictureDAO.sortForSalePicturesByComments();
+    public List<Picture> authorsPicturesByComments(User user) {
+        return pictureDAO.authorsPicturesByComments(user);
     }
 
     @Transactional
-    public List<Picture> sortForSalePicturesByDate() {
-        return pictureDAO.sortForSalePicturesByDate();
+    public List<Picture> authorsPicturesByDate(User user) {
+        return pictureDAO.authorsPicturesByDate(user);
     }
 
     @Transactional

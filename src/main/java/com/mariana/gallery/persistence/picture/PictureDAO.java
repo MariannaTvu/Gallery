@@ -44,9 +44,12 @@ public interface PictureDAO {
 
     List<Picture> sortPicturesByDate();
 
-    List<Picture> sortForSalePicturesByName();
-    List<Picture> sortForSalePicturesByComments();
-    List<Picture> sortForSalePicturesByDate();
+    List<Picture> authorsPicturesByName(User user);
+
+    List<Picture> authorsPicturesByComments(User user);
+
+    List<Picture> authorsPicturesByDate(User user);
+
     List<Picture> getForSalePictures();
 
     List<Picture> random();

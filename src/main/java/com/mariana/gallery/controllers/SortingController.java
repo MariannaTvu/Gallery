@@ -1,9 +1,12 @@
 package com.mariana.gallery.controllers;
 
+import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.service.picture.PictureService;
+import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -16,6 +19,12 @@ public class SortingController {
     @Autowired
     private PictureService pictureService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private GalleryService galleryService;
+
     @RequestMapping(value = "/sort_by_name")
     public String sortedByName(Model model, Principal principal) {
         if (principal != null) {
@@ -24,6 +33,17 @@ public class SortingController {
         }
         model.addAttribute("pictures", pictureService.sortPicturesByName());
         return "/art";
+    }
+    @RequestMapping(value = "/author_sort_by_name")
+    public String authorsSortedByName(@ModelAttribute("gallery_id") long id,
+            Model model, Principal principal) {
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("login", name);
+        }
+        model.addAttribute("gallery_id", id);
+        model.addAttribute("pictures", pictureService.authorsPicturesByName(userService.findUserByGallery(galleryService.findUserGallery(id))));
+        return "redirect:/artist_gallery}";
     }
 
     @RequestMapping(value = "/sort_by_comments")
