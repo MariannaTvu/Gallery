@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 
@@ -34,7 +35,7 @@ public class SortingController {
         model.addAttribute("pictures", pictureService.sortPicturesByName());
         return "/art";
     }
-    @RequestMapping(value = "/author_sort_by_name")
+    @RequestMapping(value = "/author_sort_by_name" , method = RequestMethod.GET)
     public String authorsSortedByName(@ModelAttribute("gallery_id") long id,
             Model model, Principal principal) {
         if (principal != null) {
@@ -43,7 +44,7 @@ public class SortingController {
         }
         model.addAttribute("gallery_id", id);
         model.addAttribute("pictures", pictureService.authorsPicturesByName(userService.findUserByGallery(galleryService.findUserGallery(id))));
-        return "redirect:/artist_gallery}";
+        return "redirect:/artist_gallery";
     }
 
     @RequestMapping(value = "/sort_by_comments")
