@@ -42,7 +42,7 @@ public class SortingController {
         }
         model.addAttribute("gallery_id", id);
         model.addAttribute("pictures", pictureService.authorsPicturesByName(userService.findUserByGallery(galleryService.findUserGallery(id))));
-        return "/artist_gallery/{gallery_id}";
+        return "/artist_gallery";
     }
 
     @RequestMapping(value = "/sort_by_comments")
