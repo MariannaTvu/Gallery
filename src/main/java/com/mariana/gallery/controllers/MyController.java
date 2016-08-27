@@ -186,6 +186,7 @@ public class MyController {
             model.addAttribute("picture_id", response);
             model.addAttribute("pictures", galleryPictures);
             model.addAttribute("author", user);
+            model.addAttribute("gallery_id", galleryId);
             return "/artist_gallery";
         } catch (NoResultException e) {
         }
