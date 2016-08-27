@@ -34,7 +34,7 @@ public class SortingController {
         return "/art";
     }
     @RequestMapping(value = "/author_sort_by_name" , method = RequestMethod.GET)
-    public String authorsSortedByName( long id,
+    public String authorsSortedByName( Long id,
             Model model, Principal principal) {
         if (principal != null) {
             String name = principal.getName();
