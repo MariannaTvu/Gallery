@@ -6,9 +6,7 @@ import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -36,7 +34,7 @@ public class SortingController {
         return "/art";
     }
     @RequestMapping(value = "/author_sort_by_name" , method = RequestMethod.GET)
-    public String authorsSortedByName(@ModelAttribute("gallery_id") long id,
+    public String authorsSortedByName(@RequestParam("gallery_id") long id,
             Model model, Principal principal) {
         if (principal != null) {
             String name = principal.getName();

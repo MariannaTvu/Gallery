@@ -91,8 +91,7 @@
 <ul class="sort_navigation">
     <input type="hidden" name="gallery_id" value="${author.userGallery.id}">
     <li>
-        <form action="/author_sort_by_name"><a href="/author_sort_by_name" title="Sort by comments">name
-            art</a></form>
+        <form action="/author_sort_by_name"><a href="/author_sort_by_name" title="Sort by comments">${author.userGallery.id}</a></form>
     </li>
     <li>
         <form action="/author_sort_by_date"><a href="/author_sort_by_date" title="Sort by date">See latest updates</a></form>
