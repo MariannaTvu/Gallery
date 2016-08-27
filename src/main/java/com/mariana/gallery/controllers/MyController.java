@@ -107,13 +107,13 @@ public class MyController {
             model.addAttribute("login", name);
         }
         List<Picture> result = pictureService.searchPictures(pattern);
-        if (result.isEmpty()) {
+        if (result.isEmpty()){
             String msg = "No matching results";
-            model.addAttribute("msg", msg);
+            model.addAttribute("msg",msg );
         }
         model.addAttribute("pictures", pictureService.searchPictures(pattern));
 
-        return "/search_result";
+       return "/search_result";
     }
 
     @RequestMapping(value = "/view_art/{picture_id}", method = RequestMethod.GET)
@@ -161,13 +161,6 @@ public class MyController {
     @RequestMapping(value = "/artist_gallery/{gallery_id}", method = RequestMethod.GET)
     public String viewGalleryById(@PathVariable("gallery_id") long galleryId, Model model) {
         try {
-            UserGallery gallery = galleryService.findUserGallery(galleryId);
-            User user = userService.findUserByGallery(gallery);
-            List<Picture> galleryPicturesList = pictureService.getPicturesByGallery(gallery);
-            Picture[] galleryPictures = new Picture[galleryPicturesList.size()];
-            galleryPictures = galleryPicturesList.toArray(galleryPictures);
-            model.addAttribute("pictures", galleryPictures);
-            model.addAttribute("author", user);
             model.addAttribute("gallery_id", galleryId);
             return "redirect:/artist_gallery";
         } catch (NoResultException e) {
@@ -176,14 +169,11 @@ public class MyController {
     }
 
     @RequestMapping("/artist_gallery")
-    public String artistGallery(@ModelAttribute("gallery_id") long galleryId,
-                                @ModelAttribute("author") User user,
-                                @ModelAttribute("pictures") Picture[] galleryPictures,
-                                Model model, Principal principal) {
+    public String artistGallery(@RequestParam("gallery_id") long galleryId, Model model, Principal principal) {
         try {
-            //   UserGallery gallery = galleryService.findUserGallery(galleryId);
-            //  User user = userService.findUserByGallery(gallery);
-            //  List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
+            UserGallery gallery = galleryService.findUserGallery(galleryId);
+            User user = userService.findUserByGallery(gallery);
+            List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
             List<Long> response = new ArrayList<>();
             for (Picture picture : galleryPictures) {
                 long id = picture.getId();
@@ -196,8 +186,6 @@ public class MyController {
             model.addAttribute("picture_id", response);
             model.addAttribute("pictures", galleryPictures);
             model.addAttribute("author", user);
-
-            model.addAttribute("gallery_id", galleryId);
             return "/artist_gallery";
         } catch (NoResultException e) {
         }
