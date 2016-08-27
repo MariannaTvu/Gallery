@@ -164,7 +164,8 @@ public class MyController {
             UserGallery gallery = galleryService.findUserGallery(galleryId);
             User user = userService.findUserByGallery(gallery);
             List<Picture> galleryPicturesList = pictureService.getPicturesByGallery(gallery);
-            Picture[] galleryPictures = (Picture[]) galleryPicturesList.toArray();
+            Picture[] galleryPictures = new Picture[galleryPicturesList.size()];
+            galleryPictures = galleryPicturesList.toArray(galleryPictures);
             model.addAttribute("pictures", galleryPictures);
             model.addAttribute("author", user);
             model.addAttribute("gallery_id", galleryId);
