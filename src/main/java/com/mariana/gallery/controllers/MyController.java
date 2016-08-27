@@ -161,6 +161,12 @@ public class MyController {
     @RequestMapping(value = "/artist_gallery/{gallery_id}", method = RequestMethod.GET)
     public String viewGalleryById(@PathVariable("gallery_id") long galleryId, Model model) {
         try {
+            UserGallery gallery = galleryService.findUserGallery(galleryId);
+            User user = userService.findUserByGallery(gallery);
+            List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
+
+            model.addAttribute("pictures", galleryPictures);
+            model.addAttribute("author", user);
             model.addAttribute("gallery_id", galleryId);
             return "redirect:/artist_gallery";
         } catch (NoResultException e) {
@@ -169,11 +175,14 @@ public class MyController {
     }
 
     @RequestMapping("/artist_gallery")
-    public String artistGallery(@ModelAttribute("gallery_id") long galleryId, Model model, Principal principal) {
+    public String artistGallery(@ModelAttribute("gallery_id") long galleryId,
+                                @ModelAttribute("author") User user,
+                                @ModelAttribute("pictures") List<Picture> galleryPictures,
+                                Model model, Principal principal) {
         try {
-            UserGallery gallery = galleryService.findUserGallery(galleryId);
-            User user = userService.findUserByGallery(gallery);
-            List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
+         //   UserGallery gallery = galleryService.findUserGallery(galleryId);
+          //  User user = userService.findUserByGallery(gallery);
+          //  List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
             List<Long> response = new ArrayList<>();
             for (Picture picture : galleryPictures) {
                 long id = picture.getId();
@@ -186,6 +195,7 @@ public class MyController {
             model.addAttribute("picture_id", response);
             model.addAttribute("pictures", galleryPictures);
             model.addAttribute("author", user);
+
             model.addAttribute("gallery_id", galleryId);
             return "/artist_gallery";
         } catch (NoResultException e) {
