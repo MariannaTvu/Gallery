@@ -189,7 +189,7 @@ public class MyController {
             if (sortingType.equals("by_date")) {
                 model.addAttribute("pictures", pictureService.authorsPicturesByDate(user));
             }
-            if (sortingType.equals("by_name")) {
+            if (sortingType.equals("name")) {
                 model.addAttribute("pictures", pictureService.authorsPicturesByName(user));
             }
             if (sortingType.equals("by_comments")) {
