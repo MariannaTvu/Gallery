@@ -34,12 +34,13 @@ public class SortingController {
         return "/art";
     }
     @RequestMapping(value = "/author_sort_by_name" , method = RequestMethod.GET)
-    public String authorsSortedByName(Model model, Principal principal) {
+    public String authorsSortedByName(@ModelAttribute("gallery_id") long id,
+            Model model, Principal principal) {
         if (principal != null) {
             String name = principal.getName();
             model.addAttribute("login", name);
         }
-
+        model.addAttribute("gallery_id", id);
         model.addAttribute("sorting_type", "name");
         return "redirect:/artist_gallery";
     }
