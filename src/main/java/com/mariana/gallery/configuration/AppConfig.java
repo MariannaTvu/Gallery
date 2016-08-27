@@ -107,7 +107,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
             basicDataSource.setUsername(username);
             basicDataSource.setPassword(password);
         }
-        basicDataSource.setInitialSize(1);
+        basicDataSource.setInitialSize(8);
         return basicDataSource;
 
 //        DriverManagerDataSource ds = new DriverManagerDataSource();
