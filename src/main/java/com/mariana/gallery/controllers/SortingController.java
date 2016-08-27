@@ -33,9 +33,9 @@ public class SortingController {
         model.addAttribute("pictures", pictureService.sortPicturesByName());
         return "/art";
     }
-    @RequestMapping(value = "/author_sort_by_name" , method = RequestMethod.GET)
-    public String authorsSortedByName(@ModelAttribute("gallery_id") long id,
-            Model model, Principal principal) {
+    @RequestMapping(value = "/author_sort_by_name/{gallery_id}" , method = RequestMethod.GET)
+    public String authorsSortedByName(
+                                      Model model, Principal principal, @PathVariable("gallery_id") long id) {
         if (principal != null) {
             String name = principal.getName();
             model.addAttribute("login", name);
