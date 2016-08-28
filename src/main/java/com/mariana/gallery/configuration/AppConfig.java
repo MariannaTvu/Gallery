@@ -76,30 +76,24 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(dbUrl);
-
         if (dbUri.getUserinfo() != null) {
             String username = System.getenv("JDBC_DATABASE_USERNAME");
             String password = System.getenv("JDBC_DATABASE_PASSWORD");
-
             basicDataSource.setUsername(username);
             basicDataSource.setPassword(password);
         }
-
         try {
             java.sql.Connection connection = basicDataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         basicDataSource.setTestOnReturn(true);
         basicDataSource.setTestOnBorrow(true);
         basicDataSource.setTestWhileIdle(true);
-
         basicDataSource.setMaxIdle(30);
         basicDataSource.setMaxActive(100);
         basicDataSource.setMaxWait(10000);
         basicDataSource.setInitialSize(16);
-
         return basicDataSource;
     }
 
@@ -110,7 +104,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         resolver.setOrder(1);
-
         return resolver;
     }
 
@@ -124,13 +117,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
         SimpleMappingExceptionResolver simpleMEResolver = new SimpleMappingExceptionResolver();
-
-//        Properties mappings = new Properties();
-//        mappings.setProperty("Exception", "error");
-//
-//        simpleMEResolver.setExceptionMappings(mappings);
-//
-//        simpleMEResolver.setDefaultErrorView("error");
+        Properties mappings = new Properties();
+        mappings.setProperty("Exception", "error");
+        simpleMEResolver.setExceptionMappings(mappings);
+        simpleMEResolver.setDefaultErrorView("error");
         return simpleMEResolver;
     }
 }

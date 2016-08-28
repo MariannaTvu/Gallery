@@ -1,7 +1,5 @@
 package com.mariana.gallery.persistence.user;
 
-//import com.mariana.gallery.persistence.orders.Cart;
-
 import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import com.mariana.gallery.persistence.picture.Picture;

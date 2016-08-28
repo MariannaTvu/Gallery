@@ -1,6 +1,5 @@
 package com.mariana.gallery.configuration;
 
-import com.mariana.gallery.configuration.AppConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

@@ -4,7 +4,6 @@ package com.mariana.gallery.controllers;
 import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.user.User;
-import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;

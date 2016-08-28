@@ -1,8 +1,6 @@
 package com.mariana.gallery.controllers;
 
-import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.service.picture.PictureService;
-import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
