@@ -79,7 +79,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         cpds.setUser(System.getenv("JDBC_DATABASE_USERNAME"));
         cpds.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
 
-        // Optional Settings
         cpds.setInitialPoolSize(5);
         cpds.setMinPoolSize(5);
         cpds.setAcquireIncrement(5);
@@ -87,33 +86,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         cpds.setMaxStatements(100);
         cpds.setTestConnectionOnCheckin(true);
         cpds.setTestConnectionOnCheckout(true);
-
-
-//
-//
-//        BasicDataSource basicDataSource = new BasicDataSource();
-//        basicDataSource.setUrl(dbUrl);
-//        if (dbUri.getUserinfo() != null) {
-//            String username = System.getenv("JDBC_DATABASE_USERNAME");
-//            String password = System.getenv("JDBC_DATABASE_PASSWORD");
-//            basicDataSource.setUsername(username);
-//            basicDataSource.setPassword(password);
-//        }
-//        try {
-//            java.sql.Connection connection = basicDataSource.getConnection();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        basicDataSource.setTestOnReturn(true);
-//        basicDataSource.setTestOnBorrow(true);
-//        basicDataSource.setTestWhileIdle(true);
-//        basicDataSource.setMaxIdle(30);
-//        basicDataSource.setMaxActive(100);
-//        basicDataSource.setMaxWait(10000);
-//        basicDataSource.setInitialSize(6);
-//
-//        basicDataSource.setValidationQuery("SELECT 1");
-
         return cpds;
     }
 
