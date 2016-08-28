@@ -56,6 +56,10 @@ public class MyController {
         return "index";
     }
 
+    @RequestMapping("/reg")
+    public String registration() {
+        return "redirect:/registration";
+    }
 
     @RequestMapping("/art")
     public String artGalleries(Model model, Principal principal) {
