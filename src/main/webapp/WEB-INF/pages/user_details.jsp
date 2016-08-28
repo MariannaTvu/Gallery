@@ -196,8 +196,6 @@
                 <li><a href="#">Permissions &amp; Trademarks</a></li>
                 <li class="last"><a href="#">Product License Agreements</a></li>
             </ul>
-            <p>Template by <a target="_blank" href="http://www.os-templates.com/" title="Free Website Templates">OS
-                Templates</a></p>
             <div class="clear"></div>
         </div>
     </div>

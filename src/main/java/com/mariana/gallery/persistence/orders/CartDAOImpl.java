@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-@Transactional
 public class CartDAOImpl implements CartDAO {
     @PersistenceContext
     private EntityManager entityManager;
@@ -54,7 +53,6 @@ public class CartDAOImpl implements CartDAO {
         return (List<Cart>) query.getResultList();
     }
 
-    @Transactional
     @Override
     public Cart getOrderById(long id) {
         return entityManager.find(Cart.class, id);
