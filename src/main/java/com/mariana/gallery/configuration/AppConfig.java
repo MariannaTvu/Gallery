@@ -73,7 +73,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public BasicDataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
         URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
+        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath()+"?reconnect=true";
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(dbUrl);
         if (dbUri.getUserinfo() != null) {
@@ -94,6 +94,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         basicDataSource.setMaxActive(100);
         basicDataSource.setMaxWait(10000);
         basicDataSource.setInitialSize(6);
+
         return basicDataSource;
     }
 
