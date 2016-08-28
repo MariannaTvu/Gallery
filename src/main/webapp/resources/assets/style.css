@@ -66,6 +66,28 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
   padding: 10px 20px 10px 20px;
   text-decoration: none;
 }
+.delete-btn{
+	-webkit-border-radius: 28;
+	-moz-border-radius: 28;
+	border-radius: 28px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 13px;
+	background: #f53f3f;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
+}
+.edit-btn{
+	-webkit-border-radius: 28;
+	-moz-border-radius: 28;
+	border-radius: 28px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 13px;
+	background: #3f73f5;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
+}
 
 @media (max-width: 1200px) {
 	body{font:300 13px/13px Roboto,Arial,Helvetica;}
