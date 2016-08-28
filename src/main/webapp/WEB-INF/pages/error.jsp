@@ -71,7 +71,7 @@
                     </ul>
                 </li>
             </sec:authorize>
-            <li class="active"><a href="/art">Art</a></li>
+            <li><a href="/art">Art</a></li>
             <li><a href="/">Main</a></li>
         </ul>
         <br class="clear"/>
