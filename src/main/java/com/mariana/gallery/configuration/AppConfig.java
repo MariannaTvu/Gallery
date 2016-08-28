@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
@@ -83,6 +84,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
             basicDataSource.setUsername(username);
             basicDataSource.setPassword(password);
         }
+
+        try {
+            java.sql.Connection connection = basicDataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        basicDataSource.setMaxIdle(30);
+        basicDataSource.setMaxActive(100);
+        basicDataSource.setMaxWait(10000);
         basicDataSource.setInitialSize(16);
         return basicDataSource;
     }
