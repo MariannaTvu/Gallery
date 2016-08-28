@@ -140,9 +140,9 @@
                             <h2><c:out value="${picture.name}"/></h2>
                             <br>
                             <br>
-                            <p><a href="/delete_picture/${picture.id}" var="picture_id" value="${picture.id}">Delete</a></p>
+                            <p><button class="buy-btn" style="color:red" href="/delete_picture/${picture.id}" var="picture_id" value="${picture.id}">Delete</button></p>
                             <br>
-                            <p><a href="/edit_art/${picture.id}" var="picture_id" value="${picture.id}">Edit</a></p>
+                            <p><button class="buy-btn" href="/edit_art/${picture.id}" var="picture_id" value="${picture.id}">Edit</button></p>
                         </div>
                     </a>
                 </figure>
