@@ -1,5 +1,7 @@
 package com.mariana.gallery.configuration;
 
+import com.mchange.v2.c3p0.cfg.C3P0Config;
+import com.mchange.v2.c3p0.impl.C3P0Defaults;
 import com.sun.org.apache.xml.internal.utils.URI;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
@@ -91,10 +93,15 @@ public class AppConfig extends WebMvcConfigurerAdapter {
             e.printStackTrace();
         }
 
+        basicDataSource.setTestOnReturn(true);
+        basicDataSource.setTestOnBorrow(true);
+        basicDataSource.setTestWhileIdle(true);
+
         basicDataSource.setMaxIdle(30);
         basicDataSource.setMaxActive(100);
         basicDataSource.setMaxWait(10000);
         basicDataSource.setInitialSize(16);
+
         return basicDataSource;
     }
 
@@ -108,6 +115,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
         return resolver;
     }
+
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();

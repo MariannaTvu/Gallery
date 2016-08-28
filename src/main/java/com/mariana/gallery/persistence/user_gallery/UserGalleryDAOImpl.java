@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public class UserGalleryDAOImpl implements UserGalleryDAO {
+    public static final String JPQL_FIND_ALL_GALLERIES = "SELECT g FROM UserGallery g";
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -30,7 +32,7 @@ public class UserGalleryDAOImpl implements UserGalleryDAO {
 
     @Override
     public List<UserGallery> list() {
-        Query query = entityManager.createQuery("SELECT g FROM UserGallery g", UserGallery.class);
+        Query query = entityManager.createQuery(JPQL_FIND_ALL_GALLERIES, UserGallery.class);
         return (List<UserGallery>) query.getResultList();
     }
 }
