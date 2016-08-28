@@ -1,5 +1,6 @@
 package com.mariana.gallery.configuration;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.sun.org.apache.xml.internal.utils.URI;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,6 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
@@ -48,7 +48,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(BasicDataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(ComboPooledDataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
@@ -71,33 +71,50 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public BasicDataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
+    public ComboPooledDataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
         URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath()+"?reconnect=true";
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl(dbUrl);
-        if (dbUri.getUserinfo() != null) {
-            String username = System.getenv("JDBC_DATABASE_USERNAME");
-            String password = System.getenv("JDBC_DATABASE_PASSWORD");
-            basicDataSource.setUsername(username);
-            basicDataSource.setPassword(password);
-        }
-        try {
-            java.sql.Connection connection = basicDataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        basicDataSource.setTestOnReturn(true);
-        basicDataSource.setTestOnBorrow(true);
-        basicDataSource.setTestWhileIdle(true);
-        basicDataSource.setMaxIdle(30);
-        basicDataSource.setMaxActive(100);
-        basicDataSource.setMaxWait(10000);
-        basicDataSource.setInitialSize(6);
+        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath() + "?reconnect=true";
+        ComboPooledDataSource cpds = new ComboPooledDataSource();
+        cpds.setJdbcUrl(dbUrl);
+        cpds.setUser(System.getenv("JDBC_DATABASE_USERNAME"));
+        cpds.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
 
-        basicDataSource.setValidationQuery("SELECT 1");
+        // Optional Settings
+        cpds.setInitialPoolSize(5);
+        cpds.setMinPoolSize(5);
+        cpds.setAcquireIncrement(5);
+        cpds.setMaxPoolSize(20);
+        cpds.setMaxStatements(100);
+        cpds.setTestConnectionOnCheckin(true);
+        cpds.setTestConnectionOnCheckout(true);
 
-        return basicDataSource;
+
+//
+//
+//        BasicDataSource basicDataSource = new BasicDataSource();
+//        basicDataSource.setUrl(dbUrl);
+//        if (dbUri.getUserinfo() != null) {
+//            String username = System.getenv("JDBC_DATABASE_USERNAME");
+//            String password = System.getenv("JDBC_DATABASE_PASSWORD");
+//            basicDataSource.setUsername(username);
+//            basicDataSource.setPassword(password);
+//        }
+//        try {
+//            java.sql.Connection connection = basicDataSource.getConnection();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        basicDataSource.setTestOnReturn(true);
+//        basicDataSource.setTestOnBorrow(true);
+//        basicDataSource.setTestWhileIdle(true);
+//        basicDataSource.setMaxIdle(30);
+//        basicDataSource.setMaxActive(100);
+//        basicDataSource.setMaxWait(10000);
+//        basicDataSource.setInitialSize(6);
+//
+//        basicDataSource.setValidationQuery("SELECT 1");
+
+        return cpds;
     }
 
     @Bean
