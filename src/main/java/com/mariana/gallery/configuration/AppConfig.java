@@ -95,6 +95,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         basicDataSource.setMaxWait(10000);
         basicDataSource.setInitialSize(6);
 
+        basicDataSource.setValidationQuery("SELECT 1");
+
         return basicDataSource;
     }
 
