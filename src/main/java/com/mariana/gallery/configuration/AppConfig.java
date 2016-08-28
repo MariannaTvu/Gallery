@@ -1,7 +1,5 @@
 package com.mariana.gallery.configuration;
 
-import com.mchange.v2.c3p0.cfg.C3P0Config;
-import com.mchange.v2.c3p0.impl.C3P0Defaults;
 import com.sun.org.apache.xml.internal.utils.URI;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
