@@ -1,16 +1,11 @@
 package com.mariana.gallery.configuration;
 
-import com.sun.org.apache.xml.internal.security.utils.resolver.implementations.ResolverDirectHTTP;
 import com.sun.org.apache.xml.internal.utils.URI;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -27,11 +22,7 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
@@ -80,21 +71,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public BasicDataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
-//        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-//        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-//        BasicDataSource basicDataSource = new BasicDataSource();
-//        basicDataSource.setUrl(dbUrl);
-//        if (dbUri.getUserinfo() != null) {
-//            String username = dbUri.getUserinfo().split(":")[0];
-//            String password = dbUri.getUserinfo().split(":")[1];
-//
-//            basicDataSource.setUsername(username);
-//            basicDataSource.setPassword(password);
-//        }
-//
-//        return basicDataSource;
-
-
         URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
         String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
         BasicDataSource basicDataSource = new BasicDataSource();
@@ -107,15 +83,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
             basicDataSource.setUsername(username);
             basicDataSource.setPassword(password);
         }
-        basicDataSource.setInitialSize(8);
+        basicDataSource.setInitialSize(16);
         return basicDataSource;
-
-//        DriverManagerDataSource ds = new DriverManagerDataSource();
-//        ds.setDriverClassName("com.mysql.jdbc.Driver");
-//        ds.setUrl("jdbc:mysql://localhost:3306/gallery");
-//        ds.setUsername("root");
-//        ds.setPassword("rootpass888");
-//        return ds;
     }
 
     @Bean
@@ -139,12 +108,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
         SimpleMappingExceptionResolver simpleMEResolver = new SimpleMappingExceptionResolver();
 
-//        Properties mappings = new Properties();
-//        mappings.setProperty("Exception", "error");
-//
-//        simpleMEResolver.setExceptionMappings(mappings);
-//
-//        simpleMEResolver.setDefaultErrorView("error");
+        Properties mappings = new Properties();
+        mappings.setProperty("Exception", "error");
+
+        simpleMEResolver.setExceptionMappings(mappings);
+
+        simpleMEResolver.setDefaultErrorView("error");
         return simpleMEResolver;
     }
 }

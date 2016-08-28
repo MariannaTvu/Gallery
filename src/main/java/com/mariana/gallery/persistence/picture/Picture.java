@@ -52,6 +52,7 @@ public class Picture {
     private List<Cart> orders = new ArrayList<>();
 
     @Type(type = "yes_no")
+    @Basic(fetch = FetchType.EAGER)
     private boolean available;
 
     public Picture() {
