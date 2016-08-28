@@ -70,6 +70,10 @@ public class PictureService {
     public List<Picture> authorsPicturesByComments(User user) {
         return pictureDAO.authorsPicturesByComments(user);
     }
+    @Transactional
+    public List<Picture> authorsPicturesForSale(User user) {
+        return pictureDAO.authorsPicturesForSale(user);
+    }
 
     @Transactional
     public List<Picture> authorsPicturesByDate(User user) {

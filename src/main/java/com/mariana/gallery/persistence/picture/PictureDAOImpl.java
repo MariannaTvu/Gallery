@@ -264,4 +264,13 @@ public class PictureDAOImpl implements PictureDAO {
         query.setParameter("user", user);
         return query.getResultList();
     }
+    @Override
+    public List<Picture> authorsPicturesForSale(User user) {
+        boolean available = true;
+        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
+                        "g.available = :available AND g.price <> 0 ORDER BY g.name", Picture.class);
+        query.setParameter("available", available);
+        query.setParameter("user", user);
+        return query.getResultList();
+    }
 }

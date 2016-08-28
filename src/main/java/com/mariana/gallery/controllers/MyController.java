@@ -178,26 +178,20 @@ public class MyController {
             User user = userService.findUserByGallery(gallery);
             if (sortingType.equals("none")) {
                 List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
-                List<Long> response = new ArrayList<>();
-                for (Picture picture : galleryPictures) {
-                    long id = picture.getId();
-                    response.add(id);
-                }
-                model.addAttribute("picture_id", response);
                 model.addAttribute("pictures", galleryPictures);
             }
-            if (sortingType.equals("by_date")) {
+            if (sortingType.equals("date")) {
                 model.addAttribute("pictures", pictureService.authorsPicturesByDate(user));
             }
             if (sortingType.equals("name")) {
                 model.addAttribute("pictures", pictureService.authorsPicturesByName(user));
             }
-            if (sortingType.equals("by_comments")) {
+            if (sortingType.equals("comments")) {
                 model.addAttribute("pictures", pictureService.authorsPicturesByComments(user));
             }
-//            if (sortingType.equals("for_sale")) {
-//                model.addAttribute("pictures", pictureService.authorsPictures(user));
-//            }
+            if (sortingType.equals("for_sale")) {
+                model.addAttribute("pictures", pictureService.authorsPicturesForSale(user));
+            }
 
             if (principal != null) {
                 String name = principal.getName();

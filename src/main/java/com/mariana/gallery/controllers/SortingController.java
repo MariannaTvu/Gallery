@@ -18,12 +18,6 @@ public class SortingController {
     @Autowired
     private PictureService pictureService;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private GalleryService galleryService;
-
     @RequestMapping(value = "/sort_by_name")
     public String sortedByName(Model model, Principal principal) {
         if (principal != null) {
@@ -32,17 +26,6 @@ public class SortingController {
         }
         model.addAttribute("pictures", pictureService.sortPicturesByName());
         return "/art";
-    }
-    @RequestMapping(value = "/author_sort_by_name/{gallery_id}" , method = RequestMethod.GET)
-    public String authorsSortedByName(
-                                      Model model, Principal principal, @PathVariable("gallery_id") long id) {
-        if (principal != null) {
-            String name = principal.getName();
-            model.addAttribute("login", name);
-        }
-        model.addAttribute("gallery_id", id);
-        model.addAttribute("sorting_type", "name");
-        return "redirect:/artist_gallery";
     }
 
     @RequestMapping(value = "/sort_by_comments")
@@ -73,5 +56,33 @@ public class SortingController {
         }
         model.addAttribute("pictures", pictureService.forSalePictures());
         return "/art";
+    }
+
+    @RequestMapping(value = "/author_sort_by_name/{gallery_id}", method = RequestMethod.GET)
+    public String authorsSortedByName(Model model, @PathVariable("gallery_id") long id) {
+        model.addAttribute("gallery_id", id);
+        model.addAttribute("sorting_type", "name");
+        return "redirect:/artist_gallery";
+    }
+
+    @RequestMapping(value = "/author_sort_by_date/{gallery_id}", method = RequestMethod.GET)
+    public String authorsSortedByDate(Model model, @PathVariable("gallery_id") long id) {
+        model.addAttribute("gallery_id", id);
+        model.addAttribute("sorting_type", "date");
+        return "redirect:/artist_gallery";
+    }
+
+    @RequestMapping(value = "/author_sort_by_comments/{gallery_id}", method = RequestMethod.GET)
+    public String authorsSortedByComments(Model model, @PathVariable("gallery_id") long id) {
+        model.addAttribute("gallery_id", id);
+        model.addAttribute("sorting_type", "comments");
+        return "redirect:/artist_gallery";
+    }
+
+    @RequestMapping(value = "/author_for_sale/{gallery_id}", method = RequestMethod.GET)
+    public String authorsForSale(Model model, @PathVariable("gallery_id") long id) {
+         model.addAttribute("gallery_id", id);
+        model.addAttribute("sorting_type", "for_sale");
+        return "redirect:/artist_gallery";
     }
 }

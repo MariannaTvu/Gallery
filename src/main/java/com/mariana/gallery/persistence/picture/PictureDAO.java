@@ -50,6 +50,8 @@ public interface PictureDAO {
 
     List<Picture> authorsPicturesByDate(User user);
 
+    List<Picture> authorsPicturesForSale(User user);
+
     List<Picture> getForSalePictures();
 
     List<Picture> random();

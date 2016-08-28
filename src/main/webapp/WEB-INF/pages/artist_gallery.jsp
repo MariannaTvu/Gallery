@@ -42,8 +42,8 @@
             <form role="search" action="/search" method="get">
                 <fieldset>
                     <legend>Site Search</legend>
-                    <input type="text" name="pattern" placeholder="Search" />
-                    <input type="submit" name="go" id="go" value="GO" />
+                    <input type="text" name="pattern" placeholder="Search"/>
+                    <input type="submit" name="go" id="go" value="GO"/>
                 </fieldset>
             </form>
         </div>
@@ -72,19 +72,19 @@
                 </li>
             </sec:authorize>
             <li class="active"><a href="/art">Art</a></li>
-            <li ><a href="/">Main</a></li>
+            <li><a href="/">Main</a></li>
         </ul>
         <br class="clear"/>
     </div>
 </div>
 <c:if test="${author.bio ne null}">
 <div class="wrapper col5">
- <div id="container">
+    <div id="container">
         <div id="content">
             <h2>About ${author.login}</h2>
             <p>${author.bio}</p>
         </div>
-     </c:if>
+        </c:if>
         <br class="clear"/>
     </div>
 </div>
@@ -93,13 +93,21 @@
     <li>
         <form action="/author_sort_by_name/${author.userGallery.id}">
             <input type="hidden" name="gallery_id" value="${author.userGallery.id}">
-            <a href="/author_sort_by_name/${author.userGallery.id}" title="Sort by comments">${author.userGallery.id}</a></form>
+            <a href="/author_sort_by_name/${author.userGallery.id}"
+               title="Sort by name">Sort by name</a></form>
     </li>
     <li>
-        <form action="/author_sort_by_date"><a href="/author_sort_by_date" title="Sort by date">See latest updates</a></form>
+        <form action="/author_sort_by_date/${author.userGallery.id}"><a
+                href="/author_sort_by_date/${author.userGallery.id}" title="Sort by date">See latest updates</a></form>
     </li>
     <li>
-        <form action="/author_for_sale"><a href="/author_for_sale" title="Buy art">Buy art</a></form>
+        <form action="/author_sort_by_comments/${author.userGallery.id}"><a
+                href="/author_sort_by_comments/${author.userGallery.id}" title="Sort by date">See most commented</a>
+        </form>
+    </li>
+    <li>
+        <form action="/author_for_sale/${author.userGallery.id}"><a href="/author_for_sale/${author.userGallery.id}"
+                                                                    title="Buy art">Show for sale only</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
         <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}</a></li>
@@ -108,31 +116,32 @@
 </ul>
 <div class="wrapper col3">
 </div>
-    <!-- works -->
-    <div class="wrapper col4" align="center">
-        <div id="works" class="artist_grid" align="center">
-            <div class="artist_grid" align="center">
-                <c:forEach items="${pictures}" var="picture">
-                        <figure class="art_hovereffect" style="width: 25%">
-                            <div id="crop" class="crop-image-box">
-                                <div id="image" class="crop-image" style="background-image: url(<c:url value='picture/${picture.id}'/>);" />
-                            </div>
-                            <a href="<c:url value='/view_art/${picture.id}'/>">
-                                <div class="overlay">
-                                    <h2 > <c:out value="${picture.name}"/> </h2>
-                                </div>
-                            </a>
-                        </figure>
-                </c:forEach>
-            </div>
+<!-- works -->
+<div class="wrapper col4" align="center">
+    <div id="works" class="artist_grid" align="center">
+        <div class="artist_grid" align="center">
+            <c:forEach items="${pictures}" var="picture">
+                <figure class="art_hovereffect" style="width: 25%">
+                    <div id="crop" class="crop-image-box">
+                        <div id="image" class="crop-image"
+                             style="background-image: url(<c:url value='picture/${picture.id}'/>);"/>
+                    </div>
+                    <a href="<c:url value='/view_art/${picture.id}'/>">
+                        <div class="overlay">
+                            <h2><c:out value="${picture.name}"/></h2>
+                        </div>
+                    </a>
+                </figure>
+            </c:forEach>
         </div>
-        <!-- works -->
-
     </div>
-    <!-- close container -->
+    <!-- works -->
+
 </div>
-<div class="wrapper col5" >
-    <div id="container"style="padding-top: 5%">
+<!-- close container -->
+</div>
+<div class="wrapper col5">
+    <div id="container" style="padding-top: 5%">
         <div id="content">
             <h2>About </h2>
             <p>Sedsemporttis sit intesque felit
