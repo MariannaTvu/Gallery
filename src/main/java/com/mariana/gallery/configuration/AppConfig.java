@@ -93,7 +93,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         basicDataSource.setMaxIdle(30);
         basicDataSource.setMaxActive(100);
         basicDataSource.setMaxWait(10000);
-        basicDataSource.setInitialSize(16);
+        basicDataSource.setInitialSize(6);
         return basicDataSource;
     }
 
