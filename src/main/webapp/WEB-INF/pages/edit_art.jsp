@@ -125,24 +125,41 @@
 
     </div>
     <div class="clear"></div>
-</div>
-</div>
-<div class="wrapper col6">
-    <div class="clear"></div>
-</div>
-<div class="clear"></div>
-</div>
-</div>
-<div class="wrapper col7">
-    <div id="copyright">
-        <ul>
-            <li><a href="#">Online Privacy Policy</a></li>
-            <li><a href="#">Terms of Use</a></li>
-            <li><a href="#">Permissions &amp; Trademarks</a></li>
-            <li class="last"><a href="#">Product License Agreements</a></li>
-        </ul>
-        <div class="clear"></div>
+
+    <div class="wrapper col5" style="margin-top:5%;">
+
+        <div id="container">
+            <div id="content">
+
+                <h2>About </h2>
+                <p>Sedsemporttis sit intesque felit
+                    quis elis et cursuspenatibulum tincidunt non curabitae.</p>
+                <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+                    laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
+                Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+                laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.
+                <p>Lacusenim inte trices lorem anterdum nam sente vivamus quis fauctor mauris. Wisinon vivamus wisis adipis
+                    laorem lobortis curabiturpiscingilla dui platea ipsum lacingilla.</p>
+                <p>Semalique tor sempus vestibulum libero nibh pretium eget eu elit montes. Sedsemporttis sit intesque felit
+                    quis elis et cursuspenatibulum tincidunt non curabitae.</p>
+            </div>
+
+            <br class="clear"/>
+        </div>
     </div>
-</div>
+    <div class="wrapper col7">
+        <div id="copyright">
+            <ul>
+                <li><a href="#">Online Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Permissions &amp; Trademarks</a></li>
+                <li class="last"><a href="#">Product License Agreements</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    </div>
 </body>
 </html>
+
+
