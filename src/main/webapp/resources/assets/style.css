@@ -55,7 +55,20 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 .gototop{position: fixed;bottom: 20px; right: 20px;background: rgba(0,0,0,0.5);padding: 10px;color: #fff;}
 .gototop i{line-height: 0.5em;}
 
+a div.popup {
+	position: absolute;
+	display: none;
+	border: 1px solid red;
+		margin-left: 145px;
+	border-radius: 6px;
+	padding: 3px;
+	background: #FFFFAA;
+	opacity: 0.8;
+	filter:alpha(opacity=80);
+}
 
+a:hover div.popup {
+	display: block; }
 
 .buy-btn{
    -webkit-border-radius: 28;

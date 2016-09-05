@@ -146,15 +146,8 @@
             <br>
             <c:if test="${(picture.price ne 0) && (same_user ne null)}">
                 <h2 style="text-align: center; color:white">Buy This Print
-                    <a href="#" data-toggle="popover" data-trigger="hover"
-                       data-content="Buy a printed version of this art">*</a>
+                    <a href="#"><div class="popup">Buy a printed version of this art</div>*</a>
                 </h2>
-
-                <script>
-                    $(document).ready(function () {
-                        $('[data-toggle="popover"]').popover();
-                    });
-                </script>
 
                 <div class="dev-view-meta">
                     <div id="buy-tabs" class="newprintbutton open">
