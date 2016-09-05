@@ -58,7 +58,10 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 a div.popup {
 	position: absolute;
 	display: none;
-	border: 1px solid red;
+	font-size: 1em;
+	line-height: 1.7em;
+	color: #080808;
+	font: 300 15px/15px Roboto,Arial,Helvetica;
 		margin-left: 145px;
 	border-radius: 6px;
 	padding: 3px;
