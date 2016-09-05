@@ -64,7 +64,7 @@ a div.popup {
 	font: 300 15px/15px Roboto,Arial,Helvetica;
 		margin-left: 145px;
 	border-radius: 6px;
-	padding: 3px;
+	padding: 4px 5px;
 	background: #FFFFAA;
 	opacity: 0.8;
 	filter:alpha(opacity=80);
