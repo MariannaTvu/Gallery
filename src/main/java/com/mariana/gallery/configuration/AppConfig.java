@@ -83,7 +83,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         cpds.setMinPoolSize(5);
         cpds.setAcquireIncrement(5);
         cpds.setMaxPoolSize(20);
-        cpds.setMaxStatements(100);
+        cpds.setMaxStatements(2000);
         cpds.setTestConnectionOnCheckin(true);
         cpds.setTestConnectionOnCheckout(true);
         return cpds;
