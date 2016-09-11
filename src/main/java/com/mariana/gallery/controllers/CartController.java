@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 public class CartController {
@@ -32,7 +36,14 @@ public class CartController {
             User user = userService.findUserByUsername(principal.getName());
             Picture picture = pictureService.getPictureById(pictureId);
             if (pictureService.getPictureAuthor(picture).getId() != (user.getId())) {
-                Date date = new Date();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
+                Date date = null;
+                try {
+                    date = dateFormat.parse(String.valueOf(new Date()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 Cart cart = new Cart(date, picture, user);
                 cart.setSumCost(picture.getPrice());
                 cartService.createOrder(cart);

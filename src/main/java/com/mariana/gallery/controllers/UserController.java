@@ -21,10 +21,12 @@ import javax.persistence.PersistenceException;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 @RequestMapping()
@@ -48,7 +50,13 @@ public class UserController {
                 PictureComment text = new PictureComment(comment);
                 text.setPictures(pic);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date date = new Date();
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
+                Date date = null;
+                try {
+                    date = dateFormat.parse(String.valueOf(new Date()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 text.setDate(dateFormat.format(date));
                 text.setAuthor(principal.getName());
                 pictureService.update(pic);
@@ -135,7 +143,14 @@ public class UserController {
                     picture.setAvailable(true);
                     picture.setUserGallery(user.getUserGallery());
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Date date = new Date();
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
+                    Date date = null;
+                    try {
+                        date = dateFormat.parse(String.valueOf(new Date()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     picture.setDateAdded(dateFormat.format(date));
                     if (!rawPicturePrice.isEmpty()) {
                         try {
