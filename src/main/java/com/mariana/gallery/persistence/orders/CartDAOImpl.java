@@ -59,7 +59,7 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public void setPurchaseDate(Cart order, Date date) {
+    public void setPurchaseDate(Cart order, String date) {
         order.setPurchaseDate(date);
         entityManager.merge(order);
     }

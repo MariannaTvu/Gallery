@@ -47,7 +47,7 @@ public class CartService {
     }
 
     @Transactional
-    public void setPurchaseDate(Cart cart, Date date) {
+    public void setPurchaseDate(Cart cart, String date) {
         cartDAO.setPurchaseDate(cart, date);
     }
 

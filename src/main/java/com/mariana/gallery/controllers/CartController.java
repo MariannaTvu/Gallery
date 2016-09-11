@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
 import java.text.DateFormat;
@@ -58,8 +57,10 @@ public class CartController {
                 int newBalance = user.getBalance() - picture.getPrice();
                 if(newBalance>=0) {
                     user.setBalance(newBalance);
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
                     Date date = new Date();
-                    cartService.setPurchaseDate(cart, date);
+                    cartService.setPurchaseDate(cart, dateFormat.format(date));
                     cartService.confirmOrder(id);
                     pictureService.update(picture);
                     userService.save(user);
