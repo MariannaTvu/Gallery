@@ -51,13 +51,13 @@ public class UserController {
                 text.setPictures(pic);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
-                Date date = null;
+                Date date1 = new Date();
                 try {
-                    date = dateFormat.parse(String.valueOf(new Date()));
+                    Date date = dateFormat.parse(String.valueOf(date1));
+                    text.setDate(dateFormat.format(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                text.setDate(dateFormat.format(date));
                 text.setAuthor(principal.getName());
                 pictureService.update(pic);
                 pictureService.updateComment(text);
