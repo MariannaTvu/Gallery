@@ -54,7 +54,7 @@ public class UserController {
                 Date date1 = new Date();
                 try {
                     Date date = dateFormat.parse(String.valueOf(date1));
-                    text.setDate(dateFormat.format(date));
+                    text.setDate(String.valueOf(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
