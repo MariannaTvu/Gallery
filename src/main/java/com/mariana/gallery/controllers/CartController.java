@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -38,13 +37,8 @@ public class CartController {
             if (pictureService.getPictureAuthor(picture).getId() != (user.getId())) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
-                Date date = null;
-                try {
-                    date = dateFormat.parse(String.valueOf(new Date()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Cart cart = new Cart(date, picture, user);
+                Date date = new Date();
+                Cart cart = new Cart(dateFormat.format(date), picture, user);
                 cart.setSumCost(picture.getPrice());
                 cartService.createOrder(cart);
                 String msg = "Order added. You now can see it in your cart.";

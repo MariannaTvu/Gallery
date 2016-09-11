@@ -22,8 +22,8 @@ public class Cart {
     @JoinColumn(name = "user")
     private User user;
 
-    private Date date;
-    private Date purchaseDate;
+    private String date;
+    private String purchaseDate;
 
     private int sumCost;
 
@@ -33,17 +33,17 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(Date date, Picture picture, User user) {
+    public Cart(String date, Picture picture, User user) {
         this.date = date;
         this.picture = picture;
         this.user = user;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public Cart setDate(Date date) {
+    public Cart setDate(String date) {
         this.date = date;
         return this;
     }
@@ -93,11 +93,11 @@ public class Cart {
         return this;
     }
 
-    public Date getPurchaseDate() {
+    public String getPurchaseDate() {
         return purchaseDate;
     }
 
-    public Cart setPurchaseDate(Date purchaseDate) {
+    public Cart setPurchaseDate(String purchaseDate) {
         this.purchaseDate = purchaseDate;
         return this;
     }
