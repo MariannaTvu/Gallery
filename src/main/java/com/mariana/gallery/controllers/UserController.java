@@ -50,7 +50,7 @@ public class UserController {
                 PictureComment text = new PictureComment(comment);
                 text.setPictures(pic);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
+                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                 Date date1 = new Date();
                 try {
                     Date date = dateFormat.parse(String.valueOf(date1));
