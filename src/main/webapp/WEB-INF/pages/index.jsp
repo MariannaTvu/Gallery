@@ -90,7 +90,7 @@
     var w = 1, html = '', limitItem = 5;
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
-            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace("{index}", i + 1);
+            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace(${picture.get(0).id}, i + 1);
         }
         $("#freewall").html(html);
 
