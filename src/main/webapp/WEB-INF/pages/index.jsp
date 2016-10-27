@@ -84,11 +84,8 @@
 
     <script type="text/javascript">
     <c:forEach items="${pictures}" var="picture">
-
-
-
-
-        var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
+    var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
+    </c:forEach>
     var w = 1, html = '', limitItem = 5, id = ${picture.id};
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
@@ -108,7 +105,7 @@
         });
         wall.fitWidth();
         // for scroll bar appear;
-        $(window).trigger("resize");    </c:forEach>
+        $(window).trigger("resize");
     </script>
     </div>
 
