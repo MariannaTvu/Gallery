@@ -81,16 +81,16 @@
 </ul>
 <div class="clear"></div>
 <div class="wrapper col3">
-
+    <c:forEach items="${pictures}" var="picture">
     <script type="text/javascript">
 
-        <c:forEach items="${pictures}" var="picture">
+
     var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
-</c:forEach>
+
     var w = 1, html = '', limitItem = 5;
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
-            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace(${picture.get(0).id}, i + 1);
+            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace(${picture.id}, i + 1);
         }
         $("#freewall").html(html);
 
@@ -108,6 +108,7 @@
         // for scroll bar appear;
         $(window).trigger("resize");
     </script>
+    </c:forEach>
     </div>
 
 
