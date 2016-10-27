@@ -83,7 +83,7 @@
 <div class="wrapper col3">
 
     <script type="text/javascript">
-    <c:forEach items="${pictures}" var="pictures">
+    <c:forEach items="${pictures}" var="picture">
 
 
 
@@ -92,7 +92,7 @@
     var w = 1, html = '', limitItem = 5, id = ${picture.id};
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
-            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace("id", i + 1);
+            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace(id, i + 1);
         }
         $("#freewall").html(html);
 
