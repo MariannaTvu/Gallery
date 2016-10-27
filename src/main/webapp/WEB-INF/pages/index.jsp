@@ -82,11 +82,14 @@
 <div class="clear"></div>
 <div class="wrapper col3">
 
-
-
     <script type="text/javascript">
+    <c:forEach items="${small_pictures}" var="small_pictures">
+
+
+
+
         var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
-        var w = 1, html = '', limitItem = 49;
+    </c:forEach>  var w = 1, html = '', limitItem = 5;
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
             html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace("{picture.id}", i + 1);
