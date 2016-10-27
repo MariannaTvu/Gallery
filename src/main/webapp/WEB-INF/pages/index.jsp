@@ -17,8 +17,9 @@
     <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
-    <script type="text/javascript" src="/resources/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/resources/freewall.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resources/css/demo_.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/component_.css" />
+    <script src="/resources/modernizr.custom.js"></script>
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -81,34 +82,46 @@
 </ul>
 <div class="clear"></div>
 <div class="wrapper col3">
-    <c:forEach items="${pictures}" var="picture">
-    <script type="text/javascript">
 
 
-    var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
 
-    var w = 1, html = '', limitItem = 5;
-        for (var i = 0; i < limitItem; ++i) {
-            w = 200 +  200 * Math.random() << 0;
-            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace(${picture.id}, i + 1);
-        }
-        $("#freewall").html(html);
 
-    var wall = new Freewall("#freewall");
-        wall.reset({
-            selector: '.cell',
-            animate: true,
-            cellW: 20,
-            cellH: 200,
-            onResize: function() {
-                wall.fitWidth();
-            }
-        });
-        wall.fitWidth();
-        // for scroll bar appear;
-        $(window).trigger("resize");
-    </script>
-    </c:forEach>
+    <div id="grid-gallery" class="grid-gallery">
+        <c:forEach items="${pictures}" var="picture">
+        <section class="grid-wrap">
+            <ul class="grid">
+                <li class="grid-sizer"></li><!-- for Masonry column width -->
+                <li>
+                    <figure>
+                        <img src="picture/${picture.id}" alt="img01"/>
+                        <figcaption><h3>Letterpress asymmetrical</h3><p>Chillwave hoodie ea gentrify aute sriracha consequat.</p></figcaption>
+                    </figure>
+                </li>
+
+            </ul>
+        </section><!-- // grid-wrap -->
+        <section class="slideshow">
+            <ul>
+                <li>
+                    <figure>
+                        <figcaption>
+                            <h3>Letterpress asymmetrical</h3>
+                            <p>Kale chips lomo biodiesel stumptown Godard Tumblr, mustache sriracha tattooed cray aute slow-carb placeat delectus. Letterpress asymmetrical fanny pack art party est pour-over skateboard anim quis, ullamco craft beer.</p>
+                        </figcaption>
+                        <img src="picture/${picture.id}" alt="img01"/>
+                    </figure>
+                </li>
+            </ul>
+            <nav>
+                <span class="icon nav-prev"></span>
+                <span class="icon nav-next"></span>
+                <span class="icon nav-close"></span>
+            </nav>
+            <div class="info-keys icon">Navigate with arrow keys</div>
+        </section><!-- // slideshow -->
+
+        </c:forEach>
+    </div><!-- // grid-gallery -->
     </div>
 
 
@@ -143,5 +156,13 @@
         <div class="clear"></div>
     </div>
 </div>
+
+<script src="js/imagesloaded.pkgd.min.js"></script>
+<script src="js/masonry.pkgd.min.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/cbpGridGallery.js"></script>
+<script>
+    new CBPGridGallery( document.getElementById( 'grid-gallery' ) );
+</script>
 </body>
 </html>
