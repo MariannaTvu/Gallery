@@ -100,25 +100,7 @@
 
             </ul>
         </section><!-- // grid-wrap -->
-        <section class="slideshow">
-            <ul>
-                <li>
-                    <figure>
-                        <figcaption>
-                            <h3>Letterpress asymmetrical</h3>
-                            <p>Kale chips lomo biodiesel stumptown Godard Tumblr, mustache sriracha tattooed cray aute slow-carb placeat delectus. Letterpress asymmetrical fanny pack art party est pour-over skateboard anim quis, ullamco craft beer.</p>
-                        </figcaption>
-                        <img src="picture/${picture.id}" alt="img01"/>
-                    </figure>
-                </li>
-            </ul>
-            <nav>
-                <span class="icon nav-prev"></span>
-                <span class="icon nav-next"></span>
-                <span class="icon nav-close"></span>
-            </nav>
-            <div class="info-keys icon">Navigate with arrow keys</div>
-        </section><!-- // slideshow -->
+
 
         </c:forEach>
     </div><!-- // grid-gallery -->
