@@ -39,21 +39,16 @@ public class MyController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model, Principal principal) {
         List<Picture> galleryPictures = pictureService.random();
-        if (galleryPictures.size() > 10) {
-            galleryPictures = galleryPictures.subList(0, 9);
+        if (galleryPictures.size() > 26) {
+            galleryPictures = galleryPictures.subList(0, 25);
         }
-        List<Picture> smallGalleryPictures = galleryPictures.subList(0,5);
-        List<Picture> smallGalleryPicturesFix = galleryPictures.subList(6,7);
-        List<Picture> bigGalleryPictures = galleryPictures.subList(8,9);
-//        List<Long> response = new ArrayList<>();
-//        for (Picture picture : galleryPictures) {
-//            long id = picture.getId();
-//            response.add(id);
-//        }
-        model.addAttribute("small_pictures", smallGalleryPictures);
-        model.addAttribute("small_pictures_fix", smallGalleryPicturesFix);
+        List<Long> response = new ArrayList<>();
+        for (Picture picture : galleryPictures) {
+            long id = picture.getId();
+            response.add(id);
+        }
         model.addAttribute("pictures", galleryPictures);
-     //   model.addAttribute("picture_id", response);
+        model.addAttribute("picture_id", response);
         if (principal != null) {
             String name = principal.getName(); //get logged in username
             model.addAttribute("login", name);
