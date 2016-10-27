@@ -89,14 +89,14 @@
 
 
         var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
-    </c:forEach>  var w = 1, html = '', limitItem = 5;
+    var w = 1, html = '', limitItem = 5;
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
             html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace("${picture.id}", i + 1);
         }
         $("#freewall").html(html);
 
-        var wall = new Freewall("#freewall");
+    var wall = new Freewall("#freewall");
         wall.reset({
             selector: '.cell',
             animate: true,
@@ -108,7 +108,7 @@
         });
         wall.fitWidth();
         // for scroll bar appear;
-        $(window).trigger("resize");
+        $(window).trigger("resize");    </c:forEach>
     </script>
     </div>
 
