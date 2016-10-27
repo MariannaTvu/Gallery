@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
-    <script type="text/javascript" src="/resources/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/resources/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/resources/freewall.js"></script>
     <style type="text/css">
         .free-wall {
