@@ -87,9 +87,10 @@
 
 
     <div id="grid-gallery" class="grid-gallery">
-        <c:forEach items="${pictures}" var="picture">
+
         <section class="grid-wrap">
             <ul class="grid">
+                <c:forEach items="${pictures}" var="picture">
                 <li class="grid-sizer"></li><!-- for Masonry column width -->
                 <li>
                     <figure>
@@ -97,12 +98,12 @@
                         <figcaption><h3>Letterpress asymmetrical</h3><p>Chillwave hoodie ea gentrify aute sriracha consequat.</p></figcaption>
                     </figure>
                 </li>
-
+                </c:forEach>
             </ul>
         </section><!-- // grid-wrap -->
 
 
-        </c:forEach>
+
     </div><!-- // grid-gallery -->
     </div>
 
