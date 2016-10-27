@@ -13,7 +13,33 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 .spacer{padding: 6em 0;}
 
 
-
+ul {
+	width:1200px;
+	padding:10px;
+}
+li.image {
+	float: left;
+	margin: 10px;
+	overflow: hidden;
+	width:220px;
+	height:220px;
+	background-color:black;
+}
+li.image2 {
+	float: left;
+	margin: 10px;
+	overflow: hidden;
+	width:460px;
+	height:460px;
+	background-color:black;
+}
+li.fix1 {
+	margin-top:-230px;
+}
+li.fix2 {
+	margin-top:-710px;
+	margin-left:250px;
+}
 
 #head,.carousel{margin-top: 0;}
 

@@ -80,10 +80,14 @@
 </ul>
 <div class="clear"></div>
 <div class="wrapper col3">
+
+
+
+
     <div id="photos">
         <c:forEach items="${pictures}" var="picture">
-            <div class="container-fluid">
-                <div class="row">
+            <ul>
+                <li class="image">
                     <div class="hovereffect">
                         <img class="img-responsive" src="picture/${picture.id}" alt="Image 1">
                         <div class="overlay">
@@ -93,8 +97,24 @@
                                 artist gallery</a>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+                <li class="image"></li>
+                <li class="image2"></li>
+                <li class="image"></li>
+                <li class="image"></li>
+                <li class="image fix1" ></li>
+                <li class="image2"></li>
+                <li class="image"></li>
+                <li class="image"></li>
+                <li class="image"></li>
+                <li class="image"></li>
+                <li class="image"></li>
+                <li class="image"></li>
+                <li class="image fix2"></li>
+
+            </ul>
+
+
         </c:forEach>
     </div>
 </div>

@@ -39,8 +39,8 @@ public class MyController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model, Principal principal) {
         List<Picture> galleryPictures = pictureService.random();
-        if (galleryPictures.size() > 26) {
-            galleryPictures = galleryPictures.subList(0, 25);
+        if (galleryPictures.size() > 10) {
+            galleryPictures = galleryPictures.subList(0, 9);
         }
         List<Long> response = new ArrayList<>();
         for (Picture picture : galleryPictures) {
