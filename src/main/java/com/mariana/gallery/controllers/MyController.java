@@ -42,13 +42,18 @@ public class MyController {
         if (galleryPictures.size() > 10) {
             galleryPictures = galleryPictures.subList(0, 9);
         }
-        List<Long> response = new ArrayList<>();
-        for (Picture picture : galleryPictures) {
-            long id = picture.getId();
-            response.add(id);
-        }
-        model.addAttribute("pictures", galleryPictures);
-        model.addAttribute("picture_id", response);
+        List<Picture> smallGalleryPictures = galleryPictures.subList(0,5);
+        List<Picture> smallGalleryPicturesFix = galleryPictures.subList(6,7);
+        List<Picture> bigGalleryPictures = galleryPictures.subList(8,9);
+//        List<Long> response = new ArrayList<>();
+//        for (Picture picture : galleryPictures) {
+//            long id = picture.getId();
+//            response.add(id);
+//        }
+        model.addAttribute("small_pictures", smallGalleryPictures);
+        model.addAttribute("small_pictures_fix", smallGalleryPicturesFix);
+        model.addAttribute("big_pictures", bigGalleryPictures);
+     //   model.addAttribute("picture_id", response);
         if (principal != null) {
             String name = principal.getName(); //get logged in username
             model.addAttribute("login", name);
