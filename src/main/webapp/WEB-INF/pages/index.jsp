@@ -81,12 +81,12 @@
 </ul>
 <div class="clear"></div>
 <div class="wrapper col3">
-    <input type="hidden" name="picture" value="${pictures}">
+
     <script type="text/javascript">
 
-
+        <c:forEach items="${pictures}" var="picture">
     var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.get(0).id}'/>)'></div>";
-
+</c:forEach>
     var w = 1, html = '', limitItem = 5;
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
