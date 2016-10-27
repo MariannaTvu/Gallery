@@ -85,7 +85,7 @@
     <script type="text/javascript">
 
 
-    var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
+    var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.get(0)}'/>)'></div>";
 
     var w = 1, html = '', limitItem = 5;
         for (var i = 0; i < limitItem; ++i) {
