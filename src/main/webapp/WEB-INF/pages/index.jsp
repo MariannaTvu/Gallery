@@ -17,9 +17,7 @@
     <link rel="stylesheet" href="/resources/assets/style.css">
 
     <!--userGallery end-->
-    <link rel="stylesheet" type="text/css" href="/resources/css/demo_.css" />
-    <link rel="stylesheet" type="text/css" href="/resources/css/component_.css" />
-    <script src="/resources/modernizr.custom.js"></script>
+
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -82,31 +80,24 @@
 </ul>
 <div class="clear"></div>
 <div class="wrapper col3">
-
-
-
-
-    <div id="grid-gallery" class="grid-gallery">
-
-        <section class="grid-wrap">
-            <ul class="grid">
-                <c:forEach items="${pictures}" var="picture">
-                <li class="grid-sizer"></li><!-- for Masonry column width -->
-                <li>
-                    <figure>
-                        <img src="picture/${picture.id}" alt="img01"/>
-                        <figcaption><h3>Letterpress asymmetrical</h3><p>Chillwave hoodie ea gentrify aute sriracha consequat.</p></figcaption>
-                    </figure>
-                </li>
-                </c:forEach>
-            </ul>
-        </section><!-- // grid-wrap -->
-
-
-
-    </div><!-- // grid-gallery -->
+    <div id="photos">
+        <c:forEach items="${pictures}" var="picture">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="hovereffect">
+                        <img class="img-responsive" src="picture/${picture.id}" alt="Image 1">
+                        <div class="overlay">
+                            <h2 style="margin: 0">${picture.name} by ${picture.author.login}</h2>
+                            <a class="info" href="/artist_gallery/${picture.userGallery.id}"
+                               style="padding: 3%; margin: 50px 15%">view
+                                artist gallery</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
     </div>
-
+</div>
 
 <div class="wrapper col5" style="margin-top:5%;">
     <div id="container">
@@ -139,13 +130,5 @@
         <div class="clear"></div>
     </div>
 </div>
-
-<script src="js/imagesloaded.pkgd.min.js"></script>
-<script src="js/masonry.pkgd.min.js"></script>
-<script src="js/classie.js"></script>
-<script src="js/cbpGridGallery.js"></script>
-<script>
-    new CBPGridGallery( document.getElementById( 'grid-gallery' ) );
-</script>
 </body>
 </html>
