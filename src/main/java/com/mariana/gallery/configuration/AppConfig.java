@@ -79,11 +79,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         cpds.setUser(System.getenv("JDBC_DATABASE_USERNAME"));
         cpds.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
 
-        cpds.setInitialPoolSize(5);
+        cpds.setInitialPoolSize(1);
         cpds.setMinPoolSize(5);
         cpds.setAcquireIncrement(5);
         cpds.setMaxPoolSize(20);
-        cpds.setMaxStatements(2000);
+        cpds.setMaxStatements(200);
         cpds.setTestConnectionOnCheckin(true);
         cpds.setTestConnectionOnCheckout(true);
         return cpds;

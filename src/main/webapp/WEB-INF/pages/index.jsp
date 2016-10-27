@@ -81,12 +81,8 @@
 <div class="clear"></div>
 <div class="wrapper col3">
 
-
-
-
-    <div id="photos">
-        <c:forEach items="${pictures}" var="picture">
-            <ul>
+    <ul>
+        <c:forEach items="${small_pictures}" var="small_pictures">
                 <li class="image">
                     <div class="hovereffect">
                         <img class="img-responsive" src="picture/${picture.id}" alt="Image 1">
@@ -98,9 +94,21 @@
                         </div>
                     </div>
                 </li>
-                <li class="image"></li>
-                <li class="image2"></li>
-                <li class="image"></li>
+        </c:forEach>
+        <c:forEach items="${small_pictures_fix}" var="small_pictures_fix">
+            <li class="image fix1">
+                <div class="hovereffect">
+                    <img class="img-responsive" src="picture/${picture.id}" alt="Image 1">
+                    <div class="overlay">
+                        <h2 style="margin: 0">${picture.name} by ${picture.author.login}</h2>
+                        <a class="info" href="/artist_gallery/${picture.userGallery.id}"
+                           style="padding: 3%; margin: 50px 15%">view
+                            artist gallery</a>
+                    </div>
+                </div>
+            </li>
+        </c:forEach>
+        <li class="image"></li>
                 <li class="image"></li>
                 <li class="image fix1" ></li>
                 <li class="image2"></li>
@@ -115,9 +123,8 @@
             </ul>
 
 
-        </c:forEach>
     </div>
-</div>
+
 
 <div class="wrapper col5" style="margin-top:5%;">
     <div id="container">
