@@ -89,10 +89,10 @@
 
 
         var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
-    var w = 1, html = '', limitItem = 5;
+    var w = 1, html = '', limitItem = 5, id = ${picture.id};
         for (var i = 0; i < limitItem; ++i) {
             w = 200 +  200 * Math.random() << 0;
-            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace("${picture.id}", i + 1);
+            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace("id", i + 1);
         }
         $("#freewall").html(html);
 
