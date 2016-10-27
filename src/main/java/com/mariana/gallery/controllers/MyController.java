@@ -52,7 +52,7 @@ public class MyController {
 //        }
         model.addAttribute("small_pictures", smallGalleryPictures);
         model.addAttribute("small_pictures_fix", smallGalleryPicturesFix);
-        model.addAttribute("big_pictures", bigGalleryPictures);
+        model.addAttribute("pictures", galleryPictures);
      //   model.addAttribute("picture_id", response);
         if (principal != null) {
             String name = principal.getName(); //get logged in username

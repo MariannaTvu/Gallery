@@ -83,7 +83,7 @@
 <div class="wrapper col3">
 
     <script type="text/javascript">
-    <c:forEach items="${small_pictures}" var="small_pictures">
+    <c:forEach items="${pictures}" var="pictures">
 
 
 
