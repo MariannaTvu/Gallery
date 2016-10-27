@@ -19,14 +19,6 @@
     <!--userGallery end-->
     <script type="text/javascript" src="/resources/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/resources/freewall.js"></script>
-    <style type="text/css">
-        .free-wall {
-            margin: 15px;
-        }
-        .add-more {
-            margin: 15px;
-        }
-    </style>
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -89,82 +81,32 @@
 </ul>
 <div class="clear"></div>
 <div class="wrapper col3">
-        <c:forEach items="${small_pictures}" var="small_pictures">
-                <li class="image">
-                    <div class="hovereffect">
-                        <img class="img-responsive" src="picture/${picture.id}" alt="Image 1">
-                        <div class="overlay">
-                            <h2 style="margin: 0">${picture.name} by ${picture.author.login}</h2>
-                            <a class="info" href="/artist_gallery/${picture.userGallery.id}"
-                               style="padding: 3%; margin: 50px 15%">view
-                                artist gallery</a>
-                        </div>
-                    </div>
-                </li>
-        </c:forEach>
-
-            <div id="freewall" class="free-wall">
-                <div class="brick size32">
-                    <div class='cover'>
-                        <h2>Click on 'Prepend' block to see this demo</h2>
-                    </div>
-                </div>
-                <div class="brick size21" data-fixSize=0>
-                    <div class='cover'>
-                        <h2>Copyright</h2>
-                        <p> © 2016 Minh Nguyen </p>
-                        <p> Released under the MIT license</p>
-                    </div>
-                </div>
-            </div>
-            <div class="brick size11 add-more">
-                <div class='cover'>
-                    <h2>Prepend</h2>
-                </div>
-            </div>
-            <script type="text/javascript">
-
-                var colour = [
-                        <c:forEach items="${small_pictures}" var="small_pictures">
 
 
-                "picture/${picture.id}"
-                </c:forEach>
-                ];
 
-                $(".brick").each(function() {
-                    this.style.backgroundColor =  colour[colour.length * Math.random() << 0];
-                });
+    <script type="text/javascript">
+        var temp = "<div class='cell' style='width:{width}px; height: {height}px; background-image: url(<c:url value='picture/${picture.id}'/>)'></div>";
+        var w = 1, html = '', limitItem = 49;
+        for (var i = 0; i < limitItem; ++i) {
+            w = 200 +  200 * Math.random() << 0;
+            html += temp.replace(/\{height\}/g, 200).replace(/\{width\}/g, w).replace("{picture.id}", i + 1);
+        }
+        $("#freewall").html(html);
 
-                $(function() {
-                    var wall = new Freewall("#freewall");
-                    wall.reset({
-                        selector: '.brick',
-                        animate: true,
-                        cellW: 160,
-                        cellH: 160,
-                        delay: 50,
-                        onResize: function() {
-                            wall.fitWidth();
-                        }
-                    });
-                    wall.fitWidth();
-
-                    var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover"></div></div>';
-                    var size = "size33 size32 size31 size23 size22 size21 size13 size12 size11".split(" ");
-                    $(".add-more").click(function() {
-                        var html = "";
-                        for (var i = 0; i < 3; ++i) {
-                            html += temp.replace('{size}', size[size.length * Math.random() << 0])
-                                    .replace('{color}', colour[colour.length * Math.random() << 0]);
-                        }
-                        wall.prepend(html);
-                    });
-                });
-
-            </script>
-
-
+        var wall = new Freewall("#freewall");
+        wall.reset({
+            selector: '.cell',
+            animate: true,
+            cellW: 20,
+            cellH: 200,
+            onResize: function() {
+                wall.fitWidth();
+            }
+        });
+        wall.fitWidth();
+        // for scroll bar appear;
+        $(window).trigger("resize");
+    </script>
     </div>
 
 
