@@ -10,8 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_NAME_PATTER;
+
+@Transactional
 @Repository
 public class PictureDAOImpl implements PictureDAO {
     @PersistenceContext
@@ -78,7 +82,7 @@ public class PictureDAOImpl implements PictureDAO {
                 entityManager.remove(order);
             }
 
-            User user = getPictureAuthor(picture);
+            User user = picture.getAuthor();
             UserGallery userGallery = user.getUserGallery();
 
             int i = user.getPictures().indexOf(picture);
@@ -127,12 +131,10 @@ public class PictureDAOImpl implements PictureDAO {
 
     @Override
     public List<Picture> getByNamePattern(String pattern) {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT c FROM Picture c WHERE c.name LIKE :pattern" +
-                " AND c.available = :available", Picture.class);
-        query.setParameter("pattern", "%" + pattern + "%");
-        query.setParameter("available", available);
-        return (List<Picture>) query.getResultList();
+        return entityManager.createNamedQuery(JPQL_GET_BY_NAME_PATTER, Picture.class)
+                .setParameter("pattern", "%" + pattern + "%")
+                .setParameter("available", true)
+                .getResultList();
     }
 
     @Override
@@ -141,12 +143,6 @@ public class PictureDAOImpl implements PictureDAO {
         Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.available = :available", Picture.class);
         query.setParameter("available", available);
         return (List<Picture>) query.getResultList();
-    }
-
-    @Override
-    public User getPictureAuthor(Picture picture) {
-        User user = picture.getAuthor();
-        return user;
     }
 
     @Override
@@ -163,7 +159,6 @@ public class PictureDAOImpl implements PictureDAO {
         return name;
     }
 
-    @Transactional
     @Override
     public Picture getPictureById(long id) {
         return entityManager.find(Picture.class, id);
@@ -196,11 +191,12 @@ public class PictureDAOImpl implements PictureDAO {
     }
 
     @Override
-    public List<Picture> random() {
+    public List<Picture> random(int count) {
         boolean available = true;
-        Query query = entityManager.createQuery("SELECT n FROM Picture n WHERE n.available = :available" +
+        TypedQuery<Picture> query = entityManager.createQuery("SELECT p FROM Picture p WHERE p.available = :available" +
                 " ORDER BY RAND()", Picture.class);
         query.setParameter("available", available);
+        query.setMaxResults(count);
         List<Picture> randomList = query.getResultList();
         return randomList;
     }

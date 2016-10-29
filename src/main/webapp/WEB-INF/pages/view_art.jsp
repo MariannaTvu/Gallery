@@ -93,15 +93,15 @@
 <div class="wrapper col5">
     <div id="container">
         <div id="content">
-            <h1>${picture.name} by ${author}</h1>
-            <img class="imgr" src="picture/${picture.id}" alt="" width="100%" height="auto"/>
+            <h1>${picture.name} by ${picture.author.login}</h1>
+            <img class="imgr" src="picture?picture_id=${picture.id}" alt="" width="100%" height="auto"/>
 
 
             <div id="comments">
                 <h2>Comments</h2>
-                <c:if test="${empty comments}"><p>No comments yet</p></c:if>
+                <c:if test="${empty picture.comments}"><p>No comments yet</p></c:if>
                 <ul class="commentlist">
-                    <c:forEach items="${comments}" var="comment">
+                    <c:forEach items="${picture.comments}" var="comment">
                         <li class="comment_odd">
                             <div class="author"><span class="name"><a href="#">${comment.author}</a></span> <span
                                     class="wrote">wrote:</span></div>
@@ -144,7 +144,7 @@
                 </c:if>
             </div>
             <br>
-            <c:if test="${(picture.price ne 0) && (same_user ne null)}">
+            <c:if test="${(picture.price ne 0) && (same_user eq false)}">
                 <h2 style="text-align: center; color:white">Buy This Print
                     <a href="#"><div class="popup">Buy a printed version of this art</div>*</a>
                 </h2>
@@ -169,14 +169,18 @@
                                     </div>
                                 </form>
                             </sec:authorize>
-                            <c:if test="${msg ne null}">
-                                <br>
-                                <a href="/shop">${msg}</a>
-                                <br>
-                            </c:if>
+
+                            <%-- TODO: WHAT IS A SHOP? --%>
+                            <%--<sec:authorize access="isAuthenticated">--%>
+                                <%--<c:if test="${picture.author.login ne pageContext.request.userPrincipal.name}">--%>
+                                    <%--<br>--%>
+                                    <%--<a href="/shop">Shop</a>--%>
+                                    <%--<br>--%>
+                                <%--</c:if>--%>
+                            <%--</sec:authorize>--%>
+
                             <sec:authorize access="!isAuthenticated()">
-                                <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a>
-                                </p>
+                                <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a></p>
                             </sec:authorize>
                             <br>
                             <br>
@@ -188,7 +192,7 @@
                         </div>
                     </div>
                 </div>
-            </c:if> <a href="/artist_gallery/${picture.userGallery.id}" style="margin:30%">Back
+            </c:if> <a href="/artist_gallery?gallery_id=${picture.userGallery.id}" style="margin:30%">Back
             to ${picture.author.login}'s gallery</a>
         </div>
     </div>

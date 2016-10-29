@@ -82,27 +82,27 @@
         <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}
+        <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username" />
         </a></li>
         </sec:authorize>
     <div class="clear"></div>
 </ul>
 <div class="wrapper col3">
     <div class=" clearfix grid">
-        <c:if test="${msg ne null}">
+        <c:if test="${empty pictures}">
             <br>
-            <p>${msg}</p>
+            <p>No matching results</p>
             <br>
         </c:if>
         <c:forEach items="${pictures}" var="picture">
         <figure class="effect-oscar  wowload fadeInUp">
             <div style="max-width: 300px;">
-            <img src="picture/${picture.id}"/>
+            <img src="picture?picture_id=${picture.id}"/>
             <figcaption>
                 <h2>${picture.name} by ${picture.author.login}</h2>
                 <br>
                 <br>
-                <p><a href="/view_art/${picture.id}" data-userGallery>View</a></p>
+                <p><a href="/view_art?picture_id=${picture.id}" data-userGallery>View</a></p>
             </figcaption></div>
         </figure>
     </c:forEach>

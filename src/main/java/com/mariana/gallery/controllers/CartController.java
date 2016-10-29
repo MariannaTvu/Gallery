@@ -33,7 +33,7 @@ public class CartController {
         if (principal != null) {
             User user = userService.findUserByUsername(principal.getName());
             Picture picture = pictureService.getPictureById(pictureId);
-            if (pictureService.getPictureAuthor(picture).getId() != (user.getId())) {
+            if (picture.getAuthor().getId() != (user.getId())) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
                 Date date = new Date();

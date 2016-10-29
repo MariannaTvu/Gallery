@@ -86,7 +86,7 @@
         <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}
+        <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username" />
         </a></li>
     </sec:authorize>
     <div class="clear"></div>
@@ -115,7 +115,7 @@
                                                value="${cart.id}"/></td>
                                     <td>${cart.picture.name}</td>
                                     <td>${cart.picture.author.login}</td>
-                                    <td><a href="/view_art/${cart.picture.id}">View art</a></td>
+                                    <td><a href="/view_art?picture_id=${cart.picture.id}">View art</a></td>
                                     <td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
                                                           value='${cart.picture.price/100}' pattern='##,###.##'/></td>
                                     <td class="options-width">

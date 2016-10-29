@@ -69,6 +69,11 @@ public class UserController {
         return "/upload_art";
     }
 
+    @RequestMapping("/profile")
+    public String profile() {
+        return "redirect:/user_details";
+    }
+
     @RequestMapping("/user_details")
     public String seeUserDetails(Model model, Principal principal) {
         User user = userService.findUserByUsername(principal.getName());
@@ -226,7 +231,7 @@ public class UserController {
             userService.addUserBio(user, bio);
             model.addAttribute("gallery_id", user.getId());
         }
-        return "redirect:/artist_gallery/{gallery_id}";
+        return "redirect:/artist_gallery?gallery_id={gallery_id}";
     }
 
     @RequestMapping("/edit_gallery")

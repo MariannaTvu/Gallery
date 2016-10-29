@@ -81,11 +81,6 @@ public class PictureService {
     }
 
     @Transactional
-    public List<Picture> random() {
-        return pictureDAO.random();
-    }
-
-    @Transactional
     String getCommentAuthor(User user) {
         return pictureDAO.getCommentAuthor(user);
     }
@@ -128,11 +123,6 @@ public class PictureService {
     @Transactional
     public void setPrice(Picture picture, int price) {
         pictureDAO.setPrice(picture, price);
-    }
-
-    @Transactional
-    public User getPictureAuthor(Picture picture) {
-        return pictureDAO.getPictureAuthor(picture);
     }
 
     @Transactional

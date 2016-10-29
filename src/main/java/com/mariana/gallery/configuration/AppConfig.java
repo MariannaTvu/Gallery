@@ -1,11 +1,9 @@
 package com.mariana.gallery.configuration;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.sun.org.apache.xml.internal.utils.URI;
-import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -23,13 +21,14 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.persistence.EntityManagerFactory;
-import java.net.URISyntaxException;
+import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
 @ComponentScan("com.mariana.gallery")
 @EnableWebMvc
 @EnableTransactionManagement
+@Import({DevDbConfig.class, HerokuDbConfig.class})
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Override
@@ -48,7 +47,10 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(ComboPooledDataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            DataSource dataSource,
+            JpaVendorAdapter jpaVendorAdapter) {
+
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
@@ -68,25 +70,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         adapter.setGenerateDdl(true);
         adapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
         return adapter;
-    }
-
-    @Bean
-    public ComboPooledDataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
-        URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath() + "?reconnect=true";
-        ComboPooledDataSource cpds = new ComboPooledDataSource();
-        cpds.setJdbcUrl(dbUrl);
-        cpds.setUser(System.getenv("JDBC_DATABASE_USERNAME"));
-        cpds.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
-
-        cpds.setInitialPoolSize(3);
-        cpds.setMinPoolSize(3);
-        cpds.setAcquireIncrement(5);
-        cpds.setMaxPoolSize(20);
-        cpds.setMaxStatements(2000);
-        cpds.setTestConnectionOnCheckin(true);
-        cpds.setTestConnectionOnCheckout(true);
-        return cpds;
     }
 
     @Bean

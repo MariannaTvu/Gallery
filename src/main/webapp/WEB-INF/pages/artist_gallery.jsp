@@ -110,7 +110,7 @@
                                                                     title="Buy art">Show for sale only</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}</a></li>
+        <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username" /></a></li>
     </sec:authorize>
     <div class="clear"></div>
 </ul>
@@ -124,9 +124,9 @@
                 <figure class="art_hovereffect" style="width: 25%">
                     <div id="crop" class="crop-image-box">
                         <div id="image" class="crop-image"
-                             style="background-image: url(<c:url value='picture/${picture.id}'/>);"/>
+                             style="background-image: url('picture?picture_id=${picture.id}');"/>
                     </div>
-                    <a href="<c:url value='/view_art/${picture.id}'/>">
+                    <a href="/view_art?picture_id=${picture.id}">
                         <div class="overlay">
                             <h2><c:out value="${picture.name}"/></h2>
                         </div>

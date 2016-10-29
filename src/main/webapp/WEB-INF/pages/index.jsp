@@ -73,7 +73,7 @@
         <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}</a></li>
+        <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username" /></a></li>
     </sec:authorize>
 
     <div class="clear"></div>
@@ -85,10 +85,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="hovereffect">
-                        <img class="img-responsive" src="picture/${picture.id}" alt="Image 1">
+                        <img class="img-responsive" src="picture?picture_id=${picture.id}" alt="Image 1">
                         <div class="overlay">
                             <h2 style="margin: 0">${picture.name} by ${picture.author.login}</h2>
-                            <a class="info" href="/artist_gallery/${picture.userGallery.id}"
+                            <a class="info" href="/artist_gallery?gallery_id=${picture.userGallery.id}"
                                style="padding: 3%; margin: 50px 15%">view
                                 artist gallery</a>
                         </div>

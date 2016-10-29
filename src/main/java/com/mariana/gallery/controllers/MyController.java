@@ -2,7 +2,7 @@ package com.mariana.gallery.controllers;
 
 import com.mariana.gallery.controllers.exeptions.FileErrorException;
 import com.mariana.gallery.persistence.picture.Picture;
-import com.mariana.gallery.persistence.picture.PictureComment;
+import com.mariana.gallery.persistence.picture.PictureDAO;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.NoResultException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class MyController {
+
+    public static final int MAX_PICTURES_ON_BOARD = 26;
+
     @Autowired
     private GalleryService galleryService;
     @Autowired
@@ -31,133 +33,76 @@ public class MyController {
     @Autowired
     private PictureService pictureService;
 
+    @Autowired
+    private PictureDAO pictureDAO;
+
     @RequestMapping("/")
     public String onIndex() {
         return "redirect:/index";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(Model model, Principal principal) {
-        List<Picture> galleryPictures = pictureService.random();
-        if (galleryPictures.size() > 26) {
-            galleryPictures = galleryPictures.subList(0, 25);
-        }
-        List<Long> response = new ArrayList<>();
-        for (Picture picture : galleryPictures) {
-            long id = picture.getId();
-            response.add(id);
-        }
+    public String index(Model model) {
+        List<Picture> galleryPictures = pictureDAO.random(MAX_PICTURES_ON_BOARD);
+
         model.addAttribute("pictures", galleryPictures);
-        model.addAttribute("picture_id", response);
-        if (principal != null) {
-            String name = principal.getName(); //get logged in username
-            model.addAttribute("login", name);
-        }
+
         return "index";
     }
 
-    @RequestMapping("/reg")
-    public String registration() {
-        return "redirect:/registration";
-    }
-
     @RequestMapping("/art")
-    public String artGalleries(Model model, Principal principal) {
-        List<Picture> galleryPictures = pictureService.random();
-        List<Long> response = new ArrayList<>();
-        for (Picture picture : galleryPictures) {
-            long id = picture.getId();
-            response.add(id);
-        }
+    public String artGalleries(Model model) {
+        List<Picture> galleryPictures = pictureDAO.random(100);
         model.addAttribute("pictures", galleryPictures);
-        model.addAttribute("picture_id", response);
-
-        if (principal != null) {
-            String name = principal.getName();
-            model.addAttribute("login", name);
-        }
         return "/art";
     }
 
-    @RequestMapping("/profile")
-    public String userDetails() {
-        return "redirect:/user_details";
-    }
-
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(@RequestParam String pattern, Model model, Principal principal) {
-
-        if (principal != null) {
-            String name = principal.getName();
-            model.addAttribute("login", name);
-        }
-        List<Picture> result = pictureService.searchPictures(pattern);
-        if (result.isEmpty()) {
-            String msg = "No matching results";
-            model.addAttribute("msg", msg);
-        }
-        model.addAttribute("pictures", pictureService.searchPictures(pattern));
-
+    public String search(@RequestParam("pattern") String namePattern, Model model) {
+        List<Picture> result = pictureDAO.getByNamePattern(namePattern);
+        model.addAttribute("pictures", result);
         return "/search_result";
     }
 
-    @RequestMapping(value = "/view_art/{picture_id}", method = RequestMethod.GET)
-    public String viewArtById(@PathVariable("picture_id") long id, Model model, Principal principal) {
-        model.addAttribute("picture_id", id);
-        if (principal != null) {
-            String name = principal.getName();
-            model.addAttribute("login", name);
-        }
-        return "redirect:/view_art";
-    }
-
     @RequestMapping(value = "/view_art", method = RequestMethod.GET)
-    public String viewArt(@ModelAttribute("picture_id") long id, @ModelAttribute("login") String name,
-                          @ModelAttribute("msg") String msg, Model model, Principal principal) {
-        try {
-            Picture pic = pictureService.getPictureById(id);
-            List<PictureComment> comments = pic.getPictureComments();
-            model.addAttribute("author", pic.getAuthor().getLogin());
-            model.addAttribute("picture_id", id);
-            model.addAttribute("picture", pic);
-            model.addAttribute("comments", comments);
-            model.addAttribute("msg", msg);
-            if (principal != null) {
-                User user = userService.findUserByUsername(principal.getName());
-                if (pictureService.getPictureAuthor(pic).getId() != (user.getId())) {
-                    model.addAttribute("same_user", false);
-                }
-            }
-            if (principal == null) {
-                model.addAttribute("same_user", false);
-            }
-            return "/view_art";
-        } catch (NullPointerException e) {
+    public String viewArtById(@RequestParam("picture_id") long id, Model model, Principal principal) {
+        Picture pic = pictureDAO.getPictureById(id);
+        if (pic == null) {
             return "redirect:/index";
         }
+
+        model.addAttribute("picture", pic);
+        model.addAttribute("same_user", isSameUser(pic, principal));
+
+        return "/view_art";
     }
 
-    @RequestMapping("picture/{picture_id}")
-    public ResponseEntity<byte[]> onPhoto(@PathVariable("picture_id") long id, Model model) {
-        model.addAttribute("picture_id", id);
-        return pictureById(id);
-    }
-
-    @RequestMapping(value = "/artist_gallery/{gallery_id}", method = RequestMethod.GET)
-    public String viewGalleryById(@PathVariable("gallery_id") long galleryId, Model model) {
-        try {
-            model.addAttribute("gallery_id", galleryId);
-            model.addAttribute("sorting_type", "none");
-            return "redirect:/artist_gallery";
-        } catch (NoResultException e) {
+    private boolean isSameUser(Picture pic, Principal principal) {
+        if (principal == null) {
+            return false;
         }
-        return "redirect:/index";
+
+        User user = userService.findUserByUsername(principal.getName());
+        return pic.getAuthor().getId() == user.getId();
+    }
+
+    @RequestMapping("picture")
+    public ResponseEntity<byte[]> downloadPhotoContent(@RequestParam("picture_id") long id) {
+        Picture picture = pictureDAO.getPictureById(id);
+        byte[] bytes = picture.getBytes();
+        if (bytes == null) {
+            throw new FileErrorException(); // TODO: handle this exception
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 
     @RequestMapping("/artist_gallery")
     public String artistGallery(@RequestParam("gallery_id") long galleryId,
-                                @RequestParam("sorting_type") String sortingType,
-                                Model model, Principal principal) {
+                                @RequestParam(value = "sorting_type", defaultValue = "none") String sortingType,
+                                Model model) {
         try {
             UserGallery gallery = galleryService.findUserGallery(galleryId);
             User user = userService.findUserByGallery(gallery);
@@ -178,27 +123,10 @@ public class MyController {
                 model.addAttribute("pictures", pictureService.authorsPicturesForSale(user));
             }
 
-            if (principal != null) {
-                String name = principal.getName();
-                model.addAttribute("login", name);
-            }
             model.addAttribute("author", user);
             return "/artist_gallery";
         } catch (NoResultException e) {
+            return "redirect:/index";
         }
-        return "redirect:/index";
-    }
-
-    private ResponseEntity<byte[]> pictureById(long id) {
-        byte[] bytes = pictureService.getPictureBytesById(id);
-        if (bytes == null) {
-            throw new FileErrorException();
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
     }
 }
-
-
-

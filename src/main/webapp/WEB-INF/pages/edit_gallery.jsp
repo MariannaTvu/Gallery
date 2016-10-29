@@ -132,9 +132,9 @@
             <c:forEach items="${pictures}" var="picture">
                 <figure class="art_hovereffect" style="width: 25%">
                     <div id="crop" class="crop-image-box">
-                        <div id="image" class="crop-image" style="background-image: url(<c:url value='picture/${picture.id}'/>);" />
+                        <div id="image" class="crop-image" style="background-image: url('picture?picture_id=${picture.id}');" />
                     </div>
-                    <a href="<c:url value='/view_art/${picture.id}'/>">
+                    <a href="/view_art?picture_id=${picture.id}">
                         <div class="overlay">
 
                             <h2><c:out value="${picture.name}"/></h2>

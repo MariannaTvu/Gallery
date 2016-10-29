@@ -82,7 +82,7 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${login}
+        <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username" />
         </a></li>
     </sec:authorize>
     <div class="clear"></div>
@@ -93,15 +93,15 @@
         <c:forEach items="${pictures}" var="picture" >
         <figure class="effect-oscar  wowload fadeInUp" >
             <div style="max-width: 300px;">
-                <img src="picture/${picture.id}" style=""/>
+                <img src="picture?picture_id=${picture.id}" style=""/>
                 <figcaption>
                     <h2>${picture.name} by ${picture.author.login}</h2>
                     <br>
                     <br>
                     <br>
-                    <p><a href="/view_art/${picture.id}" data-userGallery>View art</a></p>
+                    <p><a href="/view_art?picture_id=${picture.id}" data-userGallery>View art</a></p>
                     <br>
-                    <p><a href="/artist_gallery/${picture.author.id}" data-userGallery>View gallery</a></p>
+                    <p><a href="/artist_gallery?gallery_id=${picture.author.id}" data-userGallery>View gallery</a></p>
                 </figcaption>
             </div>
         </figure>

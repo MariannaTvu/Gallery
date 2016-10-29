@@ -4,6 +4,8 @@ import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -12,9 +14,20 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_NAME_PATTER;
+
 @Entity
 @Table(name = "pictures")
+@NamedQueries(
+        @NamedQuery(
+                name = JPQL_GET_BY_NAME_PATTER,
+                query = "SELECT p FROM Picture p WHERE p.name LIKE :pattern AND p.available = :available"
+        )
+)
 public class Picture {
+
+    public static final String JPQL_GET_BY_NAME_PATTER = "Picture.getByNamePattern";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
