@@ -94,8 +94,8 @@
         <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-    <li style=" position: absolute; right: 0px"><a>Logged in as: ${user.login}
-        </sec:authorize></a></li>
+        <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username" /></a></li>
+    </sec:authorize>
     <div class="clear"></div>
 </ul>
 <div class="wrapper col3">
