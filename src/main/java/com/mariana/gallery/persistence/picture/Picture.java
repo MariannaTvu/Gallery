@@ -11,22 +11,44 @@ import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_NAME_PATTER;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_NAME_PATTERN;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_USER_GALLERY;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_ALL_PICTURES;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_RANDOM_PICTURES;
 
 @Entity
 @Table(name = "pictures")
-@NamedQueries(
+@NamedQueries({
         @NamedQuery(
-                name = JPQL_GET_BY_NAME_PATTER,
+                name = JPQL_GET_BY_NAME_PATTERN,
                 query = "SELECT p FROM Picture p WHERE p.name LIKE :pattern AND p.available = :available"
+        ),
+        @NamedQuery(
+                name = JPQL_GET_BY_USER_GALLERY,
+                query = "SELECT p FROM Picture p WHERE p.userGallery = :userGallery AND p.available = :available"
+        ),
+        @NamedQuery(
+                name = JPQL_GET_ALL_PICTURES,
+                query = "SELECT p FROM Picture p WHERE p.available = :available"
+        ),
+        @NamedQuery(
+                name = JPQL_GET_RANDOM_PICTURES,
+                query = "SELECT p FROM Picture p WHERE p.available = :available ORDER BY RAND()"
         )
-)
+})
 public class Picture {
 
-    public static final String JPQL_GET_BY_NAME_PATTER = "Picture.getByNamePattern";
+    public static final String JPQL_GET_BY_NAME_PATTERN = "Picture.getByNamePattern";
+    public static final String JPQL_GET_BY_USER_GALLERY = "Picture.getByGallery";
+    public static final String JPQL_GET_ALL_PICTURES = "Picture.pictureList";
+    public static final String JPQL_GET_RANDOM_PICTURES = "Picture.random";
+
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,7 +63,7 @@ public class Picture {
     private User author;
 
     @Basic(fetch = FetchType.LAZY)
-    private String dateAdded;
+    private long dateAdded;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -73,6 +95,10 @@ public class Picture {
 
     public Picture(byte[] bytes) {
         this.bytes = bytes;
+    }
+
+    public boolean isForSale() {
+        return price > 0;
     }
 
     public User getAuthor() {
@@ -114,9 +140,8 @@ public class Picture {
         return name;
     }
 
-    public Picture setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        return this;
     }
 
     public Picture setId(long id) {
@@ -133,11 +158,11 @@ public class Picture {
         return comments;
     }
 
-    public String getDateAdded() {
+    public long getDateAdded() {
         return dateAdded;
     }
 
-    public Picture setDateAdded(String dateAdded) {
+    public Picture setDateAdded(long dateAdded) {
         this.dateAdded = dateAdded;
         return this;
     }

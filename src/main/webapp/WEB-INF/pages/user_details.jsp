@@ -88,79 +88,111 @@
         <form action="/for_sale"><a href="/for_sale" title="Buy art">Buy art</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-    <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username" />
+    <li style=" position: absolute; right: 0px"><a>Logged in as: <sec:authentication property="principal.username"/>
         </sec:authorize></a></li>
     <div class="clear"></div>
 </ul>
-<div class="wrapper col5" style="border-bottom: 0">
-    <div id="container">
-        <div id="content" style="margin-bottom:10%">
-            <div>
-                <p>Your login: ${user.login}</p>
-            </div>
-            <div>
-                <p>Your balance: <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
-                                                   value='${user.balance/100}' pattern='##,###.##'/>
-                                                    $</p>
-            </div>
+<div class="wrapper col3" style="border-bottom: 0">
 
+    <div style="margin: 3% 20% 7%">
+
+        <table style="font-size: 1rem">
+            <tr>
+                <th style="width: 150px">
+                    Your login:
+                </th>
+                <td>
+                    ${user.login}
+                </td>
+            </tr>
+            <tr>
+                <th style="width: 150px">
+                    Your balance:
+                </th>
+                <td>
+                    <p><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                         value='${user.balance/100}' pattern='##,###.##'/>
+                        $</p>
+                </td>
+            </tr>
             <c:if test="${user.bio ne null}">
-                <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add_bio" method="post">
-                    <div class="form-group" style="margin-top:5%;"><h3>Update bio</h3><input type="text"
-                                                                                             class="form-control"
-                                                                                             name="bio"
-                                                                                             placeholder="Current bio will be re-written">
-                    </div>
-                    <div class="form-group"><input type="submit" class="btn btn-primary" value="Update"></div>
-                </form>
+                <tr>
+                    <th style="width: 150px">Update bio
+                    </th>
+                    <td>
+
+                        <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add_bio"
+                              method="post">
+                            <div class="form-group" style="margin-top:5%;"><input type="text"
+                                                                                  class="form-control"
+                                                                                  name="bio"
+                                                                                  placeholder="Current bio will be re-written">
+                            </div>
+                            <div class="form-group"><input type="submit" class="btn btn-primary" value="Update"></div>
+                        </form>
+
+                    </td>
+                </tr>
             </c:if>
             <c:if test="${user.bio == null}">
-                <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add_bio" method="post">
-                    <div class="form-group" style="margin-top:5%;">Add a bio<input type="text" class="form-control"
-                                                                                   name="bio"
-                                                                                   placeholder="Tell something about you">
-                    </div>
-                    <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
-                </form>
+                <tr>
+                    <th style="width: 150px">Add a bio
+                    </th>
+                    <td>
+                        <form role="form" enctype="multipart/form-data" class="form-horizontal" action="/add_bio"
+                              method="post">
+                            <div class="form-group" style="margin-top:5%;"><input type="text" class="form-control"
+                                                                                  name="bio"
+                                                                                  placeholder="Tell something about you">
+                            </div>
+                            <div class="form-group"><input type="submit" class="btn btn-primary" value="Add"></div>
+                        </form>
+                    </td>
+                </tr>
+            </c:if>
+            <tr>
+                <th style="width: 150px">Edit gallery
+                </th>
+                <td>
+                    <form action="/user_pictures"><input type="submit" class="btn btn-primary"
+                                                         value="Click here to edit gallery">
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+
+        <br>
+        <br>
+        <br>
+        <div>
+            <h3>Order history</h3>
+            <c:if test="${!empty orders}">
+                <table>
+                    <tr>
+                        <th>Picture name</th>
+                        <th>Picture price</th>
+                        <th>Date ordered</th>
+                        <th>Date of purchase</th>
+                        <th>Author</th>
+                    </tr>
+                    <c:forEach items="${orders}" var="orders">
+                        <tr>
+                            <td>${orders.picture.name}</td>
+                            <td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                  value='${orders.picture.price/100}' pattern='##,###.##'/>
+                            </td>
+                            <td>${orders.date}</td>
+                            <td>${orders.purchaseDate}</td>
+                            <td>${orders.picture.author.login}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
+            <c:if test="${msg ne null}">
+                <p>${msg}</p>
             </c:if>
 
-            <div class="form-group">
-                <h3>Edit gallery</h3>
-                <form action="/user_pictures"><input type="submit" class="btn btn-primary"
-                                                     value="Click here to edit gallery">
-                </form>
-            </div>
-            <br>
-            <br>
-            <br>
-            <div>
-                <h3>Order history</h3>
-                <c:if test="${!empty orders}">
-                    <table>
-                        <tr>
-                            <th>Picture name</th>
-                            <th>Picture price</th>
-                            <th>Date ordered</th>
-                            <th>Date of purchase</th>
-                            <th>Author</th>
-                        </tr>
-                        <c:forEach items="${orders}" var="orders">
-                            <tr>
-                                <td>${orders.picture.name}</td>
-                                <td><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
-                                                      value='${orders.picture.price/100}' pattern='##,###.##'/>
-                                </td>
-                                <td>${orders.date}</td>
-                                <td>${orders.purchaseDate}</td>
-                                <td>${orders.picture.author.login}</td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </c:if>
-                <c:if test="${msg ne null}">
-                    <p>${msg}</p>
-                </c:if>
-            </div>
         </div>
 
     </div>

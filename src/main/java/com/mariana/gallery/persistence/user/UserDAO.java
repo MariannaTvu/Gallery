@@ -13,6 +13,7 @@ public interface UserDAO {
 
     void setBio(User user, String bio);
 
+    @Deprecated
     User findUserByGallery(UserGallery gallery);
 
     void setBalance(User user, int balance);

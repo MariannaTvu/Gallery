@@ -2,14 +2,42 @@ package com.mariana.gallery.persistence.orders;
 
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.user.User;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import static com.mariana.gallery.persistence.orders.Cart.JPQL_FIND_USER_CART;
+import static com.mariana.gallery.persistence.orders.Cart.JPQL_GET_ORDERS_OF_PICTURE;
+import static com.mariana.gallery.persistence.orders.Cart.JPQL_GET_USER_CONFIRMED_ORDERS;
+
 
 @Entity
 @Table(name = "orders")
+@NamedQueries({
+        @NamedQuery(
+                name = JPQL_FIND_USER_CART,
+                query = "SELECT g FROM Cart g WHERE g.user = :user AND g.confirmedOrder = :confirmedOrder"
+        ),
+        @NamedQuery(
+                name = JPQL_GET_USER_CONFIRMED_ORDERS,
+                query = "SELECT c FROM Cart c WHERE c.user = :user AND c.confirmedOrder = :confirmedOrder"
+        ),
+        @NamedQuery(
+                name = JPQL_GET_ORDERS_OF_PICTURE,
+                query = "SELECT c FROM Cart c WHERE c.picture = :picture"
+        ),
+})
 public class Cart {
+
+    public static final String JPQL_GET_USER_CONFIRMED_ORDERS = "Cart.getUserConfirmedOrders";
+    public static final String JPQL_GET_ORDERS_OF_PICTURE = "Cart.getOrdersOfPicture";
+    public static final String JPQL_FIND_USER_CART = "Cart.findUserCart";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -27,7 +55,7 @@ public class Cart {
 
     private int sumCost;
 
-    @Type(type="yes_no")
+    @Type(type = "yes_no")
     private boolean confirmedOrder;
 
     public Cart() {

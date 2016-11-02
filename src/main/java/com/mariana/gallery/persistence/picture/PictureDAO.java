@@ -10,10 +10,6 @@ public interface PictureDAO {
 
     void addComment(PictureComment comment);
 
-    void delete(Picture picture);
-
-    void delete(long[] ids);
-
     Picture update(Picture picture);
 
     PictureComment updateComment(PictureComment pictureComment);
@@ -28,29 +24,9 @@ public interface PictureDAO {
 
     Picture getPictureById(long id);
 
-    List<PictureComment> getCommentsByPictureId(long id);
-
-    String getCommentAuthor(User user);
-
     PictureComment setCommentDate(PictureComment comment, String date);
 
     String getPictureNameById(long id);
-
-    List<Picture> sortPicturesByName();
-
-    List<Picture> sortPicturesByComments();
-
-    List<Picture> sortPicturesByDate();
-
-    List<Picture> authorsPicturesByName(User user);
-
-    List<Picture> authorsPicturesByComments(User user);
-
-    List<Picture> authorsPicturesByDate(User user);
-
-    List<Picture> authorsPicturesForSale(User user);
-
-    List<Picture> getForSalePictures();
 
     List<Picture> random(int count);
 

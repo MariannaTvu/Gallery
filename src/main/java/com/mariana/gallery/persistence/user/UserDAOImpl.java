@@ -2,19 +2,16 @@ package com.mariana.gallery.persistence.user;
 
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import static com.mariana.gallery.persistence.user.User.JPQL_FIND_USER_BY_USERGALLERY;
+import static com.mariana.gallery.persistence.user.User.JPQL_FIND_USER_BY_USERNAME;
+
 @Repository
 public class UserDAOImpl implements UserDAO {
-
-    public static final String JPQL_FIND_USER_BY_USERNAME = "SELECT u FROM User u WHERE u.login = :login";
-    public static final String JPQL_FIND_USER_BY_USERGALLERY = "SELECT u FROM User u WHERE u.userGallery = :userGallery";
-    public static final String PARAM_USERNAME = "login";
-    public static final String PARAM_USERGALLERY = "userGallery";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -26,8 +23,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findUserByUsername(String username) {
-        TypedQuery<User> query = entityManager.createQuery(JPQL_FIND_USER_BY_USERNAME, User.class);
-        query.setParameter(PARAM_USERNAME, username);
+        TypedQuery<User> query = entityManager.createNamedQuery(JPQL_FIND_USER_BY_USERNAME, User.class);
+        query.setParameter("login", username);
 
         return query.getSingleResult();
     }
@@ -52,8 +49,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findUserByGallery(UserGallery gallery) {
-        TypedQuery<User> query = entityManager.createQuery(JPQL_FIND_USER_BY_USERGALLERY, User.class);
-        query.setParameter(PARAM_USERGALLERY, gallery);
+        TypedQuery<User> query = entityManager.createNamedQuery(JPQL_FIND_USER_BY_USERGALLERY, User.class);
+        query.setParameter("userGallery", gallery);
 
         return query.getSingleResult();
     }

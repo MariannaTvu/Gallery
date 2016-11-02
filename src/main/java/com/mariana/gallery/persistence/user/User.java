@@ -4,6 +4,8 @@ import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
 import com.mariana.gallery.persistence.picture.Picture;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -12,9 +14,27 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mariana.gallery.persistence.user.User.JPQL_FIND_USER_BY_USERGALLERY;
+import static com.mariana.gallery.persistence.user.User.JPQL_FIND_USER_BY_USERNAME;
+
 @Entity
 @Table(name = "users")
+@NamedQueries({
+@NamedQuery(
+        name = JPQL_FIND_USER_BY_USERNAME,
+        query = "SELECT u FROM User u WHERE u.login = :login"
+
+),
+        @NamedQuery(
+                name = JPQL_FIND_USER_BY_USERGALLERY,
+                query = "SELECT u FROM User u WHERE u.userGallery = :userGallery"
+        )
+
+})
 public class User {
+    public static final String JPQL_FIND_USER_BY_USERNAME = "User.findUserByUsername";
+    public static final String JPQL_FIND_USER_BY_USERGALLERY = "User.FindUserByGallery";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

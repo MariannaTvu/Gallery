@@ -10,17 +10,20 @@ table {
 }	
 
 th {
-	background: url(http://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
+	background: linear-gradient(#777, #444);
 	border-left: 1px solid #555;
 	border-right: 1px solid #777;
-	border-top: 1px solid #555;
-	border-bottom: 1px solid #333;
-	box-shadow: inset 0 1px 0 #999;
 	color: #fff;
 
 	padding: 10px 15px;
 	position: relative;
 
+}
+td{
+	background: #232323; /* For browsers that do not support gradients */
+	border-left: 1px solid #555;
+	border-right: 1px solid #777;
+	box-shadow: inset 0 1px 0 #999;
 }
 
 
@@ -30,11 +33,11 @@ th {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   cursor: pointer;
-  padding: 0.35em 0.35em;
+  padding: 0.55em 0.65em;
   border: none;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  font: normal 1.25em/normal "Abel", Helvetica, sans-serif;
+  font-size: 17px;
   color: rgba(255,255,255,1);
   -o-text-overflow: clip;
   text-overflow: clip;
@@ -73,14 +76,6 @@ th:after {
 	width: 100%;
 }
 
-th:first-child {
-	border-left: 1px solid #777;	
-	box-shadow: inset 1px 1px 0 #999;
-}
-
-th:last-child {
-	box-shadow: inset -1px 1px 0 #999;
-}
 
 td {
 	border-right: 1px solid #fff;
@@ -88,18 +83,9 @@ td {
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid #e8e8e8;
 	padding: 10px 15px;
-	position: relative;
+
 	transition: all 300ms;
 }
-
-td:first-child {
-	box-shadow: inset 1px 0 0 #fff;
-}	
-
-td:last-child {
-	border-right: 1px solid #e8e8e8;
-	box-shadow: inset -1px 0 0 #fff;
-}	
 
 tr {
 	background: url(http://jackrugile.com/images/misc/noise-diagonal.png);	

@@ -13,7 +13,10 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_NAME_PATTER;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_NAME_PATTERN;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_USER_GALLERY;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_ALL_PICTURES;
+import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_RANDOM_PICTURES;
 
 @Transactional
 @Repository
@@ -29,20 +32,6 @@ public class PictureDAOImpl implements PictureDAO {
     @Override
     public void addComment(PictureComment comment) {
         entityManager.persist(comment);
-    }
-
-    @Override
-    public void delete(Picture picture) {
-        entityManager.remove(picture);
-    }
-
-    @Override
-    public void delete(long[] ids) {
-        Picture c;
-        for (long id : ids) {
-            c = entityManager.getReference(Picture.class, id);
-            entityManager.remove(c);
-        }
     }
 
     @Override
@@ -115,23 +104,22 @@ public class PictureDAOImpl implements PictureDAO {
 
     @Override
     public List<Picture> getByGallery(UserGallery userGallery) {
-        Query query;
+        TypedQuery<Picture> query;
         boolean available = true;
         if (userGallery != null) {
-            query = entityManager.createQuery("SELECT c FROM Picture c WHERE c.userGallery = :userGallery" +
-                    " AND c.available = :available", Picture.class);
+            query = entityManager.createNamedQuery(JPQL_GET_BY_USER_GALLERY, Picture.class);
             query.setParameter("userGallery", userGallery);
             query.setParameter("available", available);
         } else {
             query = entityManager.createQuery("SELECT c FROM Picture c", Picture.class);
         }
 
-        return (List<Picture>) query.getResultList();
+        return query.getResultList();
     }
 
     @Override
     public List<Picture> getByNamePattern(String pattern) {
-        return entityManager.createNamedQuery(JPQL_GET_BY_NAME_PATTER, Picture.class)
+        return entityManager.createNamedQuery(JPQL_GET_BY_NAME_PATTERN, Picture.class)
                 .setParameter("pattern", "%" + pattern + "%")
                 .setParameter("available", true)
                 .getResultList();
@@ -140,17 +128,10 @@ public class PictureDAOImpl implements PictureDAO {
     @Override
     public List<Picture> pictureList() {
         boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.available = :available", Picture.class);
+        TypedQuery<Picture> query = entityManager.createNamedQuery(JPQL_GET_ALL_PICTURES, Picture.class);
         query.setParameter("available", available);
-        return (List<Picture>) query.getResultList();
-    }
-
-    @Override
-    public List<PictureComment> getCommentsByPictureId(long id) {
-        Query query = entityManager.createQuery("SELECT g FROM PictureComment g", PictureComment.class);
         return query.getResultList();
     }
-
 
     @Override
     public String getPictureNameById(long id) {
@@ -165,45 +146,13 @@ public class PictureDAOImpl implements PictureDAO {
     }
 
     @Override
-    public List<Picture> sortPicturesByName() {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.available = :available ORDER BY g.name", Picture.class);
-        query.setParameter("available", available);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Picture> sortPicturesByComments() {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.available = :available" +
-                " ORDER BY g.comments.size DESC", Picture.class);
-        query.setParameter("available", available);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Picture> sortPicturesByDate() {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.available = :available" +
-                " ORDER BY g.dateAdded DESC", Picture.class);
-        query.setParameter("available", available);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Picture> random(int count) {
         boolean available = true;
-        TypedQuery<Picture> query = entityManager.createQuery("SELECT p FROM Picture p WHERE p.available = :available" +
-                " ORDER BY RAND()", Picture.class);
+        TypedQuery<Picture> query = entityManager.createNamedQuery(JPQL_GET_RANDOM_PICTURES, Picture.class);
         query.setParameter("available", available);
         query.setMaxResults(count);
         List<Picture> randomList = query.getResultList();
         return randomList;
-    }
-
-    @Override
-    public String getCommentAuthor(User user) {
-        return user.getLogin();
     }
 
     @Override
@@ -216,57 +165,5 @@ public class PictureDAOImpl implements PictureDAO {
         picture.setPrice(price);
         entityManager.merge(picture);
     }
-
-    @Override
-    public List<Picture> getForSalePictures() {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT n FROM Picture n WHERE n.price <> 0 AND " +
-                "n.available = :available" +
-                " ORDER BY RAND()", Picture.class);
-        query.setParameter("available", available);
-
-        List<Picture> forSaleList = query.getResultList();
-        return forSaleList;
-    }
-
-    @Override
-    public List<Picture> authorsPicturesByComments(User user) {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
-                "g.available = :available" +
-                " ORDER BY g.comments.size DESC", Picture.class);
-        query.setParameter("available", available);
-        query.setParameter("user", user);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Picture> authorsPicturesByDate(User user) {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
-                "g.available = :available" +
-                " ORDER BY g.dateAdded DESC", Picture.class);
-        query.setParameter("available", available);
-        query.setParameter("user", user);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Picture> authorsPicturesByName(User user) {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
-                        "g.available = :available ORDER BY g.name", Picture.class);
-        query.setParameter("available", available);
-        query.setParameter("user", user);
-        return query.getResultList();
-    }
-    @Override
-    public List<Picture> authorsPicturesForSale(User user) {
-        boolean available = true;
-        Query query = entityManager.createQuery("SELECT g FROM Picture g WHERE g.author = :user AND " +
-                        "g.available = :available AND g.price <> 0 ORDER BY g.name", Picture.class);
-        query.setParameter("available", available);
-        query.setParameter("user", user);
-        return query.getResultList();
-    }
 }
+

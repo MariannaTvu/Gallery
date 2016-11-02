@@ -18,6 +18,8 @@
 
 
     <!-- CSS Files -->
+
+    <link rel="stylesheet" type="text/css" href="/resources/css/table.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/resources/css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/resources/menu/css/simple_menu.css">
     <link rel="stylesheet" href="/resources/css/nivo-slider.css" type="text/css" media="screen">
@@ -94,10 +96,12 @@
     <div id="container">
         <div id="content">
             <h1>${picture.name} by ${picture.author.login}</h1>
-            <img class="imgr" src="picture?picture_id=${picture.id}" alt="" width="100%" height="auto"/>
+           <div>
+            <img class="imgr" src="picture?picture_id=${picture.id}" alt=""  height="auto"/>
+</div>
+            <div class="clear"></div>
 
-
-            <div id="comments">
+            <div id="comments" >
                 <h2>Comments</h2>
                 <c:if test="${empty picture.comments}"><p>No comments yet</p></c:if>
                 <ul class="commentlist">

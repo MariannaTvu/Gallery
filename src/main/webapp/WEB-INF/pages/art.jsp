@@ -88,12 +88,17 @@
     <div class="clear"></div>
 </ul>
 
-<div class="wrapper col3" align="center">
-    <div class=" clearfix grid" align="center" >
+<div class="wrapper col3" style="padding-left: 1% ">
+    <div class="grid" >
+
         <c:forEach items="${pictures}" var="picture" >
+
         <figure class="effect-oscar  wowload fadeInUp" >
-            <div style="max-width: 300px;">
-                <img src="picture?picture_id=${picture.id}" style=""/>
+            <div >
+                <div id="crop" class="crop-image-box">
+                    <div id="image" class="crop-image"
+                         style="background-image: url('picture?picture_id=${picture.id}');"/>
+                </div>
                 <figcaption>
                     <h2>${picture.name} by ${picture.author.login}</h2>
                     <br>
@@ -105,8 +110,9 @@
                 </figcaption>
             </div>
         </figure>
+
     </c:forEach>
-    </div>
+         </div>
 </div>
 
 <div class="wrapper col5" style="margin-top: 5%">

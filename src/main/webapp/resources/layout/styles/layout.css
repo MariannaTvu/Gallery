@@ -24,15 +24,17 @@ a{outline:none; text-decoration:none;}
 img{margin:0; padding:0; border:0;}
 
 .imgl{margin:0 8px 8px 0; clear:left;}
-.imgr{margin:0 0 8px 8px; clear:right;}
+.imgr{margin:0 0 8px 8px; clear:right; float: left; max-width: 100%; ;
+}
+
 
 /* ----------------------------------------------Wrapper------------------------------------- */
 
-div.wrapper{display:block; width:100%; margin:0, 1%; text-align:left;}
+div.wrapper{display:block; width:100%; margin:0; text-align:left;}
 div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, div.wrapper h6{margin:0 0 15px 0; padding:8px ; margin:8px; font-size:18px; font-weight:normal; font-family:Georgia, "Times New Roman", Times, serif; border-bottom:1px dashed #DDDDDD;}
 .col1{color:#333333; background-color:#080808;}
 .col2{color:#DBDBDB; background-color:#080808; }
-.col3{color:#DBDBDB; background-color:#080808; }
+.col3{color:#DBDBDB; background-color:#080808;    }
 .col4{color:#DBDBDB; background-color:#080808; }
 .col5{color:#CCCCCC; background-color:#080808;}
 .col5 a{color:#99CC00; }
@@ -79,9 +81,10 @@ div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, 
 #container h1, #container h2, #container h3, #container h4, #container h5, #container h6{margin:0 0 15px 0; padding:0 0 8px 0; color:#CCCCCC; background-color:#080808; border-bottom:1px solid #CCCCCC;}
 #content{display:block; float:left; width:600px; 	margin-left: 10%;}
 
+
 /* Comments */
 
-#comments{margin-bottom:40px;}
+#comments{margin-bottom:40px; margin-top: 10%}
 #comments .commentlist{margin:0; padding:0;}
 #comments .commentlist ul{margin:0; padding:0; list-style:none;}
 #comments .commentlist li.comment_odd, #comments .commentlist li.comment_even{margin:0 0 10px 0; padding:15px; list-style:none;}

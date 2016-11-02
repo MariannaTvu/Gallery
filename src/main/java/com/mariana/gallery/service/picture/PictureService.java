@@ -47,52 +47,8 @@ public class PictureService {
     }
 
     @Transactional
-    public List<Picture> sortPicturesByName() {
-        return pictureDAO.sortPicturesByName();
-    }
-
-    @Transactional
-    public List<Picture> sortPicturesByComments() {
-        return pictureDAO.sortPicturesByComments();
-    }
-
-    @Transactional
-    public List<Picture> sortPicturesByDate() {
-        return pictureDAO.sortPicturesByDate();
-    }
-
-    @Transactional
-    public List<Picture> authorsPicturesByName(User user) {
-        return pictureDAO.authorsPicturesByName(user);
-    }
-
-    @Transactional
-    public List<Picture> authorsPicturesByComments(User user) {
-        return pictureDAO.authorsPicturesByComments(user);
-    }
-    @Transactional
-    public List<Picture> authorsPicturesForSale(User user) {
-        return pictureDAO.authorsPicturesForSale(user);
-    }
-
-    @Transactional
-    public List<Picture> authorsPicturesByDate(User user) {
-        return pictureDAO.authorsPicturesByDate(user);
-    }
-
-    @Transactional
-    String getCommentAuthor(User user) {
-        return pictureDAO.getCommentAuthor(user);
-    }
-
-    @Transactional
     public PictureComment setCommentDate(PictureComment comment, String date) {
         return pictureDAO.setCommentDate(comment, date);
-    }
-
-    @Transactional
-    public void deletePicture(long[] ids) {
-        pictureDAO.delete(ids);
     }
 
     @Transactional
@@ -124,11 +80,4 @@ public class PictureService {
     public void setPrice(Picture picture, int price) {
         pictureDAO.setPrice(picture, price);
     }
-
-    @Transactional
-    public List<Picture> forSalePictures() {
-        return pictureDAO.getForSalePictures();
-    }
-
-
 }

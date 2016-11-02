@@ -73,15 +73,6 @@ a div.popup {
 a:hover div.popup {
 	display: block; }
 
-.buy-btn{
-   -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  color: #ffffff;
-  font-size: 17px;
-  background: #54ab37;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
-}
 .delete-btn{
 	-webkit-border-radius: 28;
 	-moz-border-radius: 28;
@@ -90,7 +81,7 @@ a:hover div.popup {
 	color: #ffffff;
 	font-size: 13px;
 	background: #f53f3f;
-	padding: 5px 10px 5px 10px;
+	padding: 5px 15px ;
 	text-decoration: none;
 }
 .edit-btn{
@@ -101,22 +92,21 @@ a:hover div.popup {
 	color: #ffffff;
 	font-size: 13px;
 	background: #3f73f5;
-	padding: 5px 10px 5px 10px;
+	padding: 5px 15px ;
 	text-decoration: none;
 }
 
 @media (max-width: 1200px) {
 	body{font:300 13px/13px Roboto,Arial,Helvetica;}
 	
-	.grid figure h2{font: 700 1.5em Roboto,Arial,Helvetica;}
+
 	figure.effect-oscar figcaption{padding: 12%;}
 	figure.effect-oscar figcaption::before,figure.effect-chico figcaption::before{top: 20px;right: 20px;bottom: 20px;left: 20px;}
 
 }
 
 @media (max-width: 900px) {
-	h1{font: 700 3.5em Roboto,Arial,Helvetica;}
-	h4 {font: 300 1.3em Roboto,Arial,Helvetica;}
+
 	.btn{padding: 1em 2em;}
 	figure.effect-chico figcaption {padding: 2em;}	
 	figure.effect-oscar figcaption {padding: 20%;}
@@ -126,12 +116,12 @@ a:hover div.popup {
 
 
 @media (max-width: 767px) {
-	body{font:300 12px/12px Roboto,Arial,Helvetica;}
+
 
 	.banner .caption,.carousel-caption,.carousel-control,.carousel-indicators{display: none;}
 
 	h2.text-center{text-align: left;font-size: 1.7em;}
-	h4 {font: 300 1.2em Roboto,Arial,Helvetica;}
+
 	
 
 	.spacer{padding:2em 0 ;}

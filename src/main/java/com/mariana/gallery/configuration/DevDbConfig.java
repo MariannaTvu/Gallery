@@ -12,6 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 
 /**
  * Created by Maryana on 28.10.2016.
@@ -31,15 +32,25 @@ public class DevDbConfig {
                                  @Value("${db.user}") String dbUser,
                                  @Value("${db.password}") String dbPassword) {
 
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(Driver.class.getName());
-        dataSource.setUrl(dbUrl);
-        dataSource.setUsername(dbUser);
-        dataSource.setPassword(dbPassword);
-        dataSource.setMaxActive(100);
-        dataSource.setMaxWait(10000);
-        dataSource.setMaxIdle(10);
+        ComboPooledDataSource cpds = new ComboPooledDataSource();
+        try {
+            cpds.setDriverClass(Driver.class.getName());
+        } catch (PropertyVetoException e) {
+            e.printStackTrace();
+        }
+        cpds.setJdbcUrl(dbUrl);
+        cpds.setUser(dbUser);
+        cpds.setPassword(dbPassword);
 
-        return dataSource;
+
+        cpds.setInitialPoolSize(3);
+        cpds.setMinPoolSize(3);
+        cpds.setAcquireIncrement(5);
+        cpds.setMaxPoolSize(20);
+        cpds.setMaxStatements(2000);
+        cpds.setTestConnectionOnCheckin(true);
+        cpds.setTestConnectionOnCheckout(true);
+
+        return cpds;
     }
 }

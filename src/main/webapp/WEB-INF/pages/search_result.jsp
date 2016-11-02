@@ -88,24 +88,32 @@
     <div class="clear"></div>
 </ul>
 <div class="wrapper col3">
-    <div class=" clearfix grid">
+    <div class="grid" >
         <c:if test="${empty pictures}">
             <br>
             <p>No matching results</p>
             <br>
         </c:if>
         <c:forEach items="${pictures}" var="picture">
-        <figure class="effect-oscar  wowload fadeInUp">
-            <div style="max-width: 300px;">
-            <img src="picture?picture_id=${picture.id}"/>
-            <figcaption>
-                <h2>${picture.name} by ${picture.author.login}</h2>
-                <br>
-                <br>
-                <p><a href="/view_art?picture_id=${picture.id}" data-userGallery>View</a></p>
-            </figcaption></div>
-        </figure>
-    </c:forEach>
+            <figure class="effect-oscar  wowload fadeInUp" >
+                <div >
+                    <div id="crop" class="crop-image-box">
+                        <div id="image" class="crop-image"
+                             style="background-image: url('picture?picture_id=${picture.id}');"/>
+                    </div>
+                    <figcaption>
+                        <h2>${picture.name} by ${picture.author.login}</h2>
+                        <br>
+                        <br>
+                        <br>
+                        <p><a href="/view_art?picture_id=${picture.id}" data-userGallery>View art</a></p>
+                        <br>
+                        <p><a href="/artist_gallery?gallery_id=${picture.author.id}" data-userGallery>View gallery</a></p>
+                    </figcaption>
+                </div>
+            </figure>
+
+        </c:forEach>
     </div>
 </div>
 

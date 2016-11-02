@@ -19,11 +19,6 @@ public class UserService {
     }
 
     @Transactional
-    public User findUserByUsername(String username) {
-        return userDAO.findUserByUsername(username);
-    }
-
-    @Transactional
     public User saveUser(User user, UserGallery gallery) {
         userDAO.saveUser(user);
         user.setUserGallery(gallery);
@@ -47,6 +42,7 @@ public class UserService {
     }
 
     @Transactional
+    @Deprecated
     public User findUserByGallery(UserGallery gallery) {
         return userDAO.findUserByGallery(gallery);
     }

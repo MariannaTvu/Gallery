@@ -83,9 +83,6 @@ li #topnav{ width: 300px;
 
 
 
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,200,300,100,500,700,600,800,900);
-
-
 
 .clear {
   clear: both;
@@ -99,7 +96,7 @@ li #topnav{ width: 300px;
  
 
   box-shadow:  0px -2px 3px -1px rgba(0, 0, 0, 1);
-  */
+
 }
 
 .sort_navigation li {
@@ -636,4 +633,3 @@ transition-delay:.2s;
 		padding: 20px;
 		min-height: 100px;
 	}
-}

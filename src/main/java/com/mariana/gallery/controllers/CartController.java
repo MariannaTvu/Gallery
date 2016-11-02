@@ -3,7 +3,9 @@ package com.mariana.gallery.controllers;
 
 import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.picture.Picture;
+import com.mariana.gallery.persistence.picture.PictureDAO;
 import com.mariana.gallery.persistence.user.User;
+import com.mariana.gallery.persistence.user.UserDAO;
 import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;
@@ -28,10 +30,15 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private PictureDAO pictureDAO;
+    @Autowired
+    private UserDAO userDAO;
+
     @RequestMapping(value = "/add_to_cart", method = RequestMethod.GET)
     public String addToCart(@ModelAttribute("picture_id") long pictureId, Principal principal, Model model) {
         if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+            User user = userDAO.findUserByUsername(principal.getName());
             Picture picture = pictureService.getPictureById(pictureId);
             if (picture.getAuthor().getId() != (user.getId())) {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -50,7 +57,7 @@ public class CartController {
     @RequestMapping(value = "/buy", method = RequestMethod.GET)
     public String buyArt(@RequestParam("selectedItems") long[] orderIds, Principal principal, Model model) {
         if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+            User user = userDAO.findUserByUsername(principal.getName());
             for (long id : orderIds) {
                 Cart cart = cartService.getOrderById(id);
                 Picture picture = cart.getPicture();
@@ -62,7 +69,7 @@ public class CartController {
                     Date date = new Date();
                     cartService.setPurchaseDate(cart, dateFormat.format(date));
                     cartService.confirmOrder(id);
-                    pictureService.update(picture);
+                    pictureDAO.update(picture);
                     userService.save(user);
                 }else{
                     String msg = "Sorry, there is not enough money on your balance";
@@ -76,7 +83,7 @@ public class CartController {
     @RequestMapping(value = "/shop", method = RequestMethod.GET)
     public String shop(@ModelAttribute("msg") String msg, Model model, Principal principal) {
         if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+            User user = userDAO.findUserByUsername(principal.getName());
             List<Cart> userCarts = cartService.getUserCart(user);
             String name = principal.getName();
             model.addAttribute("login", name);

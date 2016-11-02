@@ -104,8 +104,11 @@
 <div class="wrapper col5">
     <div id="container">
         <div id="content">
-            <h2>About ${author.login} <a href="/user_details">Edit bio</a></h2>
+            <h2>About ${author.login}</h2>
             <p>${author.bio}</p>
+            <form action="/user_details"><input type="submit" class="btn btn-primary"
+                                              value="Click here to edit biography">
+            </form>
         </div>
 
         <br class="clear"/>

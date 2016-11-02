@@ -3,14 +3,17 @@ package com.mariana.gallery.persistence.orders;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.user.User;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.mariana.gallery.persistence.orders.Cart.JPQL_FIND_USER_CART;
+import static com.mariana.gallery.persistence.orders.Cart.JPQL_GET_ORDERS_OF_PICTURE;
+import static com.mariana.gallery.persistence.orders.Cart.JPQL_GET_USER_CONFIRMED_ORDERS;
 
 @Repository
 public class CartDAOImpl implements CartDAO {
@@ -47,10 +50,10 @@ public class CartDAOImpl implements CartDAO {
     @Override
     public List<Cart> findUserCart(User user) {
         boolean confirmedOrder = false;
-        Query query = entityManager.createQuery("SELECT g FROM Cart g WHERE g.user = :user AND g.confirmedOrder = :confirmedOrder", Cart.class);
+        TypedQuery<Cart> query = entityManager.createNamedQuery(JPQL_FIND_USER_CART, Cart.class);
         query.setParameter("user", user);
         query.setParameter("confirmedOrder", confirmedOrder);
-        return (List<Cart>) query.getResultList();
+        return query.getResultList();
     }
 
     @Override
@@ -77,12 +80,11 @@ public class CartDAOImpl implements CartDAO {
 
     @Override
     public List<Cart> getUserConfirmedOrders(User user) {
-        Query query;
         boolean confirmedOrder = true;
-        query = entityManager.createQuery("SELECT c FROM Cart c WHERE c.user = :user AND c.confirmedOrder = :confirmedOrder", Cart.class);
+        TypedQuery<Cart> query = entityManager.createNamedQuery(JPQL_GET_USER_CONFIRMED_ORDERS, Cart.class);
         query.setParameter("user", user);
         query.setParameter("confirmedOrder", confirmedOrder);
-        return (List<Cart>) query.getResultList();
+        return query.getResultList();
     }
 
     @Override
@@ -96,11 +98,8 @@ public class CartDAOImpl implements CartDAO {
 
     @Override
     public List<Cart> getOrdersOfPicture(Picture picture) {
-        Cart c;
-        Query query;
-        query = entityManager.createQuery("SELECT c FROM Cart c WHERE c.picture = :picture", Cart.class);
+        TypedQuery<Cart> query = entityManager.createQuery(JPQL_GET_ORDERS_OF_PICTURE, Cart.class);
         query.setParameter("picture", picture);
-
-        return (List<Cart>) query.getResultList();
+        return query.getResultList();
     }
 }

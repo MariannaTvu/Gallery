@@ -92,10 +92,6 @@
     <div class="clear"></div>
 </ul>
 <div class="wrapper col5" style="border-bottom: 0; width:100%">
-    <table border="0" width="100%" cellpadding="0" cellspacing="0" id="shop">
-        <tr>
-            <td>
-                <br>
                 <c:if test="${msg ne null}"><p>${msg}</p></c:if>
                 <div>
                     <form role="form" enctype="multipart/form-data" id="form1"
@@ -150,7 +146,6 @@
             </td>
         </tr>
         <div class="clear">&nbsp;</div>
-    </table>
     </form>
 
 </div>

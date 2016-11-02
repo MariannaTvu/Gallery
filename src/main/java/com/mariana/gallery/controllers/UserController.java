@@ -3,14 +3,18 @@ package com.mariana.gallery.controllers;
 import com.mariana.gallery.persistence.orders.Cart;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.picture.PictureComment;
+import com.mariana.gallery.persistence.picture.PictureDAO;
 import com.mariana.gallery.persistence.user.User;
+import com.mariana.gallery.persistence.user.UserDAO;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
+import com.mariana.gallery.persistence.user_gallery.UserGalleryDAO;
 import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,9 +39,16 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
+    private UserDAO userDAO;
+    @Autowired
     private PictureService pictureService;
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private PictureDAO pictureDAO;
+    @Autowired
+    private UserGalleryDAO userGalleryDAO;
 
     @RequestMapping(value = "/add_comment", method = RequestMethod.GET)
     public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
@@ -53,7 +64,7 @@ public class UserController {
                 Date date = new Date();
                 text.setDate(dateFormat.format(date));
                 text.setAuthor(principal.getName());
-                pictureService.update(pic);
+                pictureDAO.update(pic);
                 pictureService.updateComment(text);
             }
         }
@@ -63,7 +74,7 @@ public class UserController {
     @RequestMapping("/upload_art")
     public String uploadArt(Model model, Principal principal) {
         if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+            User user = userDAO.findUserByUsername(principal.getName());
             model.addAttribute("user", user);
         }
         return "/upload_art";
@@ -76,7 +87,7 @@ public class UserController {
 
     @RequestMapping("/user_details")
     public String seeUserDetails(Model model, Principal principal) {
-        User user = userService.findUserByUsername(principal.getName());
+        User user = userDAO.findUserByUsername(principal.getName());
         List<Cart> orderHistory = cartService.getUsersOrderHistory(user);
         if (orderHistory.size() == 0) {
             model.addAttribute("msg", "You have no orders yet");
@@ -89,10 +100,10 @@ public class UserController {
     @RequestMapping("/user_pictures")
     public String userPictures(Model model, Principal principal) {
         if (principal != null) {
-            UserGallery gallery = galleryService.findUserGallery(userService.findUserByUsername(principal.getName()).getId());
-            model.addAttribute("picture_id", pictureService.getPicturesByGallery(gallery));
-            model.addAttribute("pictures", pictureService.getPicturesByGallery(gallery));
-            model.addAttribute("author", userService.findUserByUsername(principal.getName()));
+            UserGallery gallery = userGalleryDAO.findById(userDAO.findUserByUsername(principal.getName()).getId());
+            model.addAttribute("picture_id", pictureDAO.getByGallery(gallery));
+            model.addAttribute("pictures", pictureDAO.getByGallery(gallery));
+            model.addAttribute("author", userDAO.findUserByUsername(principal.getName()));
         }
         return "/edit_gallery";
     }
@@ -114,14 +125,14 @@ public class UserController {
     }
 
     //add picture
+    @Transactional
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String pictureAdd(@RequestParam("picture_name") String pictureName,
                              @ModelAttribute("picture_description") String pictureDescription,
-                             @ModelAttribute("picture_price") String rawPicturePrice,
-                             @RequestParam("file") MultipartFile file,
-                             Principal principal, Model model) throws IOException {
-        if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+                             @ModelAttribute("picture_price") String rawPicturePrice, Principal principal,
+                             @RequestParam("file") MultipartFile file, Model model)  {
+
+            User user = userDAO.findUserByUsername(principal.getName());
             model.addAttribute("user", user);
 
             try {
@@ -141,9 +152,7 @@ public class UserController {
                     picture.setAuthor(user);
                     picture.setAvailable(true);
                     picture.setUserGallery(user.getUserGallery());
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Date date = new Date();
-                    picture.setDateAdded(dateFormat.format(date));
+                    picture.setDateAdded(System.currentTimeMillis());
                     if (!rawPicturePrice.isEmpty()) {
                         try {
                             double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
@@ -157,7 +166,7 @@ public class UserController {
                     } else {
                         picture.setPrice(0);
                     }
-                    pictureService.addPicture(picture);
+                   pictureService.addPicture(picture);
                     return "redirect:/art";
                 } else {
                     String msg = "Please, upload file";
@@ -168,9 +177,12 @@ public class UserController {
                 String msg = "File, that you are trying to upload, is too large";
                 model.addAttribute("error", msg);
                 return "/upload_art";
+            } catch (IOException e) {
+                String msg = "Error occurred, during file upload. Please, try again";
+                model.addAttribute("error", msg);
+                return "/upload_art";
             }
-        }
-        return "/upload_art";
+
     }
 
     @RequestMapping(value = "/edit_picture/{picture_id}", method = RequestMethod.POST)
@@ -179,7 +191,7 @@ public class UserController {
                               @ModelAttribute("picture_id") long id,
                               Principal principal, Model model) {
         if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+            User user = userDAO.findUserByUsername(principal.getName());
             Picture pic = pictureService.getPictureById(id);
             if (!pictureDescription.isEmpty()) {
                 pic.setDescription(pictureDescription);
@@ -195,7 +207,7 @@ public class UserController {
                     return "/edit_art";
                 }
             }
-            pictureService.update(pic);
+            pictureDAO.update(pic);
             model.addAttribute("picture", pic);
         }
 
@@ -227,7 +239,7 @@ public class UserController {
     @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
     public String bioAdd(@RequestParam String bio, Model model, Principal principal) {
         if (principal != null) {
-            User user = userService.findUserByUsername(principal.getName());
+            User user = userDAO.findUserByUsername(principal.getName());
             userService.addUserBio(user, bio);
             model.addAttribute("gallery_id", user.getId());
         }
@@ -236,9 +248,9 @@ public class UserController {
 
     @RequestMapping("/edit_gallery")
     public String editGallery(@ModelAttribute("gallery_id") long galleryId, Model model, Principal principal) {
-        UserGallery gallery = galleryService.findUserGallery(galleryId);
+        UserGallery gallery = userGalleryDAO.findById(galleryId);
         User user = userService.findUserByGallery(gallery);
-        List<Picture> galleryPictures = pictureService.getPicturesByGallery(gallery);
+        List<Picture> galleryPictures = pictureDAO.getByGallery(gallery);
         List<Long> response = new ArrayList<>();
         for (Picture picture : galleryPictures) {
             long id = picture.getId();

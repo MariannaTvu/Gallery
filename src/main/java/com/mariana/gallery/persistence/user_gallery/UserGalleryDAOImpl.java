@@ -2,14 +2,13 @@ package com.mariana.gallery.persistence.user_gallery;
 
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.List;
+
+import static com.mariana.gallery.persistence.user_gallery.UserGallery.JPQL_FIND_ALL_GALLERIES;
 
 @Repository
 public class UserGalleryDAOImpl implements UserGalleryDAO {
-    public static final String JPQL_FIND_ALL_GALLERIES = "SELECT g FROM UserGallery g";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -26,13 +25,13 @@ public class UserGalleryDAOImpl implements UserGalleryDAO {
     }
 
     @Override
-    public UserGallery findOne(long id) {
-        return entityManager.getReference(UserGallery.class, id);
+    public UserGallery findById(long id) {
+        return entityManager.find(UserGallery.class, id);
     }
 
     @Override
-    public List<UserGallery> list() {
-        Query query = entityManager.createQuery(JPQL_FIND_ALL_GALLERIES, UserGallery.class);
-        return (List<UserGallery>) query.getResultList();
+    public List<UserGallery> allGalleriesList() {
+        TypedQuery<UserGallery> query = entityManager.createNamedQuery(JPQL_FIND_ALL_GALLERIES, UserGallery.class);
+        return query.getResultList();
     }
 }
