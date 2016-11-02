@@ -169,15 +169,11 @@
                                     </div>
                                 </form>
                             </sec:authorize>
-
-                            <%-- TODO: WHAT IS A SHOP? --%>
-                            <%--<sec:authorize access="isAuthenticated">--%>
-                                <%--<c:if test="${picture.author.login ne pageContext.request.userPrincipal.name}">--%>
-                                    <%--<br>--%>
-                                    <%--<a href="/shop">Shop</a>--%>
-                                    <%--<br>--%>
-                                <%--</c:if>--%>
-                            <%--</sec:authorize>--%>
+                            <c:if test="${msg ne null}">
+                                <br>
+                                <a href="/shop">${msg}</a>
+                                <br>
+                            </c:if>
 
                             <sec:authorize access="!isAuthenticated()">
                                 <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a></p>
@@ -192,7 +188,8 @@
                         </div>
                     </div>
                 </div>
-            </c:if> <a href="/artist_gallery?gallery_id=${picture.userGallery.id}" style="margin:30%">Back
+            </c:if>
+            <a href="/artist_gallery?gallery_id=${picture.userGallery.id}" style="margin:30%">Back
             to ${picture.author.login}'s gallery</a>
         </div>
     </div>
