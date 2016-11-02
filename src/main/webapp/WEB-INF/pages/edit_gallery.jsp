@@ -65,7 +65,7 @@
         <ul id="topnav">
             <sec:authorize access="!isAuthenticated()">
                 <li class="last"><a href="/login">Login</a></li>
-                <li class="last"><a href="/reg">Register</a></li>
+                <li class="last"><a href="/register">Register</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <li><c:url value="/logout" var="logoutUrl"/><a href="${logoutUrl}">Logout</a></li>
