@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class Picture {
     private User author;
 
     @Basic(fetch = FetchType.LAZY)
-    private long dateAdded;
+    private String dateAdded;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -158,11 +159,20 @@ public class Picture {
         return comments;
     }
 
-    public long getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public Picture setDateAdded(long dateAdded) {
+    public long getLongDateAdded(){
+        try {
+            return dateFormat.parse(getDateAdded()).getTime();
+        } catch (ParseException e) {
+
+        }
+        return 0L;
+    }
+
+    public Picture setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
         return this;
     }

@@ -9,7 +9,7 @@ public enum PictureSortingType implements Comparator<Picture> {
     NEWEST("date") {
         @Override
         public int compare(Picture a, Picture b) {
-            return Long.compare(b.getDateAdded(), a.getDateAdded());
+            return Long.compare(b.getLongDateAdded(), a.getLongDateAdded());
         }
     },
     MOST_COMMENTED("comments") {

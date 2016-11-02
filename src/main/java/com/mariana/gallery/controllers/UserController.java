@@ -152,7 +152,10 @@ public class UserController {
                     picture.setAuthor(user);
                     picture.setAvailable(true);
                     picture.setUserGallery(user.getUserGallery());
-                    picture.setDateAdded(System.currentTimeMillis());
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
+                    Date date = new Date();
+                    picture.setDateAdded(dateFormat.format(date));
                     if (!rawPicturePrice.isEmpty()) {
                         try {
                             double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
