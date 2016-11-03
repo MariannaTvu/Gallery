@@ -241,27 +241,21 @@ public class UserController {
 
     @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
     public String bioAdd(@RequestParam String bio, Model model, Principal principal) {
-        if (principal != null) {
             User user = userDAO.findUserByUsername(principal.getName());
             userService.addUserBio(user, bio);
             model.addAttribute("gallery_id", user.getId());
-        }
         return "redirect:/artist_gallery?gallery_id={gallery_id}";
     }
 
     @RequestMapping("/edit_gallery")
     public String editGallery(@ModelAttribute("gallery_id") long galleryId, Model model, Principal principal) {
-        UserGallery gallery = userGalleryDAO.findById(galleryId);
-        User user = userService.findUserByGallery(gallery);
+       User user = userDAO.findUserByUsername(principal.getName());
+        UserGallery gallery = user.getUserGallery();
         List<Picture> galleryPictures = pictureDAO.getByGallery(gallery);
         List<Long> response = new ArrayList<>();
         for (Picture picture : galleryPictures) {
             long id = picture.getId();
             response.add(id);
-        }
-        if (principal != null) {
-            String name = principal.getName();
-            model.addAttribute("login", name);
         }
         model.addAttribute("picture_id", response);
         model.addAttribute("pictures", galleryPictures);

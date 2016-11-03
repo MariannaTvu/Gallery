@@ -41,11 +41,6 @@ public class UserService {
         userDAO.setBio(user, bio);
     }
 
-    @Transactional
-    @Deprecated
-    public User findUserByGallery(UserGallery gallery) {
-        return userDAO.findUserByGallery(gallery);
-    }
 
     @Transactional
     public void setBalance(User user, int balance) {
