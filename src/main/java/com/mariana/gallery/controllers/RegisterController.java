@@ -66,8 +66,7 @@ public class RegisterController {
 
         UserGallery gal = new UserGallery(userForm.getLogin());
         userForm.setUserGallery(gal);
-        userService.saveUser(userForm, gal);
-
+        userService.save(userForm);
         authenticateUser(userForm);
 
         return "redirect:/user_details";
@@ -76,7 +75,7 @@ public class RegisterController {
     public void authenticateUser(User user) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getLogin());
         SecurityContextHolder.getContext().setAuthentication(
-                new Authentication(){
+                new Authentication() {
                     @Override
                     public Collection<? extends GrantedAuthority> getAuthorities() {
                         return userDetails.getAuthorities();
