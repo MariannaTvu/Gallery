@@ -107,7 +107,7 @@
                     <br>
                     <p><a href="/view_art?picture_id=${picture.id}" data-userGallery>View art</a></p>
                     <br>
-                    <p><a href="/artist_gallery?gallery_id=${picture.author.id}" data-userGallery>View gallery</a></p>
+                    <p><a href="/artist_gallery?gallery_id=${picture.userGallery.id}" data-userGallery>View gallery</a></p>
                 </figcaption>
             </div>
         </figure>

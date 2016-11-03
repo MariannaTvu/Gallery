@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.security.Principal;
 import java.util.Collection;
 
 @Controller
@@ -65,8 +64,10 @@ public class RegisterController {
         userForm.setBalance(1500000);
 
         UserGallery gal = new UserGallery(userForm.getLogin());
+        galleryService.addUserGallery(gal);
         userForm.setUserGallery(gal);
         userService.save(userForm);
+
         authenticateUser(userForm);
 
         return "redirect:/user_details";

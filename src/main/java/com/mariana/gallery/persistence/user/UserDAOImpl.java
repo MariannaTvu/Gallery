@@ -36,9 +36,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User setGallery(User user, UserGallery gallery) {
+    public void setGallery(User user, UserGallery gallery) {
         user.setUserGallery(gallery);
-        return entityManager.merge(user);
+        entityManager.merge(user);
     }
 
     @Override

@@ -20,8 +20,8 @@ public class UserService {
 
     @Transactional
     public User saveUser(User user, UserGallery gallery) {
-        userDAO.saveUser(user);
         user.setUserGallery(gallery);
+        userDAO.saveUser(user);
         return user;
     }
 
@@ -32,8 +32,8 @@ public class UserService {
     }
 
     @Transactional
-    public User setUserGallery(User user, UserGallery gallery) {
-        return userDAO.setGallery(user, gallery);
+    public void setUserGallery(User user, UserGallery gallery) {
+        userDAO.setGallery(user, gallery);
     }
 
     @Transactional

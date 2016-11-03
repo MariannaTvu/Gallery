@@ -9,7 +9,7 @@ public interface UserDAO {
 
     User saveUser(User user);
 
-    User setGallery(User user, UserGallery gallery);
+    void setGallery(User user, UserGallery gallery);
 
     void setBio(User user, String bio);
 
