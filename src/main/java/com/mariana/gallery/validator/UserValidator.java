@@ -28,13 +28,13 @@ public class UserValidator implements Validator {
         User user = (User) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "NotEmpty");
-        if (user.getLogin().length() < 3 || user.getLogin().length() > 32) {
+        if (user.getUsername().length() < 3 || user.getUsername().length() > 32) {
             errors.rejectValue("login", "Size.userForm.username");
 
         }
         try {
-            userDAO.findUserByUsername(user.getLogin());
-            if (userDAO.findUserByUsername(user.getLogin()) != null) {
+            userDAO.findUserByUsername(user.getUsername());
+            if (userDAO.findUserByUsername(user.getUsername()) != null) {
                 errors.rejectValue("login", "Duplicate.userForm.username");
             }
 

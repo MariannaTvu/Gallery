@@ -8,6 +8,8 @@ import com.mariana.gallery.service.user.UserService;
 import com.mariana.gallery.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +21,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.security.Principal;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/")
@@ -46,7 +51,8 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("user") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("user") User userForm, BindingResult bindingResult
+    ) {
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/registration";
@@ -61,17 +67,48 @@ public class RegisterController {
         UserGallery gal = galleryService.addUserGallery(new UserGallery(userForm.getLogin()));
         userForm.setUserGallery(gal);
         userService.save(userForm);
-
         authenticateUser(userForm);
+
         return "redirect:/user_details";
     }
 
     public void authenticateUser(User user) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getLogin());
         SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(
-                        user.getLogin(),
-                        user.getPassword(),
-                        userDetails.getAuthorities()));
+                new Authentication(){
+                    @Override
+                    public Collection<? extends GrantedAuthority> getAuthorities() {
+                        return userDetails.getAuthorities();
+                    }
+
+                    @Override
+                    public Object getCredentials() {
+                        return userDetails.isCredentialsNonExpired();
+                    }
+
+                    @Override
+                    public Object getDetails() {
+                        return userDetails.getUsername();
+                    }
+
+                    @Override
+                    public Object getPrincipal() {
+                        return userDetails;
+                    }
+
+                    @Override
+                    public boolean isAuthenticated() {
+                        return userDetails.isEnabled();
+                    }
+
+                    @Override
+                    public void setAuthenticated(boolean b) throws IllegalArgumentException {
+                    }
+
+                    @Override
+                    public String getName() {
+                        return userDetails.getUsername();
+                    }
+                });
     }
 }

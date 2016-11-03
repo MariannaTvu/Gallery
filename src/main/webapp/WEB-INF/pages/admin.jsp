@@ -79,7 +79,7 @@
         <form action="/sort_by_date"><a href="/sort_by_date" title="Sort by date">See latest updates</a></form>
     </li>
     <sec:authorize access="isAuthenticated()">
-        <li style=" position: absolute; right: 0px"><a>Logged in as: ${user.login}
+        <li style=" position: absolute; right: 0px"><a>Logged in as: ${user.username}
         </a></li>
     </sec:authorize>
     <div class="clear"></div>
@@ -88,7 +88,7 @@
     <div id="container">
         <div id="content" style="margin-bottom:10%">
             <div>
-                <p>Your login: ${user.login}</p>
+                <p>Your login: ${user.username}</p>
             </div>
 
         </div>

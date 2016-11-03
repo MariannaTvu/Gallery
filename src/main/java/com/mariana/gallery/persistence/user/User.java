@@ -131,8 +131,16 @@ public class User {
     public String getLogin() {
         return login;
     }
+    public String getUsername() {
+        return login;
+    }
 
     public User setLogin(String username) {
+        this.login = username;
+        return this;
+    }
+
+    public User setUsername(String username) {
         this.login = username;
         return this;
     }
@@ -172,4 +180,6 @@ public class User {
         this.orders = orders;
         return this;
     }
+
+
 }

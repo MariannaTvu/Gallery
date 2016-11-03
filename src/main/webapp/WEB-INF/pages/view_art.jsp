@@ -95,7 +95,7 @@
 <div class="wrapper col5">
     <div id="container">
         <div id="content">
-            <h1>${picture.name} by ${picture.author.login}</h1>
+            <h1>${picture.name} by ${picture.author.username}</h1>
            <div>
             <img class="imgr" src="picture?picture_id=${picture.id}" alt=""  height="auto"/>
 </div>

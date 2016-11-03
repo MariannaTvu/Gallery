@@ -13,6 +13,7 @@ import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -53,7 +54,6 @@ public class UserController {
     @RequestMapping(value = "/add_comment", method = RequestMethod.GET)
     public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
                              Model model, Principal principal) {
-        if (principal != null) {
             if (!comment.isEmpty()) {
                 model.addAttribute("picture_id", id);
                 Picture pic = pictureService.getPictureById(id);
@@ -67,21 +67,23 @@ public class UserController {
                 pictureDAO.update(pic);
                 pictureService.updateComment(text);
             }
-        }
+
         return "redirect:/view_art";
     }
 
     @RequestMapping("/upload_art")
     public String uploadArt(Model model, Principal principal) {
-        if (principal != null) {
-            User user = userDAO.findUserByUsername(principal.getName());
+     Principal principal1 = principal;
+
+        User user = userDAO.findUserByUsername(principal.getName());
             model.addAttribute("user", user);
-        }
+
         return "/upload_art";
     }
 
     @RequestMapping("/profile")
     public String profile() {
+
         return "redirect:/user_details";
     }
 
@@ -99,12 +101,10 @@ public class UserController {
 
     @RequestMapping("/user_pictures")
     public String userPictures(Model model, Principal principal) {
-        if (principal != null) {
             UserGallery gallery = userGalleryDAO.findById(userDAO.findUserByUsername(principal.getName()).getId());
             model.addAttribute("picture_id", pictureDAO.getByGallery(gallery));
             model.addAttribute("pictures", pictureDAO.getByGallery(gallery));
             model.addAttribute("author", userDAO.findUserByUsername(principal.getName()));
-        }
         return "/edit_gallery";
     }
 

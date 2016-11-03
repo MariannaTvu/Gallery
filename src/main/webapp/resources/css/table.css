@@ -13,6 +13,7 @@ th {
 	background: linear-gradient(#777, #444);
 	border-left: 1px solid #555;
 	border-right: 1px solid #777;
+	border-top: 1px solid #555;
 	color: #fff;
 
 	padding: 10px 15px;
@@ -110,5 +111,5 @@ tr:last-of-type td:first-child {
 
 tr:last-of-type td:last-child {
 	box-shadow: inset -1px -1px 0 #fff;
-}	
+}
 

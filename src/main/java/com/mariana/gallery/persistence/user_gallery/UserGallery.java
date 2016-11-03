@@ -40,7 +40,7 @@ public class UserGallery {
     private User user;
 
     public UserGallery(User user) {
-        this.name = user.getLogin();
+        this.name = user.getUsername();
         this.user = user;
     }
 
