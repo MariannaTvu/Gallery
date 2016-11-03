@@ -101,7 +101,8 @@ public class UserController {
 
     @RequestMapping("/user_pictures")
     public String userPictures(Model model, Principal principal) {
-            UserGallery gallery = userGalleryDAO.findById(userDAO.findUserByUsername(principal.getName()).getId());
+        User user = userDAO.findUserByUsername(principal.getName());
+        UserGallery gallery = user.getUserGallery();
             model.addAttribute("picture_id", pictureDAO.getByGallery(gallery));
             model.addAttribute("pictures", pictureDAO.getByGallery(gallery));
             model.addAttribute("author", userDAO.findUserByUsername(principal.getName()));
