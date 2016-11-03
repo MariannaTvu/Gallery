@@ -64,9 +64,10 @@ public class RegisterController {
         userForm.setRole(UserRole.USER);
         userForm.setBalance(1500000);
 
-        UserGallery gal = galleryService.addUserGallery(new UserGallery(userForm.getLogin()));
+        UserGallery gal = new UserGallery(userForm.getLogin());
         userForm.setUserGallery(gal);
-        userService.save(userForm);
+        userService.saveUser(userForm, gal);
+
         authenticateUser(userForm);
 
         return "redirect:/user_details";
