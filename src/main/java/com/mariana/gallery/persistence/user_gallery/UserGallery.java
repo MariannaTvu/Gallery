@@ -24,7 +24,6 @@ import static com.mariana.gallery.persistence.user_gallery.UserGallery.JPQL_FIND
                 query = "SELECT g FROM UserGallery g"
         )
 })
-
 public class UserGallery {
     public static final String JPQL_FIND_ALL_GALLERIES = "UserGallery.allGalleriesList";
     @Id

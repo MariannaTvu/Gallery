@@ -20,11 +20,11 @@ import static com.mariana.gallery.persistence.user.User.JPQL_FIND_USER_BY_USERNA
 @Entity
 @Table(name = "users")
 @NamedQueries({
-@NamedQuery(
-        name = JPQL_FIND_USER_BY_USERNAME,
-        query = "SELECT u FROM User u WHERE u.login = :login"
+        @NamedQuery(
+                name = JPQL_FIND_USER_BY_USERNAME,
+                query = "SELECT u FROM User u WHERE u.login = :login"
 
-),
+        ),
         @NamedQuery(
                 name = JPQL_FIND_USER_BY_USERGALLERY,
                 query = "SELECT u FROM User u WHERE u.userGallery = :userGallery"
@@ -131,6 +131,7 @@ public class User {
     public String getLogin() {
         return login;
     }
+
     public String getUsername() {
         return login;
     }

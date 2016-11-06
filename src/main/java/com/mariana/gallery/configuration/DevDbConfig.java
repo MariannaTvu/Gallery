@@ -1,10 +1,8 @@
 package com.mariana.gallery.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mysql.jdbc.Driver;
-import org.apache.commons.dbcp.BasicDataSource;
+import org.postgresql.Driver;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -28,15 +26,16 @@ public class DevDbConfig {
     }
 
     @Bean
-    public DataSource dataSource(@Value("${db.url}") String dbUrl,
+    public DataSource dataSource(@Value("${db.driver}") String dbDriver,
+                                 @Value("${db.url}") String dbUrl,
                                  @Value("${db.user}") String dbUser,
                                  @Value("${db.password}") String dbPassword) {
 
         ComboPooledDataSource cpds = new ComboPooledDataSource();
         try {
-            cpds.setDriverClass(Driver.class.getName());
+            cpds.setDriverClass(dbDriver);
         } catch (PropertyVetoException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         cpds.setJdbcUrl(dbUrl);
         cpds.setUser(dbUser);
