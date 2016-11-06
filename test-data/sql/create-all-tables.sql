@@ -61,3 +61,4 @@ CREATE TABLE IF NOT EXISTS picture_comments
     FOREIGN KEY (pictures) REFERENCES pictures (id)
 );
 CREATE INDEX IF NOT EXISTS comment_picture_idx ON picture_comments (pictures);
+
