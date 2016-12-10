@@ -6,8 +6,10 @@ import javax.persistence.*;
 import java.util.List;
 
 import static com.mariana.gallery.persistence.user_gallery.UserGallery.JPQL_FIND_ALL_GALLERIES;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class UserGalleryDAOImpl implements UserGalleryDAO {
 
     @PersistenceContext

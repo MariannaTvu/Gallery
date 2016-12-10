@@ -26,16 +26,16 @@ import static com.mariana.gallery.persistence.user_gallery.UserGallery.JPQL_FIND
 })
 public class UserGallery {
     public static final String JPQL_FIND_ALL_GALLERIES = "UserGallery.allGalleriesList";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
 
-    @OneToMany(mappedBy = "userGallery", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Picture> pictures = new ArrayList<Picture>();
+    @OneToMany(mappedBy = "userGallery")
+    private List<Picture> pictures = new ArrayList<>();
 
-    @OneToOne(mappedBy = "userGallery", cascade=CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(mappedBy = "userGallery")
     private User user;
 
     public UserGallery(User user) {

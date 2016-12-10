@@ -39,31 +39,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne
     @JoinColumn(name = "userGallery")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserGallery userGallery;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "author")
     private List<Picture> pictures = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "user")
     private List<Cart> orders = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserRole role;
 
     private String login;
     private String email;
     private String password;
     private String passwordConfirm;
+
     @Lob
-    @Basic(fetch = FetchType.EAGER)
     private String bio;
+
     private int balance;
 
     public User() {

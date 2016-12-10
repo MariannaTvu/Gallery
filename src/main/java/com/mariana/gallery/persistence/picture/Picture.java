@@ -63,7 +63,6 @@ public class Picture {
     @JoinColumn(name = "author")
     private User author;
 
-    @Basic(fetch = FetchType.LAZY)
     private String dateAdded;
 
     @Lob
@@ -74,21 +73,14 @@ public class Picture {
 
     private int price;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
     private String description;
 
-    @Lob
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pictures", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "picture", cascade = CascadeType.REMOVE)
     private List<PictureComment> comments = new ArrayList<>();
 
-
-    @Lob
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "picture")
     private List<Cart> orders = new ArrayList<>();
 
-    @Type(type = "yes_no")
-    @Basic(fetch = FetchType.EAGER)
     private boolean available;
 
     public Picture() {

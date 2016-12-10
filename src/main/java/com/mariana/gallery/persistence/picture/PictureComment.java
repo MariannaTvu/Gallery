@@ -14,10 +14,10 @@ public class PictureComment {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "pictures")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Picture pictures;
+    @JoinColumn(name = "picture")
+    private Picture picture;
 
+    @Column(name = "commentator")
     private String user;
 
     private String text;
@@ -40,12 +40,12 @@ public class PictureComment {
         return this;
     }
 
-    public Picture getPictures() {
-        return pictures;
+    public Picture getPicture() {
+        return picture;
     }
 
-    public PictureComment setPictures(Picture picture) {
-        this.pictures = picture;
+    public PictureComment setPicture(Picture picture) {
+        this.picture = picture;
         return this;
     }
 

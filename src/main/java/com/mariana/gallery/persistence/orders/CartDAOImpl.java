@@ -1,21 +1,18 @@
 package com.mariana.gallery.persistence.orders;
 
+import static com.mariana.gallery.persistence.orders.Cart.*;
 import com.mariana.gallery.persistence.picture.Picture;
 import com.mariana.gallery.persistence.user.User;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.mariana.gallery.persistence.orders.Cart.JPQL_FIND_USER_CART;
-import static com.mariana.gallery.persistence.orders.Cart.JPQL_GET_ORDERS_OF_PICTURE;
-import static com.mariana.gallery.persistence.orders.Cart.JPQL_GET_USER_CONFIRMED_ORDERS;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class CartDAOImpl implements CartDAO {
     @PersistenceContext
     private EntityManager entityManager;

@@ -1,25 +1,19 @@
 package com.mariana.gallery.persistence.picture;
 
 import com.mariana.gallery.persistence.orders.Cart;
-
+import static com.mariana.gallery.persistence.picture.Picture.*;
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user_gallery.UserGallery;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.List;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_NAME_PATTERN;
-import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_BY_USER_GALLERY;
-import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_ALL_PICTURES;
-import static com.mariana.gallery.persistence.picture.Picture.JPQL_GET_RANDOM_PICTURES;
-
-@Transactional
 @Repository
+@Transactional
 public class PictureDAOImpl implements PictureDAO {
     @PersistenceContext
     private EntityManager entityManager;

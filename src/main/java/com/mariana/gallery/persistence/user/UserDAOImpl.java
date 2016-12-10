@@ -9,8 +9,10 @@ import javax.persistence.TypedQuery;
 
 import static com.mariana.gallery.persistence.user.User.JPQL_FIND_USER_BY_USERGALLERY;
 import static com.mariana.gallery.persistence.user.User.JPQL_FIND_USER_BY_USERNAME;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext

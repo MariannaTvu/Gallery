@@ -46,8 +46,8 @@ public class Cart {
     @JoinColumn(name = "picture")
     private Picture picture;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user")
+    @ManyToOne
+    @JoinColumn(name = "owner")
     private User user;
 
     private String date;
@@ -55,7 +55,6 @@ public class Cart {
 
     private int sumCost;
 
-    @Type(type = "yes_no")
     private boolean confirmedOrder;
 
     public Cart() {
