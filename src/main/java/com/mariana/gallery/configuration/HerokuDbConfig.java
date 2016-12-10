@@ -17,8 +17,8 @@ import java.net.URISyntaxException;
 public class HerokuDbConfig {
     @Bean
     public DataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
-        URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-        String dbUrl = "jdbc:postgresql://ec2-54-228-235-185.eu-west-1.compute.amazonaws.com:5432/d9jhd09v6nov9j?sslmode=require";
+        URI dbUri = new URI("jdbc:postgresql://ec2-54-228-235-185.eu-west-1.compute.amazonaws.com:5432/d9jhd09v6nov9j?sslmode=require");
+        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath() + "?reconnect=true";
         ComboPooledDataSource cpds = new ComboPooledDataSource();
         cpds.setJdbcUrl(dbUrl);
         cpds.setUser(System.getenv("JDBC_DATABASE_USERNAME"));
