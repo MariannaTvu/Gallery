@@ -60,5 +60,5 @@ hs_err_pid*
 
 .gitignore
 .idea/
-spring2.iml
+gallery.iml
 target/
