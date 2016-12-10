@@ -17,12 +17,12 @@ import java.net.URISyntaxException;
 public class HerokuDbConfig {
     @Bean
     public DataSource dataSource() throws URISyntaxException, URI.MalformedURIException {
-        URI dbUri = new URI("jdbc:postgresql://ec2-54-228-235-185.eu-west-1.compute.amazonaws.com:5432/d9jhd09v6nov9j?sslmode=require");
-        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath() + "?reconnect=true";
+
+        String dbUrl = "jdbc:postgresql://ec2-54-228-235-185.eu-west-1.compute.amazonaws.com:5432/d9jhd09v6nov9j?sslmode=require";
         ComboPooledDataSource cpds = new ComboPooledDataSource();
         cpds.setJdbcUrl(dbUrl);
-        cpds.setUser(System.getenv("JDBC_DATABASE_USERNAME"));
-        cpds.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
+        cpds.setUser("nutavdhxrgcffl");
+        cpds.setPassword("272PMO_33XXIyHQlMOoH-EXmIc");
 
         cpds.setInitialPoolSize(3);
         cpds.setMinPoolSize(3);
