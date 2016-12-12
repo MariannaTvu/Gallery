@@ -63,7 +63,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-//        adapter.setShowSql(true);
         adapter.setGenerateDdl(true);
         adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQL9Dialect");
         return adapter;
@@ -85,14 +84,4 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         source.setBasename("classpath:validation");
         return source;
     }
-
-//    @Bean
-//    public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
-//        SimpleMappingExceptionResolver simpleMEResolver = new SimpleMappingExceptionResolver();
-//        Properties mappings = new Properties();
-//        mappings.setProperty("Exception", "error");
-//        simpleMEResolver.setExceptionMappings(mappings);
-//        simpleMEResolver.setDefaultErrorView("error");
-//        return simpleMEResolver;
-//    }
 }

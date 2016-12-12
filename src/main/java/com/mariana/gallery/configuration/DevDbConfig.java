@@ -1,7 +1,6 @@
 package com.mariana.gallery.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.postgresql.Driver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +39,6 @@ public class DevDbConfig {
         cpds.setJdbcUrl(dbUrl);
         cpds.setUser(dbUser);
         cpds.setPassword(dbPassword);
-
-
         cpds.setInitialPoolSize(3);
         cpds.setMinPoolSize(3);
         cpds.setAcquireIncrement(5);

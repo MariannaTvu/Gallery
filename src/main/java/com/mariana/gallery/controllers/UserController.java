@@ -12,10 +12,12 @@ import com.mariana.gallery.service.gallery.GalleryService;
 import com.mariana.gallery.service.orders.CartService;
 import com.mariana.gallery.service.picture.PictureService;
 import com.mariana.gallery.service.user.UserService;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,8 +37,6 @@ import java.util.TimeZone;
 @RequestMapping()
 public class UserController {
     @Autowired
-    private GalleryService galleryService;
-    @Autowired
     private UserService userService;
     @Autowired
     private UserDAO userDAO;
@@ -44,16 +44,14 @@ public class UserController {
     private PictureService pictureService;
     @Autowired
     private CartService cartService;
-
     @Autowired
     private PictureDAO pictureDAO;
-    @Autowired
-    private UserGalleryDAO userGalleryDAO;
 
     @RequestMapping(value = "/add_comment", method = RequestMethod.GET)
     public String addComment(@ModelAttribute("picture_id") long id, @RequestParam("comment") String comment,
                              Model model, Principal principal) {
-            if (!comment.isEmpty()) {
+        if (!comment.isEmpty()) {
+            try {
                 model.addAttribute("picture_id", id);
                 Picture pic = pictureService.getPictureById(id);
                 PictureComment text = new PictureComment(comment);
@@ -65,17 +63,19 @@ public class UserController {
                 text.setAuthor(principal.getName());
                 pictureDAO.update(pic);
                 pictureService.updateComment(text);
+            } catch (Exception e) {
+                String msg = "Sorry. your comment is too large";
+                model.addAttribute("msg", msg);
+                return "redirect:/view_art";
             }
-
+        }
         return "redirect:/view_art";
     }
 
     @RequestMapping("/upload_art")
     public String uploadArt(Model model, Principal principal) {
-     Principal principal1 = principal;
-
         User user = userDAO.findUserByUsername(principal.getName());
-            model.addAttribute("user", user);
+        model.addAttribute("user", user);
 
         return "/upload_art";
     }
@@ -102,9 +102,9 @@ public class UserController {
     public String userPictures(Model model, Principal principal) {
         User user = userDAO.findUserByUsername(principal.getName());
         UserGallery gallery = user.getUserGallery();
-            model.addAttribute("picture_id", pictureDAO.getByGallery(gallery));
-            model.addAttribute("pictures", pictureDAO.getByGallery(gallery));
-            model.addAttribute("author", userDAO.findUserByUsername(principal.getName()));
+        model.addAttribute("picture_id", pictureDAO.getByGallery(gallery));
+        model.addAttribute("pictures", pictureDAO.getByGallery(gallery));
+        model.addAttribute("author", userDAO.findUserByUsername(principal.getName()));
         return "/edit_gallery";
     }
 
@@ -130,61 +130,61 @@ public class UserController {
     public String pictureAdd(@RequestParam("picture_name") String pictureName,
                              @ModelAttribute("picture_description") String pictureDescription,
                              @ModelAttribute("picture_price") String rawPicturePrice, Principal principal,
-                             @RequestParam("file") MultipartFile file, Model model)  {
+                             @RequestParam("file") MultipartFile file, Model model) {
 
-            User user = userDAO.findUserByUsername(principal.getName());
-            model.addAttribute("user", user);
+        User user = userDAO.findUserByUsername(principal.getName());
+        model.addAttribute("user", user);
 
-            try {
-                if (!file.isEmpty()) {
-                    Picture picture = new Picture(file.getBytes());
-                    if (!pictureName.isEmpty()) {
-                        picture.setName(pictureName);
+        try {
+            if (!file.isEmpty()) {
+                Picture picture = new Picture(file.getBytes());
+                if (!pictureName.isEmpty()) {
+                    picture.setName(pictureName);
 
-                    } else {
-                        String msg = "Please, name the picture";
-                        model.addAttribute("error", msg);
-                        return "/upload_art";
-                    }
-                    if (!pictureDescription.isEmpty()) {
-                        picture.setDescription(pictureDescription);
-                    }
-                    picture.setAuthor(user);
-                    picture.setAvailable(true);
-                    picture.setUserGallery(user.getUserGallery());
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
-                    Date date = new Date();
-                    picture.setDateAdded(dateFormat.format(date));
-                    if (!rawPicturePrice.isEmpty()) {
-                        try {
-                            double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
-                            Double picturePrice = rawDoublePicturePrice * 100;
-                            picture.setPrice(picturePrice.intValue());
-                        } catch (Exception e) {
-                            String msg = "Please, set the price using numbers";
-                            model.addAttribute("error", msg);
-                            return "/upload_art";
-                        }
-                    } else {
-                        picture.setPrice(0);
-                    }
-                   pictureService.addPicture(picture);
-                    return "redirect:/art";
                 } else {
-                    String msg = "Please, upload file";
+                    String msg = "Please, name the picture";
                     model.addAttribute("error", msg);
                     return "/upload_art";
                 }
-            } catch (PersistenceException e) {
-                String msg = "File, that you are trying to upload, is too large";
-                model.addAttribute("error", msg);
-                return "/upload_art";
-            } catch (IOException e) {
-                String msg = "Error occurred, during file upload. Please, try again";
+                if (!pictureDescription.isEmpty()) {
+                    picture.setDescription(pictureDescription);
+                }
+                picture.setAuthor(user);
+                picture.setAvailable(true);
+                picture.setUserGallery(user.getUserGallery());
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Kiev"));
+                Date date = new Date();
+                picture.setDateAdded(dateFormat.format(date));
+                if (!rawPicturePrice.isEmpty()) {
+                    try {
+                        double rawDoublePicturePrice = Double.parseDouble(rawPicturePrice);
+                        Double picturePrice = rawDoublePicturePrice * 100;
+                        picture.setPrice(picturePrice.intValue());
+                    } catch (Exception e) {
+                        String msg = "Please, set the price using numbers";
+                        model.addAttribute("error", msg);
+                        return "/upload_art";
+                    }
+                } else {
+                    picture.setPrice(0);
+                }
+                pictureService.addPicture(picture);
+                return "redirect:/art";
+            } else {
+                String msg = "Please, upload file";
                 model.addAttribute("error", msg);
                 return "/upload_art";
             }
+        } catch (PersistenceException e) {
+            String msg = "File, that you are trying to upload, is too large";
+            model.addAttribute("error", msg);
+            return "/upload_art";
+        } catch (IOException e) {
+            String msg = "Error occurred, during file upload. Please, try again";
+            model.addAttribute("error", msg);
+            return "/upload_art";
+        }
 
     }
 
@@ -241,15 +241,15 @@ public class UserController {
 
     @RequestMapping(value = "/add_bio", method = RequestMethod.POST)
     public String bioAdd(@RequestParam String bio, Model model, Principal principal) {
-            User user = userDAO.findUserByUsername(principal.getName());
-            userService.addUserBio(user, bio);
-            model.addAttribute("gallery_id", user.getId());
+        User user = userDAO.findUserByUsername(principal.getName());
+        userService.addUserBio(user, bio);
+        model.addAttribute("gallery_id", user.getId());
         return "redirect:/artist_gallery?gallery_id={gallery_id}";
     }
 
     @RequestMapping("/edit_gallery")
     public String editGallery(@ModelAttribute("gallery_id") long galleryId, Model model, Principal principal) {
-       User user = userDAO.findUserByUsername(principal.getName());
+        User user = userDAO.findUserByUsername(principal.getName());
         UserGallery gallery = user.getUserGallery();
         List<Picture> galleryPictures = pictureDAO.getByGallery(gallery);
         List<Long> response = new ArrayList<>();

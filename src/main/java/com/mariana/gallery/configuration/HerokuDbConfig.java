@@ -23,7 +23,6 @@ public class HerokuDbConfig {
         cpds.setJdbcUrl(dbUrl);
         cpds.setUser("nutavdhxrgcffl");
         cpds.setPassword("272PMO_33XXIyHQlMOoH-EXmIc");
-
         cpds.setInitialPoolSize(3);
         cpds.setMinPoolSize(3);
         cpds.setAcquireIncrement(5);

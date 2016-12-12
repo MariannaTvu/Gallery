@@ -9,6 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Gallery</title>
@@ -96,12 +98,12 @@
     <div id="container">
         <div id="content">
             <h1>${picture.name} by ${picture.author.username}</h1>
-           <div>
-            <img class="imgr" src="picture?picture_id=${picture.id}" alt=""  height="auto"/>
-</div>
+            <div>
+                <img class="imgr" src="picture?picture_id=${picture.id}" alt="" height="auto"/>
+            </div>
             <div class="clear"></div>
 
-            <div id="comments" >
+            <div id="comments">
                 <h2>Comments</h2>
                 <c:if test="${empty picture.comments}"><p>No comments yet</p></c:if>
                 <ul class="commentlist">
@@ -117,26 +119,29 @@
                 <sec:authorize access="!isAuthenticated()">
                     <p>To add a comment, <a href="/login">login</a> or <a href="/reg">register</a></p>
                 </sec:authorize>
-            </div>
 
-            <sec:authorize access="isAuthenticated()">
+                <sec:authorize access="isAuthenticated()">
                 <h2>Write A Comment</h2>
+                <p>You can only write comment, that is less than 255 characters.</p>
+                <c:if test="${msg ne null}">
+                    <p>${msg}</p>
+                </c:if>
                 <div id="respond" style="margin-bottom:50px;">
-                    <form role="form" enctype="multipart/form-data" id="form-horizontal" action="/add_comment"
-                          method="get"
-                          cols="100%" rows="10" style="color:black;">
-                        <input type="hidden" name="picture_id" value=${picture.id}>
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form role="form" enctype="multipart/form-data" id="form-horizontal" action="/add_comment"
+                              method="get"
+                              cols="100%" rows="10" style="color:black;">
+                            <input type="hidden" name="picture_id" value=${picture.id}>
                 <textarea name="comment" id="comment" cols="100%" rows="10" style="color:black;"
                           name="comment" placeholder="Comment"></textarea>
-                        <p><input type="submit" id="submit" value="Add comment"></p>
-                    </form>
+                            <p><input type="submit" id="submit" value="Add comment"></p>
+                        </form>
 
-
+                    </div>
+                    </sec:authorize>
                 </div>
-            </sec:authorize>
-
+            </div>
         </div>
-
         <div id="column" align="center">
             <div class="subnav">
                 <c:if test="${picture.description ne null}">
@@ -150,7 +155,9 @@
             <br>
             <c:if test="${(picture.price ne 0) && (same_user eq false)}">
                 <h2 style="text-align: center; color:white">Buy This Print
-                    <a href="#"><div class="popup">Buy a printed version of this art</div>*</a>
+                    <a href="#">
+                        <div class="popup">Buy a printed version of this art</div>
+                        *</a>
                 </h2>
 
                 <div class="dev-view-meta">
@@ -180,7 +187,9 @@
                             </c:if>
 
                             <sec:authorize access="!isAuthenticated()">
-                                <p>To be able to add to cart, <a href="/login">login</a> or <a href="/reg">register</a></p>
+                                <p>To be able to add to cart, <a href="/login">login</a> or <a
+                                        href="/reg">register</a>
+                                </p>
                             </sec:authorize>
                             <br>
                             <br>
@@ -194,7 +203,7 @@
                 </div>
             </c:if>
             <a href="/artist_gallery?gallery_id=${picture.userGallery.id}" style="margin:30%">Back
-            to ${picture.author.login}'s gallery</a>
+                to ${picture.author.login}'s gallery</a>
         </div>
     </div>
 </div>

@@ -2,7 +2,6 @@ package com.mariana.gallery.validator;
 
 import com.mariana.gallery.persistence.user.User;
 import com.mariana.gallery.persistence.user.UserDAO;
-import com.mariana.gallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -13,8 +12,6 @@ import javax.persistence.NoResultException;
 
 @Component
 public class UserValidator implements Validator {
-    @Autowired
-    private UserService userService;
     @Autowired
     private UserDAO userDAO;
 
